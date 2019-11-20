@@ -4,6 +4,8 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 import AppNavigator from './navigation/AppNavigator';
 
@@ -17,14 +19,13 @@ export default function App(props) {
         onError={handleLoadingError}
         onFinish={() => handleFinishLoading(setLoadingComplete)}
       />
-    );//test another test
+    );
   } else {
     return (
-      // Provider for redux store wraps AppNavigator
-      <View style={styles.container}>
+      <Provider store={store}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <AppNavigator />
-      </View>
+      </Provider>
     );
   }
 }
