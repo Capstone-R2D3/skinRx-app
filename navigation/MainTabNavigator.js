@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import { Ionicons } from '@expo/vector-icons'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -26,8 +27,8 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? 'ios-home'
+          : 'md-home'
       }
     />
   ),
@@ -51,26 +52,73 @@ LinksStack.navigationOptions = {
 
 LinksStack.path = '';
 
-const SettingsStack = createStackNavigator(
+const ScanStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Scan: HomeScreen,
   },
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+ScanStack.navigationOptions = {
+  tabBarLabel: 'Scan',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? 'ios-barcode'
+          : 'md-barcode'
+      }
+    />
   ),
 };
 
-SettingsStack.path = '';
+ScanStack.path = '';
+
+const JourneyStack = createStackNavigator(
+  {
+    Journey: HomeScreen,
+  },
+  config
+);
+
+JourneyStack.navigationOptions = {
+  tabBarLabel: 'Journey',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? 'ios-list'
+          : 'md-list'
+      }
+    />
+  ),
+};
+
+JourneyStack.path = '';
+
+const ProfileStack = createStackNavigator(
+  {
+    Profile: SettingsScreen,
+  },
+  config
+);
+
+ProfileStack.navigationOptions = {
+  tabBarLabel: 'Profile',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-person' : 'md-options'} />
+  ),
+};
+
+ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  ScanStack,
+  JourneyStack,
+  ProfileStack,
 });
 
 tabNavigator.path = '';
