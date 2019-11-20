@@ -17,7 +17,7 @@ export default function App(props) {
         onError={handleLoadingError}
         onFinish={() => handleFinishLoading(setLoadingComplete)}
       />
-    );//test
+    );//test another test
   } else {
     return (
       // Provider for redux store wraps AppNavigator
