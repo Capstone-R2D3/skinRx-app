@@ -17,11 +17,14 @@ export default class JourneyScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text style={styles.text}>Journey Screen</Text>
       </View>
     )
   }
 }
+
+JourneyScreen.navigationOptions = {
+  title: 'My Skin Journey',
+};
 
 const styles = StyleSheet.create({
   text: {
