@@ -1,12 +1,18 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import JourneyScreen from '../screens/JourneyScreen'
+import WelcomeScreen from '../screens/WelcomeScreen'
+import LoginScreen from '../screens/LoginScreen'
+import SignupScreen from '../screens/SignupScreen'
+import SkinTypeForm from '../screens/SkinTypeForm'
+import AllergiesForm from '../screens/AllergiesForm'
+import ProfileScreen from '../screens/ProfileScreen'
+import ScanScreen from '../screens/ScanScreen'
 import { Ionicons } from '@expo/vector-icons'
 
 const config = Platform.select({
@@ -55,7 +61,7 @@ LinksStack.path = '';
 
 const ScanStack = createStackNavigator(
   {
-    Scan: HomeScreen,
+    Scan: ScanScreen,
   },
   config
 );
@@ -101,7 +107,7 @@ JourneyStack.path = '';
 
 const ProfileStack = createStackNavigator(
   {
-    Profile: SettingsScreen,
+    Profile: ProfileScreen,
   },
   config
 );
@@ -124,4 +130,13 @@ const tabNavigator = createBottomTabNavigator({
 
 tabNavigator.path = '';
 
-export default tabNavigator;
+const AuthSwitchNavigator = createSwitchNavigator({
+  Welcome: { screen: WelcomeScreen },
+  Login: { screen: LoginScreen },
+  Signup: { screen: SignupScreen },
+  SkinTypeForm: { screen: SkinTypeForm },
+  AllergiesForm: { screen: AllergiesForm },
+  Dashboard: tabNavigator
+})
+
+export default AuthSwitchNavigator;
