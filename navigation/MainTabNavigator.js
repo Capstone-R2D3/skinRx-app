@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import JourneyScreen from '../screens/JourneyScreen'
 import { Ionicons } from '@expo/vector-icons'
 
 const config = Platform.select({
@@ -34,7 +35,7 @@ HomeStack.navigationOptions = {
   ),
 };
 
-HomeStack.path = '';
+HomeStack.path = '/home';
 
 const LinksStack = createStackNavigator(
   {
@@ -73,11 +74,11 @@ ScanStack.navigationOptions = {
   ),
 };
 
-ScanStack.path = '';
+ScanStack.path = ''
 
 const JourneyStack = createStackNavigator(
   {
-    Journey: HomeScreen,
+    Journey: JourneyScreen,
   },
   config
 );
