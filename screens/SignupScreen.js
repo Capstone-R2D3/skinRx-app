@@ -5,8 +5,10 @@ import { View,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {signUp} from '../redux/reducers/users'
+import {connect} from 'react-redux'
 
-export default class SignupScreen extends Component {
+class SignupScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,16 +17,17 @@ export default class SignupScreen extends Component {
       email: "",
       password: ""
     };
-    this.resetForm = this.resetForm.bind(this);
+    this.userSignUp = this.userSignUp.bind(this)
   }
 
-  resetForm() {
-    this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
-    })
+  async userSignUp() {
+    console.log(this.state)
+    const user = await this.props.signUpThunk(this.state.firstName, this.state.lastName,this.state.email, this.state.password)
+    if (!user) {
+      console.log('user already exists')
+    } else {
+      this.props.navigation.navigate('SkinTypeForm')
+    }
   }
 
   render() {
@@ -65,7 +68,7 @@ export default class SignupScreen extends Component {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.userBtn}
-            onPress={() => this.props.navigation.navigate('SkinTypeForm')}
+            onPress={() => this.userSignUp()}
           >
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
@@ -77,6 +80,12 @@ export default class SignupScreen extends Component {
     );
   }
 }
+
+const mapDispatch = dispatch => ({
+  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password))
+})
+
+export default connect(null, mapDispatch)(SignupScreen)
 
 const styles = StyleSheet.create({
   container: {
