@@ -20,36 +20,36 @@ export const me = () => async dispatch => {
   }
 };
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (email, password) => async dispatch => {
   let res
-  console.log('email', email)
   try {
-    console.log('hereeeee')
-    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/${method}`, {email, password})
-    console.log('response', res.data)
+    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/login`, {email, password})
+    console.log('response data', res.data)
+    dispatch(getUser(res.data))
   } catch (authError) {
     console.log(authError)
   }
-  try {
-    dispatch(getUser(res.data))
-  } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr)
-  }
 }
 
-export const logout = () => async dispatch => {
+export const signUp = (firstName, lastName, email, password) => async dispatch => {
+  let res
   try {
-    await axios.post('https://skinrx-server.herokuapp.com/auth/logout')
-    dispatch(removeUser())
-  } catch (err) {
-    console.error(err)
+    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/signup`, {
+      firstName: firstName, 
+      lastName: lastName, 
+      email: email, 
+      password: password
+    })
+    dispatch(getUser(res.data))
+  } catch (authError) {
+    console.log(authError)
   }
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return {...state, user: action.user}
+      return action.user
     case REMOVE_USER:
       return state
     default:

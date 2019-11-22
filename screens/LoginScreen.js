@@ -5,7 +5,7 @@ import { View,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
-import {auth, me} from '../redux/reducers/users'
+import {auth} from '../redux/reducers/users'
 import {connect} from 'react-redux'
 
 class LoginScreen extends Component {
@@ -18,10 +18,19 @@ class LoginScreen extends Component {
     this.logIn = this.logIn.bind(this)
   }
 
+  componentDidMount() {
+    
+  }
+
+  // need to map state
   async logIn() {
-    console.log('state', this.state)
-    await this.props.userAuth(this.state.email, this.state.password, 'login')
-    this.props.navigation.navigate('Dashboard')
+    await this.props.userAuth(this.state.email, this.state.password)
+    console.log('STATE', this.state)
+    // if (!user) {
+    //   console.log('email and/or password incorrect')
+    // } else {
+    //   this.props.navigation.navigate('Dashboard')
+    // }
   }
 
   render() {
@@ -59,9 +68,8 @@ class LoginScreen extends Component {
   }
 }
 
-
 const mapDispatch = dispatch => ({
-  userAuth: (email, password, method) => dispatch(auth(email, password, method))
+  userAuth: (email, password) => dispatch(auth(email, password))
 })
 
 export default connect(null, mapDispatch)(LoginScreen)
