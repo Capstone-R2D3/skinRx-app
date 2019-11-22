@@ -15,19 +15,25 @@ class SignupScreen extends Component {
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
+      password: "",
+      showMessage: false,
     };
     this.userSignUp = this.userSignUp.bind(this)
   }
 
   async userSignUp() {
-    console.log(this.state)
-    const user = await this.props.signUpThunk(this.state.firstName, this.state.lastName,this.state.email, this.state.password)
-    if (!user) {
-      console.log('user already exists')
+    await this.props.signUpThunk(this.state.firstName, this.state.lastName,this.state.email, this.state.password)
+    if (!this.props.user) {
+      this.toggleMessage()
     } else {
       this.props.navigation.navigate('SkinTypeForm')
     }
+  }
+
+  toggleMessage() {
+    this.setState({
+      showMessage: !this.state.showMessage
+    })
   }
 
   render() {
@@ -38,7 +44,7 @@ class SignupScreen extends Component {
             style={styles.input}
             placeholder="First name"
             textContentType="name"
-            autoCapitalize="none"
+            autoCapitalize="words"
             onChangeText={text => this.setState({ firstName: text })}
             value={this.state.firstName}
           />
@@ -46,7 +52,7 @@ class SignupScreen extends Component {
             style={styles.input}
             placeholder="Last name"
             textContentType="name"
-            autoCapitalize="none"
+            autoCapitalize="words"
             onChangeText={text => this.setState({ lastName: text })}
             value={this.state.lastName}
           />
@@ -61,10 +67,16 @@ class SignupScreen extends Component {
         <TextInput
           style={styles.input}
           placeholder="Password"
+          autoCapitalize="none"
           secureTextEntry
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password}
         />
+        {
+            this.state.showMessage ? 
+              <Text style={styles.incorrect}>An account with this email already exists. Please login or create a new account to continue.</Text>
+            : null
+          }
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.userBtn}
@@ -81,11 +93,15 @@ class SignupScreen extends Component {
   }
 }
 
+const mapState = state => ({
+  user: state.users.user
+})
+
 const mapDispatch = dispatch => ({
   signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password))
 })
 
-export default connect(null, mapDispatch)(SignupScreen)
+export default connect(mapState, mapDispatch)(SignupScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -126,5 +142,11 @@ const styles = StyleSheet.create({
   redirect: {
     marginTop: 20,
     fontSize: 16
+  },
+  incorrect: {
+    color: 'red',
+    marginBottom: 10,
+    width: '75%',
+    textAlign: 'center'
   }
 });

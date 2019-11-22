@@ -13,24 +13,25 @@ class LoginScreen extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      showMessage: false
     };
     this.logIn = this.logIn.bind(this)
   }
 
-  componentDidMount() {
-    
+  async logIn() {
+   await this.props.userAuth(this.state.email, this.state.password)
+   if (this.props.user.email === this.state.email) {
+    this.props.navigation.navigate('Dashboard')
+   } else {
+     this.toggleMessage()
+   }
   }
 
-  // need to map state
-  async logIn() {
-    await this.props.userAuth(this.state.email, this.state.password)
-    console.log('STATE', this.state)
-    // if (!user) {
-    //   console.log('email and/or password incorrect')
-    // } else {
-    //   this.props.navigation.navigate('Dashboard')
-    // }
+  toggleMessage() {
+    this.setState({
+      showMessage: !this.state.showMessage
+    })
   }
 
   render() {
@@ -52,6 +53,11 @@ class LoginScreen extends Component {
             onChangeText={text => this.setState({ password: text })}
             value={this.state.password}
           />
+          {
+            this.state.showMessage ? 
+              <Text style={styles.incorrect}>Username and/or password is incorrect</Text>
+            : null
+          }
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.userBtn}
@@ -68,11 +74,15 @@ class LoginScreen extends Component {
   }
 }
 
+const mapState = state => ({
+  user: state.users.user
+})
+
 const mapDispatch = dispatch => ({
   userAuth: (email, password) => dispatch(auth(email, password))
 })
 
-export default connect(null, mapDispatch)(LoginScreen)
+export default connect(mapState, mapDispatch)(LoginScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -113,5 +123,9 @@ const styles = StyleSheet.create({
   redirect: {
     marginTop: 20,
     fontSize: 16
+  },
+  incorrect: {
+    color: 'red',
+    marginBottom: 10,
   }
 });
