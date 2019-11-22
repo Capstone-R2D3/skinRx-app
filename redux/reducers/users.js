@@ -24,8 +24,11 @@ export const auth = (email, password) => async dispatch => {
   let res
   try {
     res = await axios.post(`https://skinrx-server.herokuapp.com/auth/login`, {email, password})
-    console.log('response data', res.data)
-    dispatch(getUser(res.data))
+    if (res.request.response === 'Wrong username and/or password') {
+      dispatch(getUser(res.request.response))
+    } else {
+      dispatch(getUser(res.data))
+    }
   } catch (authError) {
     console.log(authError)
   }
@@ -49,7 +52,7 @@ export const signUp = (firstName, lastName, email, password) => async dispatch =
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return {...state, user: action.user}
     case REMOVE_USER:
       return state
     default:
