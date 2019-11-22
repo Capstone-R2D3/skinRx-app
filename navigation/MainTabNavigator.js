@@ -14,6 +14,7 @@ import AllergiesForm from '../screens/AllergiesForm'
 import ProfileScreen from '../screens/ProfileScreen'
 import ScanScreen from '../screens/ScanScreen'
 import RecommendationScreen from '../screens/RecommendationScreen'
+import SingleProduct from '../screens/SingleProduct'
 import { Ionicons } from '@expo/vector-icons'
 
 const config = Platform.select({
@@ -24,8 +25,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: RecommendationScreen,
+    SingleProduct: SingleProduct,
   },
-  config
 );
 
 HomeStack.navigationOptions = {
