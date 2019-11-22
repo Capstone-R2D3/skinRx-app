@@ -25,7 +25,7 @@ export const auth = (email, password, method) => async dispatch => {
   console.log('email', email)
   try {
     console.log('hereeeee')
-    res = await axios.post(`https://skinrx-server.herokuapp.com/api/users/${method}`, {email, password})
+    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/${method}`, {email, password})
     console.log('response', res.data)
   } catch (authError) {
     console.log(authError)
@@ -39,7 +39,7 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post('https://skinrx-server.herokuapp.com/api/users/logout')
+    await axios.post('https://skinrx-server.herokuapp.com/auth/logout')
     dispatch(removeUser())
   } catch (err) {
     console.error(err)

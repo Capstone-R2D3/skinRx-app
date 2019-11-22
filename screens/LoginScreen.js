@@ -5,33 +5,23 @@ import { View,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {auth, me} from '../redux/reducers/users'
+import {connect} from 'react-redux'
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
       email: "",
       password: ""
     };
-    this.resetForm = this.resetForm.bind(this);
     this.logIn = this.logIn.bind(this)
   }
 
-  logIn() {
+  async logIn() {
+    console.log('state', this.state)
+    await this.props.userAuth(this.state.email, this.state.password, 'login')
     this.props.navigation.navigate('Dashboard')
-    this.resetForm()
-  }
-
-
-  resetForm() {
-    this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
-    });
   }
 
   render() {
@@ -68,6 +58,13 @@ export default class LoginScreen extends Component {
     );
   }
 }
+
+
+const mapDispatch = dispatch => ({
+  userAuth: (email, password, method) => dispatch(auth(email, password, method))
+})
+
+export default connect(null, mapDispatch)(LoginScreen)
 
 const styles = StyleSheet.create({
   container: {
