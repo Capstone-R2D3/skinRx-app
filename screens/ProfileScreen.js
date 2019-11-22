@@ -14,14 +14,24 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Profile</Text>
+        <Text style={styles.header}>Hi, Name</Text>
         <View style={styles.btnContainer}>
+          
+          {/* Journey Box */}
+          <View title="box1"></View>
+
+          {/* Recommendations box */}
+          <View title="box2"></View>
+
+
+          {/* LOGOUT BUTTON BELOW */}
           <TouchableOpacity
             style={styles.userBtn}
             onPress={() => this.props.navigation.navigate('Welcome')}
           >
             <Text style={styles.btnText}>Logout</Text>
           </TouchableOpacity>
+
         </View>
       </View>
     )
