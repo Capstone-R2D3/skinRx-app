@@ -1,6 +1,4 @@
 import React from 'react';
-import Button from 'apsl-react-native-button';
-import Stars from 'react-native-stars';
 import {
   Image,
   Platform,
@@ -10,15 +8,38 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-
-import { SingleProduct } from "./SingleProduct";
+import ProductCard from './ProductCard';
 
 
 export default class RecommendationScreen extends React.Component {
   constructor() {
     super()
+    // currently dummy data - will need to repopulate
+    // should originally be set to null - leaving it here for now
     this.state = {
-      stars: 0
+      products: [
+        {
+          brand: 'Drunk Elephant', 
+          name: 'Beste No. 9 Jelly Cleanser',
+          imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Beste_US_Standard_1024px_72dpi_DE_1024x1024.jpg?v=1568054219', 
+        }, {
+          brand: 'Brand Name', 
+          name: 'Product Name Placeholder',
+          imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/B-HydraSerum-web_1024x1024_063bceac-b048-4448-b375-1c5716d586a1_1024x1024.jpg?v=1562691587', 
+        }, {
+          brand: 'Brand Name', 
+          name: 'Product Name Placeholder',
+          imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Marul-SIDE-WEB_1024x1024.jpg?v=1534291474', 
+        }, {
+          brand: 'Brand Name', 
+          name: 'Product Name Placeholder',
+          imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Beste_US_Standard_1024px_72dpi_DE_1024x1024.jpg?v=1568054219', 
+        }, {
+          brand: 'Brand Name', 
+          name: 'Product Name Placeholder',
+          imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Babyfacial_1080x1080_9bf32208-7f46-41cc-8b16-d2730f462940_1024x1024.jpg?v=1568054121', 
+        }, 
+      ]
     }
   }
 
@@ -29,87 +50,37 @@ export default class RecommendationScreen extends React.Component {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
           
-          <Text style={styles.header}>An easy, four step process curated just for you</Text> 
+          <Text style={styles.header}>An easy four step process curated just for you</Text> 
           
           <Text></Text>
-
+          
+          {/* Product no 1 - cleanser */}
           <Text style={styles.text}>Cleanser</Text>
-
-
-          <Image source={{uri: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Beste_US_Standard_1024px_72dpi_DE_1024x1024.jpg?v=1568054219'}}
-                 style={{width: 300, height: 300}} />
-
-          <TouchableOpacity> 
-                    <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-                        onPress={() => {
-                          this.props.navigation.navigate("SingleProduct", {
-                            imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Beste_US_Standard_1024px_72dpi_DE_1024x1024.jpg?v=1568054219',
-                          });
-                    }}>View Product</Button>
-          </TouchableOpacity>
-
-          {/* <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} >View Product</Button> */}
-
+          <ProductCard state={this.state.products[0]} />
 
           <Text></Text>
           
+          {/* Product no 2 - toner */}
           <Text style={styles.text}>Toner</Text>
-          <Image source={{uri: 'https://cdn.shopify.com/s/files/1/0209/8446/products/B-HydraSerum-web_1024x1024_063bceac-b048-4448-b375-1c5716d586a1_1024x1024.jpg?v=1562691587'}}
-                 style={{width: 300, height: 300}} />
-
-          <TouchableOpacity> 
-                    <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-                        onPress={() => {
-                          this.props.navigation.navigate("SingleProduct", {
-                            imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/B-HydraSerum-web_1024x1024_063bceac-b048-4448-b375-1c5716d586a1_1024x1024.jpg?v=1562691587',
-                          });
-                    }}>View Product</Button>
-          </TouchableOpacity>
+          <ProductCard state={this.state.products[1]} />
 
           <Text></Text>
 
+          {/* product no. 3 - moisturizer */}
           <Text style={styles.text}>Moisturizer</Text>
-          <Image source={{uri: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Marul-SIDE-WEB_1024x1024.jpg?v=1534291474'}}
-                 style={{width: 300, height: 300}} />
-
-          <TouchableOpacity> 
-                    <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-                        onPress={() => {
-                          this.props.navigation.navigate("SingleProduct", {
-                            imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Marul-SIDE-WEB_1024x1024.jpg?v=1534291474',
-                          });
-                    }}>View Product</Button>
-          </TouchableOpacity>
+          <ProductCard state={this.state.products[2]} />
 
           <Text></Text>
 
+          {/* product no. 4 - sunscreen */}
           <Text style={styles.text}>Sunscreen</Text>
-          <Image source={{uri: 'https://cdn.shopify.com/s/files/1/0209/8446/products/BOTF_Babyfacial_Standard_1024x1024_72dpi_New-Badge_1024x1024.jpg?v=1570735398'}}
-                 style={{width: 300, height: 300}} />
-
-          <TouchableOpacity> 
-                    <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-                        onPress={() => {
-                          this.props.navigation.navigate("SingleProduct", {
-                            imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/BOTF_Babyfacial_Standard_1024x1024_72dpi_New-Badge_1024x1024.jpg?v=1570735398',
-                          });
-                    }}>View Product</Button>
-          </TouchableOpacity>
+          <ProductCard state={this.state.products[3]} />
 
           <Text></Text>
 
+          {/* product no. 5 - face mask */}
           <Text style={styles.text}>Face mask</Text>
-          <Image source={{uri: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Babyfacial_1080x1080_9bf32208-7f46-41cc-8b16-d2730f462940_1024x1024.jpg?v=1568054121'}}
-                 style={{width: 300, height: 300}} />
-
-          <TouchableOpacity> 
-                    <Button textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-                        onPress={() => {
-                          this.props.navigation.navigate("SingleProduct", {
-                            imageUrl: 'https://cdn.shopify.com/s/files/1/0209/8446/products/Babyfacial_1080x1080_9bf32208-7f46-41cc-8b16-d2730f462940_1024x1024.jpg?v=1568054121',
-                          });
-                    }}>View Product</Button>
-          </TouchableOpacity> 
+          <ProductCard state={this.state.products[4]} />
 
         </ScrollView>
       </View>

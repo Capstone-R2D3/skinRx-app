@@ -21,11 +21,11 @@ export default class SingleProduct extends React.Component {
   render() {
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
-        
+
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-            <Text style={styles.text}>Drunk Elephant</Text>
-            <Text style={styles.text}>Beste No. 9 Jelly Cleanser</Text>
+            <Text style={styles.text}>{this.props.navigation.getParam("brand")}</Text>
+            <Text style={styles.text}>{this.props.navigation.getParam("name")}</Text>
 
             <Image source={{uri: this.props.navigation.getParam("imageUrl")}} style={{width: 300, height: 300}}></Image>
 
@@ -43,10 +43,8 @@ export default class SingleProduct extends React.Component {
                     emptyStar={require('./images/starEmpty.png')} />
             </View>
 
-          
-
         </ScrollView>
-
+        
       </View>
     )
   }
