@@ -62,9 +62,16 @@ export default class ScanScreen extends React.Component {
   handleBarCodeScanned = async ({ type, data }) => {
     // set scanned state to true
     this.setState({ scanned: true });
-    const productData = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
-    // send user alert with product name
-    alert(`${productData.data.products[0].product_name}`);
+    try {
+      // get product information using the barcode and the barcode lookup api
+      const res = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
+      const productInfo = res.data.products[0];
+      // send user alert with product name
+      alert(`${productInfo.product_name}`);
+    } catch (err) {
+      console.error(err);
+    }
+    
   };
 }
 
