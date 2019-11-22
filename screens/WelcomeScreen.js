@@ -29,9 +29,9 @@ export default function WelcomeScreen(props) {
           <Text style={styles.btnText}>Sign Up</Text>
         </TouchableOpacity>
        </View>
-       {/* <TouchableOpacity>
-        <Text style={{fontSize: 16}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
-       </TouchableOpacity> */}
+       <TouchableOpacity>
+        <Text style={{fontSize: 16}} onPress={() => props.navigation.navigate('Dashboard')}>Continue as guest</Text>
+       </TouchableOpacity>
       </View>
   )
 } 
