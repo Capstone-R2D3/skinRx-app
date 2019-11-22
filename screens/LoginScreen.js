@@ -69,6 +69,9 @@ class LoginScreen extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
             <Text style={styles.redirect}>Need an account? Sign up here!</Text>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{fontSize: 16, marginTop: 10}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
+          </TouchableOpacity>
       </View>
     );
   }
@@ -82,7 +85,7 @@ const mapDispatch = dispatch => ({
   userAuth: (email, password) => dispatch(auth(email, password))
 })
 
-export default connect(mapState, mapDispatch)(LoginScreen)
+export default connect(mapState, mapDispatch)(LoginScreen)``
 
 const styles = StyleSheet.create({
   container: {
