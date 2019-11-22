@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import axios from 'axios';
+import {BARCODE_API_KEY} from '../secrets.json'
 
 // ScanScreen is a stateful component
 export default class ScanScreen extends React.Component {
@@ -57,12 +59,12 @@ export default class ScanScreen extends React.Component {
     );
   }
 
-  handleBarCodeScanned = ({ type, data }) => {
+  handleBarCodeScanned = async ({ type, data }) => {
     // set scanned state to true
     this.setState({ scanned: true });
-    // send user alert with barcode type and data
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    console.log();
+    const productData = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
+    // send user alert with product name
+    alert(`${productData.data.products[0].product_name}`);
   };
 }
 
