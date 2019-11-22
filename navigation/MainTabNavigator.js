@@ -15,6 +15,14 @@ import ProfileScreen from '../screens/ProfileScreen'
 import ScanScreen from '../screens/ScanScreen'
 import { Ionicons } from '@expo/vector-icons'
 
+import CleanserQuestion from '../screens/skin-type-quiz/CleanserQuestion'
+import MoisturizerQuestion from '../screens/skin-type-quiz/MoisturizerQuestion'
+import PoreQuestion from '../screens/skin-type-quiz/PoreQuestion'
+import Result from '../screens/skin-type-quiz/Result'
+import SkinQuestion from '../screens/skin-type-quiz/SkinQuestion'
+import SkinTypeQuiz from '../screens/skin-type-quiz/SkinTypeQuiz'
+import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
+
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
@@ -130,11 +138,21 @@ const tabNavigator = createBottomTabNavigator({
 
 tabNavigator.path = '';
 
+const onBoardingNav = createStackNavigator({
+  SkinTypeQuiz: { screen: SkinTypeQuiz },
+  SkinTypes: { screen: SkinTypes },
+  SkinQuestion: { screen: SkinQuestion },
+  PoreQuestion: { screen: PoreQuestion },
+  CleanserQuestion: { screen: CleanserQuestion },
+  MoisturizerQuestion: { screen: MoisturizerQuestion },
+  Result: { screen: Result }
+})
+
 const AuthSwitchNavigator = createSwitchNavigator({
   Welcome: { screen: WelcomeScreen },
   Login: { screen: LoginScreen },
   Signup: { screen: SignupScreen },
-  SkinTypeForm: { screen: SkinTypeForm },
+  SkinTypeQuiz: onBoardingNav,
   AllergiesForm: { screen: AllergiesForm },
   Dashboard: tabNavigator
 })

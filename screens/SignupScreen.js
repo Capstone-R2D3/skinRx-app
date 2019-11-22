@@ -65,7 +65,7 @@ export default class SignupScreen extends Component {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.userBtn}
-            onPress={() => this.props.navigation.navigate('SkinTypeForm')}
+            onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}
           >
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
