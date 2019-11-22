@@ -85,7 +85,7 @@ const mapDispatch = dispatch => ({
   userAuth: (email, password) => dispatch(auth(email, password))
 })
 
-export default connect(mapState, mapDispatch)(LoginScreen)``
+export default connect(mapState, mapDispatch)(LoginScreen)
 
 const styles = StyleSheet.create({
   container: {
