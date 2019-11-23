@@ -8,8 +8,10 @@ export default class PoreQuestion extends Component {
     }
 
     nextQuestion(typeId) {
-        const score = this.props.score + typeId;
-        console.log('SCORE SUM IN PORE QUESTION: ', score)
+        let score = this.props.navigation.getParam('score');
+        typeId = Number(typeId);
+        score = Number(score);
+        score = String(score + typeId);
         this.props.navigation.navigate('CleanserQuestion', {
             userId: this.props.userId,
             score: score
@@ -17,7 +19,6 @@ export default class PoreQuestion extends Component {
     }
 
     render() {
-        console.log('THIS.PROPS.SCORE IN PORE QUESTION: ', this.props.score)
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
@@ -26,7 +27,7 @@ export default class PoreQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(4)}
+                    onPress={() => this.nextQuestion('4')}
                     >
                         <Text style={styles.btnText}>clogged around the nose but small and unnoticeable on other areas of my face.</Text>
                     </TouchableOpacity>
@@ -34,15 +35,15 @@ export default class PoreQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(2)}
+                    onPress={() => this.nextQuestion('2')}
                     >
-                        <Text style={styles.btnText}>small and tight, even unnoticeable, but at times I get blackheads.</Text>
+                        <Text style={styles.btnText}>small and tight, even unnoticeable, but I can still get blackheads.</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(1)}
+                    onPress={() => this.nextQuestion('1')}
                     >
                         <Text style={styles.btnText}>large and easily clogged with sweat and oil produced from my sebaceous glands.</Text>
                     </TouchableOpacity>
@@ -50,15 +51,15 @@ export default class PoreQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(5)}
+                    onPress={() => this.nextQuestion('5')}
                     >
-                        <Text style={styles.btnText}>normal to large in size but varies depending on how my skin reacts to a product or irritant.</Text>
+                        <Text style={styles.btnText}>normal to large in size but can vary since my skin reacts to products differently.</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(3)}
+                    onPress={() => this.nextQuestion('3')}
                     >
                         <Text style={styles.btnText}>unnoticeable. I don't normally have blackheads since my pores aren't congested.</Text>
                     </TouchableOpacity>

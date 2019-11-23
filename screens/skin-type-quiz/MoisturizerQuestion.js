@@ -8,24 +8,24 @@ export default class MoisturizerQuestion extends Component {
     }
 
     getResult(typeId) {
-        const score = (this.props.score + typeId) / 4;
-        console.log('SCORE SUM IN MOISTURIZER QUESTION: ', score)
+        let score = this.props.navigation.getParam('score');
+        typeId = Number(typeId);
+        score = Number(score);
+        score = (score + typeId) / 4;
         const skinType = Math.round(score);
         let result = '';
-        if (skinType === 1) {result = 'Oily'}
-        if (skinType === 2) {result = 'Dry'}
-        if (skinType === 3) {result = 'Normal'}
-        if (skinType === 4) {result = 'Combination'}
-        if (skinType === 5) {result = 'Sensitive'}
+        if (skinType === 1) {result = 'oily'}
+        if (skinType === 2) {result = 'dry'}
+        if (skinType === 3) {result = 'normal'}
+        if (skinType === 4) {result = 'combination'}
+        if (skinType === 5) {result = 'sensitive'}
         this.props.navigation.navigate('Result', {
             result: result,
             userId: this.props.userId
         });
-        console.log('RESULT: ', skinType)
     }
 
     render() {
-        console.log('THIS.PROPS.SCORE IN MOISTURIZER QUESTION: ', this.props.score)
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
@@ -34,15 +34,15 @@ export default class MoisturizerQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.getResult(4)}
+                    onPress={() => this.getResult('4')}
                     >
-                        <Text style={styles.btnText}>takes care of my different skin textures.</Text>
+                        <Text style={styles.btnText}>takes care of my different skin textures (like oily and dry).</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.getResult(2)}
+                    onPress={() => this.getResult('2')}
                     >
                         <Text style={styles.btnText}>hydrates my parched skin and seals in the moisture.</Text>
                     </TouchableOpacity>
@@ -50,7 +50,7 @@ export default class MoisturizerQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.getResult(1)}
+                    onPress={() => this.getResult('1')}
                     >
                         <Text style={styles.btnText}>is oil-free and balances my skin's oil production.</Text>
                     </TouchableOpacity>
@@ -58,7 +58,7 @@ export default class MoisturizerQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.getResult(5)}
+                    onPress={() => this.getResult('5')}
                     >
                         <Text style={styles.btnText}>calms and soothes my irritated skin.</Text>
                     </TouchableOpacity>
@@ -66,7 +66,7 @@ export default class MoisturizerQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.getResult(3)}
+                    onPress={() => this.getResult('3')}
                     >
                         <Text style={styles.btnText}>keeps my skin balanced since I don't have major concerns.</Text>
                     </TouchableOpacity>

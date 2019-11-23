@@ -5,29 +5,29 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 export default class MoisturizerQuestion extends Component {
     constructor(props) {
         super(props);
-        this.updateSkinType = this.updateSkinType.bind(this);
+        this.addSkinType = this.addSkinType.bind(this);
     }
 
-    // async updateSkinType(userId, result) {
+    // async addSkinType(userId, result) {
     //     await axios.put(`/api/user/${userId}`, {result}); // check path
     //     this.props.navigation.navigate('Home');
     // }
 
-    updateSkinType() {
+    addSkinType() {
         this.props.navigation.navigate('Home');
     }
 
     render() {
-        console.log('THIS.PROPS.RESULT: ', this.props.result)
+        let result = this.props.navigation.getParam('result');
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
-                    Your skin type is {this.props.result}!
+                    Your skin type is {result}!
                 </Text>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.updateSkinType()} // this.props.userId, this.props.result
+                    onPress={() => this.addSkinType()}
                     >
                         <Text style={styles.btnText}>Take me to my products!</Text>
                     </TouchableOpacity>

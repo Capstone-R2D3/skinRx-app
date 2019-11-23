@@ -5,33 +5,33 @@ import { View,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {auth} from '../redux/reducers/users'
+import {connect} from 'react-redux'
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
       email: "",
-      password: ""
+      password: "",
+      showMessage: false
     };
-    this.resetForm = this.resetForm.bind(this);
     this.logIn = this.logIn.bind(this)
   }
 
-  logIn() {
+  async logIn() {
+   await this.props.userAuth(this.state.email, this.state.password)
+   if (this.props.user.email === this.state.email) {
     this.props.navigation.navigate('Dashboard')
-    this.resetForm()
+   } else {
+     this.toggleMessage()
+   }
   }
 
-
-  resetForm() {
+  toggleMessage() {
     this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
-    });
+      showMessage: !this.state.showMessage
+    })
   }
 
   render() {
@@ -53,6 +53,11 @@ export default class LoginScreen extends Component {
             onChangeText={text => this.setState({ password: text })}
             value={this.state.password}
           />
+          {
+            this.state.showMessage ? 
+              <Text style={styles.incorrect}>Username and/or password is incorrect</Text>
+            : null
+          }
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.userBtn}
@@ -64,10 +69,23 @@ export default class LoginScreen extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
             <Text style={styles.redirect}>Need an account? Sign up here!</Text>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{fontSize: 16, marginTop: 10}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
+          </TouchableOpacity>
       </View>
     );
   }
 }
+
+const mapState = state => ({
+  user: state.users.user
+})
+
+const mapDispatch = dispatch => ({
+  userAuth: (email, password) => dispatch(auth(email, password))
+})
+
+export default connect(mapState, mapDispatch)(LoginScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -108,5 +126,9 @@ const styles = StyleSheet.create({
   redirect: {
     marginTop: 20,
     fontSize: 16
+  },
+  incorrect: {
+    color: 'red',
+    marginBottom: 10,
   }
 });

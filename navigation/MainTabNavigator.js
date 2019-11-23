@@ -13,6 +13,8 @@ import SkinTypeForm from '../screens/SkinTypeForm'
 import AllergiesForm from '../screens/AllergiesForm'
 import ProfileScreen from '../screens/ProfileScreen'
 import ScanScreen from '../screens/ScanScreen'
+import RecommendationScreen from '../screens/RecommendationScreen'
+import SingleProduct from '../screens/SingleProduct'
 import { Ionicons } from '@expo/vector-icons'
 
 import CleanserQuestion from '../screens/skin-type-quiz/CleanserQuestion'
@@ -30,9 +32,9 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: RecommendationScreen,
+    SingleProduct: SingleProduct,
   },
-  config
 );
 
 HomeStack.navigationOptions = {
@@ -139,13 +141,48 @@ const tabNavigator = createBottomTabNavigator({
 tabNavigator.path = '';
 
 const onBoardingNav = createStackNavigator({
-  SkinTypeQuiz: { screen: SkinTypeQuiz },
-  SkinTypes: { screen: SkinTypes },
-  SkinQuestion: { screen: SkinQuestion },
-  PoreQuestion: { screen: PoreQuestion },
-  CleanserQuestion: { screen: CleanserQuestion },
-  MoisturizerQuestion: { screen: MoisturizerQuestion },
-  Result: { screen: Result }
+  SkinTypeQuiz: {
+    screen: SkinTypeQuiz,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+    })},
+  SkinTypes: {
+    screen: SkinTypes,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  SkinQuestion: {
+    screen: SkinQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  PoreQuestion: {
+    screen: PoreQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  CleanserQuestion: {
+    screen: CleanserQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  MoisturizerQuestion: {
+    screen: MoisturizerQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  Result: {
+    screen: Result,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
 })
 
 const AuthSwitchNavigator = createSwitchNavigator({

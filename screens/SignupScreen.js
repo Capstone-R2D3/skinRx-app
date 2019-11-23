@@ -5,25 +5,34 @@ import { View,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {signUp} from '../redux/reducers/users'
+import {connect} from 'react-redux'
 
-export default class SignupScreen extends Component {
+class SignupScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
+      password: "",
+      showMessage: false,
     };
-    this.resetForm = this.resetForm.bind(this);
+    this.userSignUp = this.userSignUp.bind(this)
   }
 
-  resetForm() {
+  async userSignUp() {
+    await this.props.signUpThunk(this.state.firstName, this.state.lastName,this.state.email, this.state.password)
+    if (!this.props.user) {
+      this.toggleMessage()
+    } else {
+      this.props.navigation.navigate('SkinTypeQuiz')
+    }
+  }
+
+  toggleMessage() {
     this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
+      showMessage: !this.state.showMessage
     })
   }
 
@@ -35,7 +44,7 @@ export default class SignupScreen extends Component {
             style={styles.input}
             placeholder="First name"
             textContentType="name"
-            autoCapitalize="none"
+            autoCapitalize="words"
             onChangeText={text => this.setState({ firstName: text })}
             value={this.state.firstName}
           />
@@ -43,7 +52,7 @@ export default class SignupScreen extends Component {
             style={styles.input}
             placeholder="Last name"
             textContentType="name"
-            autoCapitalize="none"
+            autoCapitalize="words"
             onChangeText={text => this.setState({ lastName: text })}
             value={this.state.lastName}
           />
@@ -58,14 +67,20 @@ export default class SignupScreen extends Component {
         <TextInput
           style={styles.input}
           placeholder="Password"
+          autoCapitalize="none"
           secureTextEntry
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password}
         />
+        {
+            this.state.showMessage ? 
+              <Text style={styles.incorrect}>An account with this email already exists. Please login or create a new account to continue.</Text>
+            : null
+          }
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.userBtn}
-            onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}
+            onPress={() => this.userSignUp()}
           >
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
@@ -77,6 +92,16 @@ export default class SignupScreen extends Component {
     );
   }
 }
+
+const mapState = state => ({
+  user: state.users.user
+})
+
+const mapDispatch = dispatch => ({
+  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password))
+})
+
+export default connect(mapState, mapDispatch)(SignupScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -117,5 +142,11 @@ const styles = StyleSheet.create({
   redirect: {
     marginTop: 20,
     fontSize: 16
+  },
+  incorrect: {
+    color: 'red',
+    marginBottom: 10,
+    width: '75%',
+    textAlign: 'center'
   }
 });

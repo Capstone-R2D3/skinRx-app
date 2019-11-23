@@ -8,7 +8,6 @@ export default class SkinQuestion extends Component {
     }
 
     nextQuestion(typeId) {
-        console.log('TYPE ID: ', typeId)
         this.props.navigation.navigate('PoreQuestion', {
             userId: this.props.userId,
             score: typeId
@@ -24,7 +23,7 @@ export default class SkinQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(4)}
+                    onPress={() => this.nextQuestion('4')}
                     >
                         <Text style={styles.btnText}>oily in the T-zone (forehead, nose, and chin) but dry everywhere else.</Text>
                     </TouchableOpacity>
@@ -32,15 +31,15 @@ export default class SkinQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(2)}
+                    onPress={() => this.nextQuestion('2')}
                     >
-                        <Text style={styles.btnText}>tight, dry, and flaky, sometimes even cracked, but it stays shine-free throughout the day.</Text>
+                        <Text style={styles.btnText}>tight, dry, and flaky, sometimes even cracked, staying shine-free throughout the day.</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(1)}
+                    onPress={() => this.nextQuestion('1')}
                     >
                         <Text style={styles.btnText}>slick and shiny. It gets oily even after blotting away the shine.</Text>
                     </TouchableOpacity>
@@ -48,17 +47,17 @@ export default class SkinQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(5)}
+                    onPress={() => this.nextQuestion('5')}
                     >
-                        <Text style={styles.btnText}>red and itchy. It can get patchy with rashes and bumps. It sometimes stings and burns.</Text>
+                        <Text style={styles.btnText}>red and itchy with rashes and bumps. It stings and burns.</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion(3)}
+                    onPress={() => this.nextQuestion('3')}
                     >
-                        <Text style={styles.btnText}>even and balanced. It doesn't show any sign of dry flakes or oily shine.</Text>
+                        <Text style={styles.btnText}>even and balanced. It shows no sign of dry flakes or oily shine.</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.bodyText}>

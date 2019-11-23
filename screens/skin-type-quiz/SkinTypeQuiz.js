@@ -32,7 +32,7 @@ export default class SkinTypeQuiz extends Component {
                     userId={this.props.userId} //?????
                     onPress={() => this.getSkinType()}
                     >
-                        <Text style={styles.btnText}>I know my skin type. Show me some products!</Text>
+                        <Text style={styles.btnText}>I already know my skin type.</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnContainer}>
