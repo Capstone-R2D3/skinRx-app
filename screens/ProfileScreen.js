@@ -23,7 +23,7 @@ class ProfileScreen extends React.Component {
 
   render() {
 
-    console.log('from profile page', this.props.user)
+    // console.log('from profile page', this.props.user)
 
     return (
       <View style={styles.container}>

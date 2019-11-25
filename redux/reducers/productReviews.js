@@ -13,7 +13,7 @@ const newRating = (rating) => ({
 // thunks
 export const addRating = (productRating) => async dispatch => {
     try {
-        console.log('getting here', productRating);
+        // console.log('getting here', productRating);
         // ***** @@@ EDIT: UPDATE WITH HEROKU ROUTE!!! @@@ *****
         let { data } = await axios.post('/', {productRating})
         // dispatch(newRating(data.productRating))
