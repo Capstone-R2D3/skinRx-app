@@ -9,13 +9,20 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import {getToxicityScore} from '../redux/reducers/products'
+import { connect } from 'react-redux';
 
-export default class SingleProduct extends React.Component {
+class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
         stars: 0
     }
+  }
+
+  componentDidMount() {
+    this.props.getToxicity(1)
+    console.log('toxicity score', this.props.score)
   }
 
   render() {
@@ -50,6 +57,14 @@ export default class SingleProduct extends React.Component {
   }
 }
 
+const mapState = state => ({
+  score: state.score
+})
+
+const mapDispatch = dispatch => ({
+  getToxicity: (productId) => dispatch(getToxicityScore(productId))
+})
+
 SingleProduct.navigationOptions = {
   title: 'Single Product View',
 };
@@ -67,3 +82,4 @@ const styles = StyleSheet.create({
   }
 })
 
+export default connect(mapState, mapDispatch)(SingleProduct)
