@@ -9,9 +9,7 @@ export default class CleanserQuestion extends Component {
 
     nextQuestion(typeId) {
         let score = this.props.navigation.getParam('score');
-        typeId = Number(typeId);
-        score = Number(score);
-        score = String(score + typeId);
+        score = score + typeId;
         this.props.navigation.navigate('MoisturizerQuestion', {
             userId: this.props.userId,
             score: score
@@ -27,7 +25,7 @@ export default class CleanserQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion('2')}
+                    onPress={() => this.nextQuestion(2)}
                     >
                         <Text style={styles.btnText}>feels tight and dehydrated, so I stay away from products that are even more drying.</Text>
                     </TouchableOpacity>
@@ -35,7 +33,7 @@ export default class CleanserQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion('5')}
+                    onPress={() => this.nextQuestion(5)}
                     >
                         <Text style={styles.btnText}>is clean and a bit dry but can get irritated depending on the product.</Text>
                     </TouchableOpacity>
@@ -43,7 +41,7 @@ export default class CleanserQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion('1')}
+                    onPress={() => this.nextQuestion(1)}
                     >
                         <Text style={styles.btnText}>feels clean and refreshed but eventually gets oily again.</Text>
                     </TouchableOpacity>
@@ -51,7 +49,7 @@ export default class CleanserQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion('4')}
+                    onPress={() => this.nextQuestion(4)}
                     >
                         <Text style={styles.btnText}>is oil-free around my nose but tight and dry around my cheeks.</Text>
                     </TouchableOpacity>
@@ -59,7 +57,7 @@ export default class CleanserQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.nextQuestion('3')}
+                    onPress={() => this.nextQuestion(3)}
                     >
                         <Text style={styles.btnText}>is clean and clear — not too parched, oily, or sensitive.</Text>
                     </TouchableOpacity>

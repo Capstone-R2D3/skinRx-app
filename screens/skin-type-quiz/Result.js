@@ -22,7 +22,7 @@ export default class MoisturizerQuestion extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
-                    Your skin type is {result}!
+                    You have {result} skin.
                 </Text>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
