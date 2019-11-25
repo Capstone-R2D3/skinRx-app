@@ -54,19 +54,18 @@ class SingleProduct extends React.Component {
   }
 }
 
-
-// navigation 
-SingleProduct.navigationOptions = {
-  title: 'Single Product View',
-};
-
-
-// export info to redux store
+// connect to redux store
 mapDispatchToProps = dispatch => ({
   addRating: (rating) => dispatch(addRating(rating)),
 })
 
 export default connect(null, mapDispatchToProps)(SingleProduct)
+
+
+// navigation 
+SingleProduct.navigationOptions = {
+  title: 'Single Product View',
+};
 
 
 // css stylization 
