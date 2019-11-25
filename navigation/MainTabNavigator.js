@@ -15,6 +15,7 @@ import ProfileScreen from '../screens/ProfileScreen'
 import ScanScreen from '../screens/ScanScreen'
 import RecommendationScreen from '../screens/RecommendationScreen'
 import SingleProduct from '../screens/SingleProduct'
+import ScannedProduct from '../screens/ScannedProduct'
 import { Ionicons } from '@expo/vector-icons'
 
 const config = Platform.select({
@@ -64,6 +65,7 @@ LinksStack.path = '';
 const ScanStack = createStackNavigator(
   {
     Scan: ScanScreen,
+    ScannedProduct: ScannedProduct
   },
   config
 );
