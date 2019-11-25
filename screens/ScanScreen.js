@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
@@ -9,10 +9,13 @@ import {BARCODE_API_KEY} from '../secrets.json'
 export default class ScanScreen extends React.Component {
   // it has two properties on its state
   // hasCameraPermissions and scanned
-  state = {
-    hasCameraPermission: null,
-    scanned: false,
-  };
+  constructor(props) {
+    super(props) 
+    this.state = {
+      hasCameraPermission: null,
+      scanned: false
+    }
+  }
 
   // once the component is mounted, 
   // get camera permissions from the user
@@ -43,6 +46,8 @@ export default class ScanScreen extends React.Component {
     }
     // otherwise, return a view with our barcode scanner
     return (
+      // <View>
+      // <Text onPress={() => this.props.navigation.navigate('ScannedProduct')}>Product view</Text>
       <View
         style={styles.barcodeView}>
         <BarCodeScanner
@@ -56,18 +61,33 @@ export default class ScanScreen extends React.Component {
         )
         }
       </View>
+      // </View>
+
     );
   }
 
-  handleBarCodeScanned = async ({ type, data }) => {
-    // set scanned state to true
+  handleBarCodeScanned = async ({ data }) => {
     this.setState({ scanned: true });
     try {
       // get product information using the barcode and the barcode lookup api
       const res = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
       const productInfo = res.data.products[0];
-      // send user alert with product name
-      alert(`${productInfo.product_name}`);
+      console.log(productInfo)
+      Alert.alert(
+        'Product scanned',
+        `${productInfo.product_name}`,
+        [
+          { text: 'Scan again', onPress: () => console.log('Scan again pressed') },
+          { text: 'Product details', onPress: () => this.props.navigation.navigate('ScannedProduct', {
+            productBrand: productInfo.brand,
+            productDescription: productInfo.description,
+            productImage: productInfo.images[0],
+            productName: productInfo.product_name,
+            productUrl: productInfo.stores[0].product_url,
+            productPrice: productInfo.stores[0].store_price
+          }) }
+        ]
+      )
     } catch (err) {
       console.error(err);
     }
