@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Stars from 'react-native-stars';
 import {
   Image,
@@ -9,23 +10,26 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { addRating } from '../redux/reducers/productReviews';
 
-export default class SingleProduct extends React.Component {
+
+
+class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-        stars: 0
-    }
+    // this.state = {
+    //     stars: 0
+    // }
   }
 
   render() {
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
-        
+
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-            <Text style={styles.text}>Drunk Elephant</Text>
-            <Text style={styles.text}>Beste No. 9 Jelly Cleanser</Text>
+            <Text style={styles.text}>{this.props.navigation.getParam("brand")}</Text>
+            <Text style={styles.text}>{this.props.navigation.getParam("name")}</Text>
 
             <Image source={{uri: this.props.navigation.getParam("imageUrl")}} style={{width: 300, height: 300}}></Image>
 
@@ -35,7 +39,7 @@ export default class SingleProduct extends React.Component {
                 <Stars
                     half={false}
                     default={0}
-                    update={(val)=>{this.setState({stars: val})}}
+                    update={(val)=>{this.props.addRating(val)}}
                     spacing={4}
                     starSize={40}
                     count={5}
@@ -43,19 +47,28 @@ export default class SingleProduct extends React.Component {
                     emptyStar={require('./images/starEmpty.png')} />
             </View>
 
-          
-
         </ScrollView>
-
+        
       </View>
     )
   }
 }
 
+// connect to redux store
+mapDispatchToProps = dispatch => ({
+  addRating: (rating) => dispatch(addRating(rating)),
+})
+
+export default connect(null, mapDispatchToProps)(SingleProduct)
+
+
+// navigation 
 SingleProduct.navigationOptions = {
   title: 'Single Product View',
 };
 
+
+// css stylization 
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,

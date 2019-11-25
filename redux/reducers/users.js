@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-// process.env.baseURL = 'https://skinrx-server.herokuapp.com'
 
 const initialState = {
   user: {}
