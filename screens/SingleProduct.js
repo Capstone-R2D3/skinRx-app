@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Stars from 'react-native-stars';
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
