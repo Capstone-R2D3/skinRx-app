@@ -26,10 +26,7 @@ class SignupScreen extends Component {
     if (!this.props.user) {
       this.toggleMessage()
     } else {
-      const id = this.props.user.id;
-      this.props.navigation.navigate('SkinTypeQuiz', {
-        userId: id
-      })
+      this.props.navigation.navigate('SkinTypeQuiz')
     }
   }
 

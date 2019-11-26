@@ -9,15 +9,11 @@ export default class SkinTypeQuiz extends Component {
     }
 
     getSkinType() {
-        this.props.navigation.navigate('SkinTypes', {
-            userId: this.props.navigation.getParam('userId')
-        });
+        this.props.navigation.navigate('SkinTypes');
     }
 
     startQuiz() {
-        this.props.navigation.navigate('SkinQuestion', {
-            userId: this.props.navigation.getParam('userId')
-        });
+        this.props.navigation.navigate('SkinQuestion');
     }
 
     render() {

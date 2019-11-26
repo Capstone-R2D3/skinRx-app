@@ -12,14 +12,13 @@ export default class MoisturizerQuestion extends Component {
         score = (score + typeId) / 4;
         const skinType = Math.round(score);
         let result;
-        if (skinType === 1) {result = 'oily'}
-        if (skinType === 2) {result = 'dry'}
-        if (skinType === 3) {result = 'normal'}
-        if (skinType === 4) {result = 'combination'}
-        if (skinType === 5) {result = 'sensitive'}
+        if (skinType === 1) {result = 'Oily'}
+        if (skinType === 2) {result = 'Dry'}
+        if (skinType === 3) {result = 'Normal'}
+        if (skinType === 4) {result = 'Combination'}
+        if (skinType === 5) {result = 'Sensitive'}
         this.props.navigation.navigate('Result', {
-            result,
-            userId: this.props.navigation.getParam('userId')
+            result
         });
     }
 

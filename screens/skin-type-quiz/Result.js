@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class MoisturizerQuestion extends Component {
+class Result extends Component {
     constructor(props) {
         super(props);
         this.addSkinType = this.addSkinType.bind(this);
     }
 
     async addSkinType(result) {
-      const userId = this.props.navigation.getParam('userId');
+      const userId = this.props.user.id;
       await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
-        this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Home');
     }
 
     render() {
-        let result = this.props.navigation.getParam('result');
+        const result = this.props.navigation.getParam('result');
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
-                    You have {result} skin.
+                    Your skin type is {result}.
                 </Text>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
@@ -33,6 +34,12 @@ export default class MoisturizerQuestion extends Component {
         )
     }
 }
+
+const mapState = state => ({
+  user: state.users.user
+})
+
+export default connect(mapState, null)(Result)
 
 const styles = StyleSheet.create({
     container: {

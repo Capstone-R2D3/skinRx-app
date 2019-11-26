@@ -9,7 +9,6 @@ export default class SkinQuestion extends Component {
 
     nextQuestion(typeId) {
         this.props.navigation.navigate('PoreQuestion', {
-            userId: this.props.navigation.getParam('userId'),
             score: typeId
         });
     }
