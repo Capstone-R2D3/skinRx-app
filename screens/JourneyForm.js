@@ -14,7 +14,7 @@ export default class JourneyForm extends Component {
     this.state = {
         date: "",
         imageUrl: "",
-        stressLevel: 1,
+        stressLevel: 0,
         diet: "",
         description: ""
     }
@@ -22,7 +22,7 @@ export default class JourneyForm extends Component {
   }
 
   handleSubmission () {
-    console.log('SUBMITTED NEW JOURNAL ENTRY!\n', {state: this.state})
+    console.log('SUBMITTED NEW JOURNAL ENTRY!\n', this.state)
   }
 
   render() {
@@ -46,7 +46,8 @@ export default class JourneyForm extends Component {
         <Slider 
             style={{width: 300}}
             maximumValue={5} 
-            minimumValue={1} 
+            minimumValue={0} 
+            value={this.state.stressLevel}
             step={1}
             onValueChange={value => this.setState({stressLevel: value})} 
         />
