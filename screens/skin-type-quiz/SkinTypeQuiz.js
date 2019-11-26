@@ -10,13 +10,13 @@ export default class SkinTypeQuiz extends Component {
 
     getSkinType() {
         this.props.navigation.navigate('SkinTypes', {
-            userId: this.props.userId
+            userId: this.props.navigation.getParam('userId')
         });
     }
 
     startQuiz() {
         this.props.navigation.navigate('SkinQuestion', {
-            userId: this.props.userId
+            userId: this.props.navigation.getParam('userId')
         });
     }
 
@@ -29,7 +29,6 @@ export default class SkinTypeQuiz extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    userId={this.props.userId} //?????
                     onPress={() => this.getSkinType()}
                     >
                         <Text style={styles.btnText}>I already know my skin type.</Text>
@@ -38,7 +37,6 @@ export default class SkinTypeQuiz extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    userId={this.props.userId} //?????
                     onPress={() => this.startQuiz()}
                     >
                         <Text style={styles.btnText}>Help! I don't know what my skin type is!</Text>

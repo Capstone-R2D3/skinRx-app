@@ -18,8 +18,8 @@ export default class MoisturizerQuestion extends Component {
         if (skinType === 4) {result = 'combination'}
         if (skinType === 5) {result = 'sensitive'}
         this.props.navigation.navigate('Result', {
-            result: result,
-            userId: this.props.userId
+            result,
+            userId: this.props.navigation.getParam('userId')
         });
     }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 export default class SkinTypes extends Component {
     constructor(props) {
@@ -7,15 +8,15 @@ export default class SkinTypes extends Component {
         this.addSkinType = this.addSkinType.bind(this);
     }
 
-    // getResult(userId, typeId) {
-    addSkinType() {
-      // let result;
-      // (typeId === 1) && (result = 'Oily');
-      // (typeId === 2) && (result = 'Dry');
-      // (typeId === 3) && (result = 'Normal');
-      // (typeId === 4) && (result = 'Combination');
-      // (typeId === 5) && (result = 'Sensitive');
-      // await axios.put(`/api/user/${userId}`, {result});
+    async addSkinType(typeId) {
+      const userId = this.props.navigation.getParam('userId');
+      let result;
+      (typeId === 1) && (result = 'Oily');
+      (typeId === 2) && (result = 'Dry');
+      (typeId === 3) && (result = 'Normal');
+      (typeId === 4) && (result = 'Combination');
+      (typeId === 5) && (result = 'Sensitive');
+      await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
       this.props.navigation.navigate('Home');
     }
 
@@ -28,7 +29,7 @@ export default class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()} //4
+                    onPress={() => this.addSkinType(4)}
                     >
                         <Text style={styles.btnText}>combination</Text>
                     </TouchableOpacity>
@@ -36,7 +37,7 @@ export default class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()} //2
+                    onPress={() => this.addSkinType(2)}
                     >
                         <Text style={styles.btnText}>dry</Text>
                     </TouchableOpacity>
@@ -44,7 +45,7 @@ export default class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()} //1
+                    onPress={() => this.addSkinType(1)}
                     >
                         <Text style={styles.btnText}>oily</Text>
                     </TouchableOpacity>
@@ -52,7 +53,7 @@ export default class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()} //5
+                    onPress={() => this.addSkinType(5)}
                     >
                         <Text style={styles.btnText}>sensitive</Text>
                     </TouchableOpacity>
@@ -60,7 +61,7 @@ export default class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()} //3
+                    onPress={() => this.addSkinType(3)}
                     >
                         <Text style={styles.btnText}>normal</Text>
                     </TouchableOpacity>

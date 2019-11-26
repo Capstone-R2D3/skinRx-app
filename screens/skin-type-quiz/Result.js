@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default class MoisturizerQuestion extends Component {
     constructor(props) {
@@ -8,12 +8,9 @@ export default class MoisturizerQuestion extends Component {
         this.addSkinType = this.addSkinType.bind(this);
     }
 
-    // async addSkinType(userId, result) {
-    //     await axios.put(`/api/user/${userId}`, {result}); // check path
-    //     this.props.navigation.navigate('Home');
-    // }
-
-    addSkinType() {
+    async addSkinType(result) {
+      const userId = this.props.navigation.getParam('userId');
+      await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
         this.props.navigation.navigate('Home');
     }
 
@@ -27,7 +24,7 @@ export default class MoisturizerQuestion extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType()}
+                    onPress={() => this.addSkinType(result)}
                     >
                         <Text style={styles.btnText}>Take me to my products!</Text>
                     </TouchableOpacity>

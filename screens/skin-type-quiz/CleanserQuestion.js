@@ -11,8 +11,8 @@ export default class CleanserQuestion extends Component {
         let score = this.props.navigation.getParam('score');
         score = score + typeId;
         this.props.navigation.navigate('MoisturizerQuestion', {
-            userId: this.props.userId,
-            score: score
+            userId: this.props.navigation.getParam('userId'),
+            score
         });
     }
 
