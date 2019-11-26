@@ -18,6 +18,14 @@ import SingleProduct from '../screens/SingleProduct'
 import ScannedProduct from '../screens/ScannedProduct'
 import { Ionicons } from '@expo/vector-icons'
 
+import CleanserQuestion from '../screens/skin-type-quiz/CleanserQuestion'
+import MoisturizerQuestion from '../screens/skin-type-quiz/MoisturizerQuestion'
+import PoreQuestion from '../screens/skin-type-quiz/PoreQuestion'
+import Result from '../screens/skin-type-quiz/Result'
+import SkinQuestion from '../screens/skin-type-quiz/SkinQuestion'
+import SkinTypeQuiz from '../screens/skin-type-quiz/SkinTypeQuiz'
+import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
+
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
@@ -134,11 +142,56 @@ const tabNavigator = createBottomTabNavigator({
 
 tabNavigator.path = '';
 
+const onBoardingNav = createStackNavigator({
+  SkinTypeQuiz: {
+    screen: SkinTypeQuiz,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+    })},
+  SkinTypes: {
+    screen: SkinTypes,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  SkinQuestion: {
+    screen: SkinQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  PoreQuestion: {
+    screen: PoreQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  CleanserQuestion: {
+    screen: CleanserQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  MoisturizerQuestion: {
+    screen: MoisturizerQuestion,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+  Result: {
+    screen: Result,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      navigation: navigation
+  })},
+})
+
 const AuthSwitchNavigator = createSwitchNavigator({
   Welcome: { screen: WelcomeScreen },
   Login: { screen: LoginScreen },
   Signup: { screen: SignupScreen },
-  SkinTypeForm: { screen: SkinTypeForm },
+  SkinTypeQuiz: onBoardingNav,
   AllergiesForm: { screen: AllergiesForm },
   Dashboard: tabNavigator
 })
