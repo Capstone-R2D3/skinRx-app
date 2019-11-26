@@ -9,10 +9,17 @@ import {
   View,
   Button
 } from 'react-native';
+import { connect } from 'react-redux';
+import { getEntries } from '../redux/reducers/journey';
 
-export default class JourneyScreen extends React.Component {
+class JourneyScreen extends React.Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+    const userId = this.props.user.id;
+    this.props.getEntries(userId);
   }
 
   render() {
@@ -28,6 +35,18 @@ export default class JourneyScreen extends React.Component {
     )
   }
 }
+
+const mapState = state => ({
+  user: state.users.user,
+  entries: state.journey.entries,
+  entry: state.journey.entry
+})
+
+const mapDispatch = dispatch => ({
+  getEntries: (userId) => dispatch(getEntries(userId))
+})
+
+export default connect(mapState, mapDispatch)(JourneyScreen);
 
 JourneyScreen.navigationOptions = {
   title: 'My Skin Journey',
