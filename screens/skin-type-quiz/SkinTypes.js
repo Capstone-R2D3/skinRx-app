@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class SkinTypes extends Component {
+class SkinTypes extends Component {
     constructor(props) {
         super(props);
         this.addSkinType = this.addSkinType.bind(this);
     }
 
     async addSkinType(typeId) {
-      const userId = this.props.navigation.getParam('userId');
+      const userId = this.props.user.id;
       let result;
       (typeId === 1) && (result = 'Oily');
       (typeId === 2) && (result = 'Dry');
@@ -70,6 +71,12 @@ export default class SkinTypes extends Component {
         )
     }
 }
+
+const mapState = state => ({
+    user: state.users.user
+})
+  
+export default connect(mapState, null)(SkinTypes)
 
 const styles = StyleSheet.create({
     container: {
