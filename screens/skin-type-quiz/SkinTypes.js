@@ -10,7 +10,7 @@ class SkinTypes extends Component {
     }
 
     async addSkinType(typeId) {
-      const userId = this.props.user.id;
+      const userId = parseInt(this.props.user.id, 10);
       let result;
       (typeId === 1) && (result = 'Oily');
       (typeId === 2) && (result = 'Dry');
@@ -18,7 +18,10 @@ class SkinTypes extends Component {
       (typeId === 4) && (result = 'Combination');
       (typeId === 5) && (result = 'Sensitive');
       await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Home', {
+        userId: userId,
+        skinTypeId: typeId
+      });
     }
 
     render() {
@@ -75,6 +78,8 @@ class SkinTypes extends Component {
 const mapState = state => ({
     user: state.users.user
 })
+
+
   
 export default connect(mapState, null)(SkinTypes)
 

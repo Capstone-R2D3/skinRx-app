@@ -9,16 +9,21 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { addRating } from '../redux/reducers/productReviews';
-
-
+import { addRating, getRating, editRating } from '../redux/reducers/productReviews';
+import {getToxicityScore} from '../redux/reducers/products'
 
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    // this.state = {
-    //     stars: 0
-    // }
+    this.state = {
+        rating: null,
+        productId: 1
+    }
+  }
+
+  componentDidMount() {
+    this.props.getToxicityScore(1)
+    this.props.getRating(10, 2)
   }
 
   render() {
@@ -37,8 +42,15 @@ class SingleProduct extends React.Component {
             <View style={{alignItems:'center'}}>
                 <Stars
                     half={false}
-                    default={0}
-                    update={(val)=>{this.props.addRating(val)}}
+                    default={this.props.rating ? this.props.rating.rating : 0 }
+                    update={(val) => { 
+                      if (!this.props.rating) {
+                        this.props.addRating(7, 2, val) 
+                      } else {
+                        this.props.editRating(8, 1, val)
+                      }
+                    }}
+                    onPress={(value) => this.handlePress(value)}
                     spacing={4}
                     starSize={40}
                     count={5}
@@ -53,12 +65,21 @@ class SingleProduct extends React.Component {
   }
 }
 
-// connect to redux store
-mapDispatchToProps = dispatch => ({
-  addRating: (rating) => dispatch(addRating(rating)),
+const mapState = state => ({
+  user: state.users.user,
+  score: state.score,
+  rating: state.productReviews.rating
 })
 
-export default connect(null, mapDispatchToProps)(SingleProduct)
+// connect to redux store
+mapDispatchToProps = dispatch => ({
+  addRating: (rating, productId, userId) => dispatch(addRating(rating, productId, userId)),
+  getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
+  getRating: (productId, userId) => dispatch(getRating(productId, userId)),
+  editRating: (ratingId, rating) => dispatch(editRating(ratingId, rating))
+})
+
+export default connect(mapState, mapDispatchToProps)(SingleProduct)
 
 
 // navigation 
@@ -80,4 +101,3 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   }
 })
-
