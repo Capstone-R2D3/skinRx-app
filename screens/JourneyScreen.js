@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button
 } from 'react-native';
 
 export default class JourneyScreen extends React.Component {
@@ -17,6 +18,12 @@ export default class JourneyScreen extends React.Component {
   render() {
     return (
       <View>
+        <TouchableOpacity> 
+          <Button title="Add Entry" textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
+            onPress={() => {
+              this.props.navigation.navigate("JourneyForm");
+            }}></Button>
+        </TouchableOpacity>
       </View>
     )
   }
