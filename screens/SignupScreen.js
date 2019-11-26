@@ -16,17 +16,17 @@ class SignupScreen extends Component {
       lastName: "",
       email: "",
       password: "",
-      showMessage: false,
+      showMessage: false
     };
     this.userSignUp = this.userSignUp.bind(this)
   }
 
   async userSignUp() {
-    await this.props.signUpThunk(this.state.firstName, this.state.lastName,this.state.email, this.state.password)
+    await this.props.signUpThunk(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
     if (!this.props.user) {
       this.toggleMessage()
     } else {
-      this.props.navigation.navigate('SkinTypeForm')
+      this.props.navigation.navigate('SkinTypeQuiz')
     }
   }
 
