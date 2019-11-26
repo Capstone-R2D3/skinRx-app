@@ -29,7 +29,7 @@ export const auth = (email, password) => async dispatch => {
       dispatch(getUser(res.data))
     }
   } catch (authError) {
-    console.log(authError)
+    console.error(authError)
   }
 }
 
@@ -44,7 +44,19 @@ export const signUp = (firstName, lastName, email, password) => async dispatch =
     })
     dispatch(getUser(res.data))
   } catch (authError) {
-    console.log(authError)
+    console.error(authError)
+  }
+}
+
+export const updateUserProfile = (id, firstName, lastName, email) => async dispatch => {
+  let res
+  try {
+    // console.log('got to thunk')
+    // *** NEED TO ADD USER UPDATE HEROKU ROUTE!!!
+    res = await axios.put(`http://172.16.26.91:8080/auth/${id}`, {firstName, lastName, email})
+    dispatch(getUser(res.data))
+  } catch(error) {
+    console.error(error)
   }
 }
 
