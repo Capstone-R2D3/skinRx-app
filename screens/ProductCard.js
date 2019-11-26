@@ -26,7 +26,7 @@ class ProductCard extends React.Component {
   render() {
     return (
       <View>
-
+          <Text>{this.state.name}</Text>
           <Image source={{uri: this.state.imageUrl}}
                  style={{width: 300, height: 300}} />
 
