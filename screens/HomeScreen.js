@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 
+
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -36,3 +37,4 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   }
 });
+

@@ -9,11 +9,13 @@ import {
   View
 } from 'react-native';
 import ProductCard from './ProductCard';
+import {connect} from 'react-redux'
+import {getRecommendations} from '../redux/reducers/recommendations'
 
 
-export default class RecommendationScreen extends React.Component {
-  constructor() {
-    super()
+class RecommendationScreen extends React.Component {
+  constructor(props) {
+    super(props)
     // currently dummy data - will need to repopulate
     // should originally be set to null - leaving it here for now
     this.state = {
@@ -41,6 +43,10 @@ export default class RecommendationScreen extends React.Component {
         }, 
       ]
     }
+  }
+
+  componentDidMount() {
+    this.props.getRecommendations(this.props.user.id)
   }
 
   render() {
@@ -113,3 +119,13 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapState = state => ({
+  recommendations: state.recommendations,
+  user: state.users.user
+})
+
+const mapDispatch = dispatch => ({
+  getRecommendations: (userId) => dispatch(getRecommendations(userId))
+})
+
+export default connect(mapState, mapDispatch)(RecommendationScreen)

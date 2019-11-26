@@ -46,4 +46,5 @@ class ProductCard extends React.Component {
   }
 }
 
+
 export default withNavigation(ProductCard);
