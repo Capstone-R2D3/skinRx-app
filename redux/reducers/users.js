@@ -22,7 +22,7 @@ export const me = () => async dispatch => {
 export const auth = (email, password) => async dispatch => {
   let res
   try {
-    res = await axios.post(`http://172.16.27.201:8080/auth/login`, {email, password})
+    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/login`, {email, password})
     if (res.request.response === 'Wrong username and/or password') {
       dispatch(getUser(res.request.response))
     } else {
@@ -36,7 +36,7 @@ export const auth = (email, password) => async dispatch => {
 export const signUp = (firstName, lastName, email, password) => async dispatch => {
   let res
   try {
-    res = await axios.post(`http://172.16.27.201:8080/auth/signup`, {
+    res = await axios.post(`https://skinrx-server.herokuapp.com/auth/signup`, {
       firstName: firstName, 
       lastName: lastName, 
       email: email, 

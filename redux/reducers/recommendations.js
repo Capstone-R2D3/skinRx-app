@@ -9,7 +9,7 @@ const gotRecommendations = recommendations => ({
 
 export const getRecommendations = (userId, skinTypeId) => async dispatch => {
   try {
-    const {data} = await axios.post(`http://172.16.27.201:8080/api/recommendations/${userId}`, {skinTypeId})
+    const {data} = await axios.post(`https://skinrx-server.herokuapp.com/api/recommendations/${userId}`, {skinTypeId})
     dispatch(gotRecommendations(data))
   } catch (error) {
     console.log(error)

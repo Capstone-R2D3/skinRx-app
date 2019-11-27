@@ -17,7 +17,7 @@ class SkinTypes extends Component {
       (typeId === 3) && (result = 'Normal');
       (typeId === 4) && (result = 'Combination');
       (typeId === 5) && (result = 'Sensitive');
-      await axios.put(`http://172.16.27.201:8080/auth/users/${userId}`, {result});
+      await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
       this.props.navigation.navigate('Home', {
         userId: userId,
         skinTypeId: typeId
