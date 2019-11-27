@@ -16,14 +16,14 @@ class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        rating: null,
-        productId: 1
+        rating: 0,
+        productId: this.props.navigation.getParam('id')
     }
   }
 
   componentDidMount() {
-    this.props.getToxicityScore(1)
-    this.props.getRating(10, 2)
+    this.props.getToxicityScore(this.state.productId)
+    this.props.getRating(this.state.productId, this.props.user.id)
   }
 
   render() {
@@ -43,11 +43,14 @@ class SingleProduct extends React.Component {
                 <Stars
                     half={false}
                     default={this.props.rating ? this.props.rating.rating : 0 }
-                    update={(val) => { 
+                    update={async (val) => { 
+                      console.log('val', val)
                       if (!this.props.rating) {
-                        this.props.addRating(7, 2, val) 
+                        await this.props.addRating(this.state.productId, this.props.user.id, val) 
+                        this.setState({ rating: val })
                       } else {
-                        this.props.editRating(8, 1, val)
+                        await this.props.editRating(this.state.productId, this.props.user.id, val)
+                        this.setState({ rating: val })
                       }
                     }}
                     onPress={(value) => this.handlePress(value)}
