@@ -24,6 +24,10 @@ class JourneyScreen extends React.Component {
     this.props.getEntries(userId);
   }
 
+  update(entryId) {
+    const userId = this.props.user.id;
+  }
+
   delete(entryId) {
     const userId = this.props.user.id;
     this.props.deleteEntry(userId, entryId);
@@ -32,17 +36,17 @@ class JourneyScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          {
-            (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} />})
-          }
-        </View>
         <TouchableOpacity style={styles.userBtn}> 
           <Button title="Add Entry" textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
             onPress={() => {
               this.props.navigation.navigate("JourneyForm");
             }}></Button>
         </TouchableOpacity>
+        <View>
+          {
+            (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} />})
+          }
+        </View>
       </View>
     )
   }
