@@ -43,8 +43,8 @@ class SingleProduct extends React.Component {
                 <Stars
                     half={false}
                     default={this.props.rating ? this.props.rating.rating : 0 }
-                    update={async (val) => { 
-                      console.log('val', val)
+                    update={(val) => {
+
                       if (!this.props.rating) {
                         this.props.addRating(this.state.productId, this.props.user.id, val) 
                         
