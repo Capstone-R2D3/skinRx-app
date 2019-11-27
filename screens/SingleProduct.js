@@ -43,7 +43,7 @@ class SingleProduct extends React.Component {
                 <Stars
                     half={false}
                     default={this.props.rating ? this.props.rating.rating : 0 }
-                    update={(val) => { 
+                    update={(val) => {
                       if (!this.props.rating) {
                         this.props.addRating(7, 2, val) 
                       } else {
