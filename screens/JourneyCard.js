@@ -1,13 +1,50 @@
 import React, { Component } from 'react';
+import {
+    Image,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Button
+  } from 'react-native';
 
 class JourneyCard extends Component {
-    
     render() {
+        const entryId = this.props.entry.id;
+        console.log('ENTRY ID: ', entryId)
+        console.log('THIS.PROPS: ', this.props.delete)
         return (
             <View>
-                <Text>
-                    Placeholder text.
-                </Text>
+                <View>
+                    <Text>
+                        {this.props.entry.date}
+                    </Text>
+                </View>
+                <View>
+                    <Text>
+                        Stress Level: {this.props.entry.stressLevel}
+                    </Text>
+                </View>
+                <View>
+                    <Text>
+                        Diet: {this.props.entry.diet}
+                    </Text>
+                </View>
+                <View>
+                    <Text>
+                        Description: {this.props.entry.description}
+                    </Text>
+                </View>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity
+                    style={styles.userBtn}
+                    onPress={() => this.props.delete(entryId)}
+                    >
+                        <Text style={styles.btnText}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -46,9 +83,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: "center"
     },
-    bodyText: {
-        fontSize: 12,
-        textAlign: "center",
-        margin: 15
+    text: {
+      fontSize: 20,
     }
-});
+  });
