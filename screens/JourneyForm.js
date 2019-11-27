@@ -24,8 +24,8 @@ class JourneyForm extends Component {
   }
 
   async handleSubmission () {
-    console.log(this.props.userId)
     await this.props.addEntry(this.props.userId, this.state)
+    this.props.navigation.navigate('Journey');
   }
 
   render() {
