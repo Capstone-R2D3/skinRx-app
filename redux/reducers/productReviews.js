@@ -44,7 +44,8 @@ export const addRating = (productId, userId, rating) => async dispatch => {
 
 export const editRating = (productId, userId, rating) => async dispatch => {
   try {
-    const {data} = await axios.put(`http://172.16.27.201:8080/api/reviews/add/${userId}/${productId}`, {rating})
+    console.log('rating', rating)
+    const {data} = await axios.put(`http://172.16.27.201:8080/api/reviews/update`, {rating, userId, productId})
     console.log('dataaaaaaa', data)
     dispatch(editedRating(data.rating))
   } catch (error) {

@@ -46,14 +46,14 @@ class SingleProduct extends React.Component {
                     update={async (val) => { 
                       console.log('val', val)
                       if (!this.props.rating) {
-                        await this.props.addRating(this.state.productId, this.props.user.id, val) 
-                        this.setState({ rating: val })
+                        this.props.addRating(this.state.productId, this.props.user.id, val) 
+                        
                       } else {
-                        await this.props.editRating(this.state.productId, this.props.user.id, val)
-                        this.setState({ rating: val })
+                        this.props.editRating(this.state.productId, this.props.user.id, val)
                       }
+                      
+                      
                     }}
-                    onPress={(value) => this.handlePress(value)}
                     spacing={4}
                     starSize={40}
                     count={5}
@@ -79,7 +79,7 @@ mapDispatchToProps = dispatch => ({
   addRating: (rating, productId, userId) => dispatch(addRating(rating, productId, userId)),
   getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
   getRating: (productId, userId) => dispatch(getRating(productId, userId)),
-  editRating: (ratingId, rating) => dispatch(editRating(ratingId, rating))
+  editRating: (productId, userId, rating) => dispatch(editRating(productId, userId, rating))
 })
 
 export default connect(mapState, mapDispatchToProps)(SingleProduct)
