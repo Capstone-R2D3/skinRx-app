@@ -20,6 +20,7 @@ class ProductCard extends React.Component {
         imageUrl: this.props.state.imageUrl,
         name: this.props.state.name, 
         brand: this.props.state.brand,
+        id: this.props.state.id
     }
   }
 
@@ -37,6 +38,7 @@ class ProductCard extends React.Component {
                             imageUrl: this.state.imageUrl,
                             name: this.state.name, 
                             brand: this.state.brand,
+                            id: this.state.id
                           });
                         }}
                         >View Product</Button>

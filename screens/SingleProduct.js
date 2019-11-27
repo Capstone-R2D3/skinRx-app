@@ -16,14 +16,14 @@ class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        rating: null,
-        productId: 1
+        rating: 0,
+        productId: this.props.navigation.getParam('id')
     }
   }
 
   componentDidMount() {
-    this.props.getToxicityScore(1)
-    this.props.getRating(10, 2)
+    this.props.getToxicityScore(this.state.productId)
+    this.props.getRating(this.state.productId, this.props.user.id)
   }
 
   render() {
@@ -45,12 +45,13 @@ class SingleProduct extends React.Component {
                     default={this.props.rating ? this.props.rating.rating : 0 }
                     update={(val) => {
                       if (!this.props.rating) {
-                        this.props.addRating(7, 2, val) 
+                        this.props.addRating(this.state.productId, this.props.user.id, val) 
+                        
                       } else {
-                        this.props.editRating(8, 1, val)
+                        this.props.editRating(this.state.productId, this.props.user.id, val)
                       }
+                      
                     }}
-                    onPress={(value) => this.handlePress(value)}
                     spacing={4}
                     starSize={40}
                     count={5}
@@ -76,7 +77,7 @@ mapDispatchToProps = dispatch => ({
   addRating: (rating, productId, userId) => dispatch(addRating(rating, productId, userId)),
   getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
   getRating: (productId, userId) => dispatch(getRating(productId, userId)),
-  editRating: (ratingId, rating) => dispatch(editRating(ratingId, rating))
+  editRating: (productId, userId, rating) => dispatch(editRating(productId, userId, rating))
 })
 
 export default connect(mapState, mapDispatchToProps)(SingleProduct)

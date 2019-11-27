@@ -24,7 +24,6 @@ const editedRating = (rating) => ({
 
 export const getRating = (productId, userId) => async dispatch => {
   try {
-      // ***** @@@ EDIT: UPDATE WITH HEROKU ROUTE!!! @@@ *****
       let { data } = await axios.get(`https://skinrx-server.herokuapp.com/api/reviews/${userId}/${productId}`)
       dispatch(gotRating(data[0]))
   } catch(error) {
@@ -44,9 +43,9 @@ export const addRating = (productId, userId, rating) => async dispatch => {
 
 export const editRating = (productId, userId, rating) => async dispatch => {
   try {
-    console.log('here')
-    let { data } = await axios.put(`https://skinrx-server.herokuapp.com/api/reviews/${userId}/${productId}`, {rating})
-    dispatch(editedRating(data))
+    console.log('rating', rating)
+    const {data} = await axios.put(`https://skinrx-server.herokuapp.com/api/reviews/update`, {rating, userId, productId})
+    dispatch(editedRating(data.rating))
   } catch (error) {
     console.log(error)
   }
