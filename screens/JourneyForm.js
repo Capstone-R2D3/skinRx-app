@@ -25,7 +25,6 @@ class JourneyForm extends Component {
 
   componentDidMount () {
     const entry = this.props.navigation.getParam("entry");
-    console.log('COMPONENT DID MOUNT: ', entry)
     if(entry !== null){
       this.setState({
         date: entry.date,
@@ -38,8 +37,13 @@ class JourneyForm extends Component {
   }
 
   async handleSubmission () {
-    await this.props.addEntry(this.props.userId, this.state)
-    this.props.navigation.navigate('Journey');
+    const entry = this.props.navigation.getParam("entry");
+    if(entry === null){
+      await this.props.addEntry(this.props.userId, this.state)
+      this.props.navigation.navigate('Journey');
+    } else {
+      console.log('UPDATING A PREEXISTING ENTRY!')
+    }
   }
 
   render() {
