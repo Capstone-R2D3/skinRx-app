@@ -46,7 +46,7 @@ class JourneyCard extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.props.update(entryId)}
+                    onPress={() => this.props.update(this.props.entry)}
                     >
                         <Text style={styles.btnText}>Update</Text>
                     </TouchableOpacity>

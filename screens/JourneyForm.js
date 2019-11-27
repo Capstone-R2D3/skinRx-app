@@ -15,12 +15,26 @@ class JourneyForm extends Component {
     super(props)
     this.state = {
         date: "",
-        imageUrl: "",
+        imageUrl: "https://cdn.imgbin.com/14/2/14/imgbin-cartoon-girl-skin-care-mask-7TXRD4K1yKn7iYbCgwzQWuqng.jpg",
         stressLevel: 0,
         diet: "",
         description: ""
     }
     this.handleSubmission = this.handleSubmission.bind(this)
+  }
+
+  componentDidMount () {
+    const entry = this.props.navigation.getParam("entry");
+    console.log('COMPONENT DID MOUNT: ', entry)
+    if(entry !== null){
+      this.setState({
+        date: entry.date,
+        imageUrl: entry.imageUrl,
+        stressLevel: entry.stressLevel,
+        diet: entry.diet,
+        description: entry.description
+      })
+    }
   }
 
   async handleSubmission () {
@@ -70,7 +84,7 @@ class JourneyForm extends Component {
             style={styles.userBtn}
             onPress={() => this.handleSubmission()}
         >
-            <Text style={styles.btnText}>Next</Text>
+            <Text style={styles.btnText}>Save</Text>
         </TouchableOpacity>
       </View>
     )
