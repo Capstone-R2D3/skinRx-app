@@ -7,8 +7,10 @@ import { View,
   Slider
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
+import {addEntry} from '../redux/reducers/journey'
+import { connect } from 'react-redux'
 
-export default class JourneyForm extends Component {
+class JourneyForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,8 +23,9 @@ export default class JourneyForm extends Component {
     this.handleSubmission = this.handleSubmission.bind(this)
   }
 
-  handleSubmission () {
-    console.log('SUBMITTED NEW JOURNAL ENTRY!\n', this.state)
+  async handleSubmission () {
+    await this.props.addEntry(this.props.userId, this.state)
+    this.props.navigation.navigate('Journey');
   }
 
   render() {
@@ -73,6 +76,16 @@ export default class JourneyForm extends Component {
     )
   }
 }
+
+const mapState = (state) => ({
+  userId: state.users.user.id,
+})
+
+const mapDispatch = (dispatch) => ({
+  addEntry: (id, entry) => dispatch(addEntry(id, entry))
+})
+
+export default connect(mapState, mapDispatch)(JourneyForm)
 
 const styles = StyleSheet.create({
   container: {
