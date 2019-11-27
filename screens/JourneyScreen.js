@@ -30,7 +30,6 @@ class JourneyScreen extends React.Component {
   }
 
   render() {
-    const userId = this.props.user.id;
     return (
       <View style={styles.container}>
         <View>

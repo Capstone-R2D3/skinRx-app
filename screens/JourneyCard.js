@@ -13,8 +13,6 @@ import {
 class JourneyCard extends Component {
     render() {
         const entryId = this.props.entry.id;
-        console.log('ENTRY ID: ', entryId)
-        console.log('THIS.PROPS: ', this.props.delete)
         return (
             <View>
                 <View>
