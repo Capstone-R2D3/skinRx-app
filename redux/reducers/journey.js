@@ -24,7 +24,9 @@ export const getEntries = (userId) => async dispatch => {
 
 export const addEntry = (userId, newEntry) => async dispatch => {
     try {
-        const {data} = await axios.post('https://skinrx-server.herokuapp.com/auth/users/${userId}/entries', newEntry);
+        console.log('THUNK TO ADD ENTRY WAS DISPATCHED')
+        const {data} = await axios.post(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries`, newEntry);
+        console.log(data)
         dispatch(addedEntry(data));
     } catch (error) {
         console.error(error);  
@@ -41,7 +43,9 @@ const journey = (state = initialState, action) => {
         case GOT_ENTRIES:
             return { ...state, entries: action.entries }
         case ADDED_ENTRY:
-            return {...state, entries: [...entries, action.entry]}
+            const tempEntries = state.entries
+            tempEntries.push(action.entry)
+            return {...state, entries: tempEntries}
         default:
             return state
     }
