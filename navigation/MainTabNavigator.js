@@ -28,6 +28,9 @@ import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
 
 import JourneyForm from '../screens/JourneyForm'
 
+import JourneyCalendar from '../screens/calendar'
+
+
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
@@ -123,9 +126,11 @@ JourneyStack.path = '';
 const ProfileStack = createStackNavigator(
   {
     Profile: ProfileScreen,
+    JourneyCalendar: JourneyCalendar
   },
   config
 );
+
 
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Profile',
