@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import Stars from 'react-native-stars';
 import Button from 'apsl-react-native-button';
 import { withNavigation } from "react-navigation";
-
-
+import {connect} from 'react-redux'
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -20,7 +20,8 @@ class ProductCard extends React.Component {
         imageUrl: this.props.state.imageUrl,
         name: this.props.state.name, 
         brand: this.props.state.brand,
-        id: this.props.state.id
+        id: this.props.state.id,
+        ingredients: this.props.state.ingredients,
     }
   }
 
@@ -38,7 +39,8 @@ class ProductCard extends React.Component {
                             imageUrl: this.state.imageUrl,
                             name: this.state.name, 
                             brand: this.state.brand,
-                            id: this.state.id
+                            id: this.state.id,
+                            ingredients: this.state.ingredients,
                           });
                         }}
                         >View Product</Button>
@@ -48,5 +50,9 @@ class ProductCard extends React.Component {
   }
 }
 
+const mapState = state => ({
+  user: state.users.user,
+})
 
-export default withNavigation(ProductCard);
+
+export default withNavigation(connect(mapState, null)(ProductCard))

@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
-import { View, 
+import React, { Component } from "react";
+import {
+  View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-} from 'react-native'
-import {signUp} from '../redux/reducers/users'
-import {connect} from 'react-redux'
+  ImageBackground
+} from "react-native";
+import { signUp, me, logout } from "../redux/reducers/users";
+import { connect } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
 class SignupScreen extends Component {
   constructor(props) {
@@ -16,31 +19,67 @@ class SignupScreen extends Component {
       lastName: "",
       email: "",
       password: "",
-      showMessage: false
+      showMessage: false,
+      incorrect: false
     };
-    this.userSignUp = this.userSignUp.bind(this)
   }
 
   async userSignUp() {
-    await this.props.signUpThunk(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
-    if (!this.props.user) {
-      this.toggleMessage()
+    await this.props.me(this.state.email)
+    if (
+      !this.state.firstName ||
+      !this.state.lastName ||
+      !this.state.password ||
+      !this.state.email
+    ) {
+      this.toggleMessage();
+    } else if (!this.props.user.length) {
+      await this.props.signUpThunk(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.password
+      );
+      this.props.navigation.navigate("SkinTypeQuiz", {
+        email: this.state.email
+      });
     } else {
-      this.props.navigation.navigate('SkinTypeQuiz')
+      await this.props.logout()
+      this.toggleIncorrect()
     }
   }
 
   toggleMessage() {
     this.setState({
       showMessage: !this.state.showMessage
-    })
+    });
+  }
+
+  toggleIncorrect() {
+    this.setState({
+      incorrect: !this.state.incorrect
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Sign Up</Text>
-        <TextInput
+        <ImageBackground
+          source={{
+            uri:
+              "https://www.richbeganyphoto.com/wp-content/uploads/2018/07/Awake-GelacticDreamHydratingMasK-SmearOnly-128.jpg"
+          }}
+          style={styles.backgroundImage}
+        >
+          <Ionicons
+            name="ios-arrow-round-back"
+            color="white"
+            size={70}
+            style={styles.backBtn}
+            onPress={() => this.props.navigation.navigate("Welcome")}
+          />
+          <Text style={styles.header}>Sign Up</Text>
+          <TextInput
             style={styles.input}
             placeholder="First name"
             textContentType="name"
@@ -56,38 +95,42 @@ class SignupScreen extends Component {
             onChangeText={text => this.setState({ lastName: text })}
             value={this.state.lastName}
           />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          onChangeText={text => this.setState({ email: text })}
-          value={this.state.email}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          autoCapitalize="none"
-          secureTextEntry
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password}
-        />
-        {
-            this.state.showMessage ? 
-              <Text style={styles.incorrect}>An account with this email already exists. Please login or create a new account to continue.</Text>
-            : null
-          }
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={styles.userBtn}
-            onPress={() => this.userSignUp()}
-          >
-            <Text style={styles.btnText}>Next</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={styles.redirect}>Already have an account? Login here!</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            onChangeText={text => this.setState({ email: text })}
+            value={this.state.email}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            autoCapitalize="none"
+            secureTextEntry
+            onChangeText={text => this.setState({ password: text })}
+            value={this.state.password}
+          />
+          {this.state.showMessage ? (
+            <Text style={styles.incorrect}>
+              Please fill in all fields to create your account.
+            </Text>
+          ) : null}
+          {this.state.incorrect ? (
+            <Text style={styles.incorrect}>
+              An account with this email already exists. Please login or create
+              a new account to continue.
+            </Text>
+          ) : null}
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.userBtnLogin}
+              onPress={() => this.userSignUp()}
+            >
+              <Text style={styles.btnTextLogin}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -95,13 +138,15 @@ class SignupScreen extends Component {
 
 const mapState = state => ({
   user: state.users.user
-})
+});
 
 const mapDispatch = dispatch => ({
-  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password))
-})
+  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password)),
+  me: (email) => dispatch(me(email)),
+  logout: () => dispatch(logout())
+});
 
-export default connect(mapState, mapDispatch)(SignupScreen)
+export default connect(mapState, mapDispatch)(SignupScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -109,44 +154,88 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white"
   },
-  header: {
-    textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    resizeMode: "cover"
+  },
+  backBtn: {
+    marginTop: 20,
+    marginLeft: 20
   },
   input: {
     width: "75%",
     padding: 15,
     marginBottom: 10,
-    backgroundColor: "#dadada"
+    backgroundColor: "white",
+    borderRadius: 25,
+    alignSelf: "center"
+  },
+  header: {
+    fontFamily: "Avenir",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 55,
+    marginBottom: 60,
+    marginTop: "20%",
+    color: "white",
+    letterSpacing: 3
   },
   btnContainer: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20
   },
   userBtn: {
-    backgroundColor: "#dadada",
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 25,
+    backgroundColor: "white",
     padding: 15,
     width: "75%",
     display: "flex",
-    borderRadius: 7,
+    marginBottom: 10
   },
   btnText: {
     fontSize: 18,
-    textAlign: "center"
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "#b1d5e0",
+    letterSpacing: 2
+  },
+  userBtnLogin: {
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 25,
+    backgroundColor: "transparent",
+    padding: 15,
+    width: "75%",
+    display: "flex",
+    marginBottom: 10
+  },
+  btnTextLogin: {
+    fontSize: 18,
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "white",
+    letterSpacing: 2
   },
   redirect: {
     marginTop: 20,
     fontSize: 16
   },
   incorrect: {
-    color: 'red',
+    color: "white",
     marginBottom: 10,
-    width: '75%',
-    textAlign: 'center'
+    width: "80%",
+    textAlign: "center",
+    marginLeft: "10%"
   }
 });

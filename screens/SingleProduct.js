@@ -6,24 +6,29 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  FlatList,
   TouchableOpacity,
   View
 } from 'react-native';
 import { addRating, getRating, editRating } from '../redux/reducers/productReviews';
-import {getToxicityScore} from '../redux/reducers/products'
+import {getToxicityScore } from '../redux/reducers/products'
 
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        rating: 0,
-        productId: this.props.navigation.getParam('id')
+        productId: this.props.navigation.getParam("id"),
+        imageUrl: this.props.navigation.getParam("imageUrl"),
+        ingredients: this.props.navigation.getParam("ingredients"),
+        brand: this.props.navigation.getParam("brand"),
+        name: this.props.navigation.getParam("name"),
+        userId: this.props.user.id
     }
   }
 
   componentDidMount() {
+    this.props.getRating(this.state.productId, this.state.userId)
     this.props.getToxicityScore(this.state.productId)
-    this.props.getRating(this.state.productId, this.props.user.id)
   }
 
   render() {
@@ -32,23 +37,21 @@ class SingleProduct extends React.Component {
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-            <Text style={styles.text}>{this.props.navigation.getParam("brand")}</Text>
-            <Text style={styles.text}>{this.props.navigation.getParam("name")}</Text>
+            <Text style={styles.name}>{this.state.name}</Text>
+            <Text style={styles.brand}>{this.state.brand}</Text>
 
-            <Image source={{uri: this.props.navigation.getParam("imageUrl")}} style={{width: 300, height: 300}}></Image>
+            <Image source={{uri: this.state.imageUrl}} style={{width: 300, height: 300, margin: 20}}></Image>
 
-            <Text>Product Description</Text>
-
-            <View style={{alignItems:'center'}}>
+            <View style={{alignItems:'center', marginBottom: 20}}>
                 <Stars
                     half={false}
                     default={this.props.rating ? this.props.rating.rating : 0 }
                     update={(val) => {
                       if (!this.props.rating) {
-                        this.props.addRating(this.state.productId, this.props.user.id, val) 
+                        this.props.addRating(this.state.productId, this.state.userId, val) 
                         
                       } else {
-                        this.props.editRating(this.state.productId, this.props.user.id, val)
+                        this.props.editRating(this.state.productId, this.state.userId, val)
                       }
                       
                     }}
@@ -59,6 +62,19 @@ class SingleProduct extends React.Component {
                     emptyStar={require('./images/starEmpty.png')} />
             </View>
 
+            <Text stlye={styles.ingredients}>Toxicity Score</Text>
+            <Text style={styles.score}>{this.props.score}</Text>
+            
+            <Text style={styles.ingredients}>Ingredients</Text>
+               <FlatList
+                data={this.state.ingredients.map(ingredient => { 
+                  let name = ingredient.split(" : ")[0].toLowerCase()
+                  return { key: name.slice(0, 1).toUpperCase() + name.slice(1)
+                }
+                })}
+                renderItem={ ({item}) => <Text style={styles.ingredient}>{item.key}</Text> }
+                />           
+
         </ScrollView>
         
       </View>
@@ -68,11 +84,10 @@ class SingleProduct extends React.Component {
 
 const mapState = state => ({
   user: state.users.user,
-  score: state.score,
-  rating: state.productReviews.rating
+  score: state.products.score,
+  rating: state.productReviews.rating,
 })
 
-// connect to redux store
 mapDispatchToProps = dispatch => ({
   addRating: (rating, productId, userId) => dispatch(addRating(rating, productId, userId)),
   getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
@@ -88,17 +103,34 @@ SingleProduct.navigationOptions = {
   title: 'Single Product View',
 };
 
-
-// css stylization 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+  container: {
+    marginLeft: 20,
   },
   contentContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingTop: 30,
+  },
+  ingredientsContainer: {
+    width: '90%',
+    height: 200,
+    backgroundColor: '#dadada',
+    marginBottom: 50,
+    marginTop: 20,
+  },
+  ingredients: {
+    fontSize: 20
+  },
+  ingredient: {
+    marginLeft: 10,
+  },
+  name: {
+    fontSize: 24
+  },
+  brand: {
+    fontSize: 20
+  },
+  score: {
+    fontSize: 30
   }
 })

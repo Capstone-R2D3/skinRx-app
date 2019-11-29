@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {addSkinType} from '../../redux/reducers/users'
 
 class Result extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Result extends Component {
 
     async addSkinType(result) {
       const userId = this.props.user.id;
-      await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
+      await this.props.addSkinType(userId, result)
       this.props.navigation.navigate('Home');
     }
 
@@ -39,7 +40,12 @@ const mapState = state => ({
   user: state.users.user
 })
 
-export default connect(mapState, null)(Result)
+mapDispatch = dispatch => ({
+  addSkinType: (userId, result) => dispatch(addSkinType(userId, result))
+})
+
+
+export default connect(mapState, mapDispatch)(Result)
 
 const styles = StyleSheet.create({
     container: {
