@@ -12,7 +12,7 @@ const removeUser = () => ({type: REMOVE_USER})
 
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('http://172.16.27.201:8080/api/users/me');
+    const res = await axios.get('https://skinrx-server.herokuapp.com/api/users/me');
     dispatch(getUser(res.data));
   } catch (err) {
     console.error(err);
@@ -48,12 +48,18 @@ export const signUp = (firstName, lastName, email, password) => async dispatch =
   }
 }
 
-export const updateUserProfile = (id, firstName, lastName, email) => async dispatch => {
+export const updateUserProfile = (id, firstName, lastName, email, password) => async dispatch => {
   let res
   try {
     // console.log('got to thunk')
-    // *** NEED TO ADD USER UPDATE HEROKU ROUTE!!!
-    res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email})
+    if (password) {
+      console.log('not working', password)
+      res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email, password})
+    } else {
+      console.log('working', password)
+      res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email})
+    }
+    
     dispatch(getUser(res.data))
   } catch(error) {
     console.error(error)

@@ -19,7 +19,7 @@ class ProfileScreen extends React.Component {
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName, 
       email: this.props.user.email,
-      password: '',
+      password: null,
     }
   }
 
@@ -51,7 +51,7 @@ class ProfileScreen extends React.Component {
 
             {/* UPDATE PROFILE FORM */}
             <View title="box2" style={{width: "80%"}}>
-                <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Any changes recently?</Text>
+                <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Need to make changes?</Text>
                 <View style={styles.editProfile}>
                   <Text>First Name</Text>
                   <TextInput
@@ -79,13 +79,22 @@ class ProfileScreen extends React.Component {
                   onChangeText={text => this.setState({ email: text })}
                   value={this.state.email} />
                 </View>
+                <View style={styles.editProfile}>
+                  <Text>Password</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="•••••••"
+                    secureTextEntry
+                    onChangeText={text => this.setState({ password: text })}
+                    value={this.state.password} />
+                </View>
             </View>
 
             {/* UPDATE BUTTON */}
             <View style={styles.btnContainer}>
                     <TouchableOpacity
                       style={styles.userBtn}
-                      onPress={() => this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email)}>
+                      onPress={() => this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password)}>
                       <Text style={styles.btnText}>Update Info</Text>
                     </TouchableOpacity>
             </View>
@@ -123,7 +132,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  updateUserProfile: (id, firstName, lastName, email) => dispatch(updateUserProfile(id, firstName, lastName, email))
+  updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password))
 })
 
 export default connect(mapState, mapDispatch)(ProfileScreen)
