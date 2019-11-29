@@ -4,9 +4,11 @@ import { View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ImageBackground
 } from 'react-native'
 import {auth} from '../redux/reducers/users'
 import {connect} from 'react-redux'
+import {Ionicons} from '@expo/vector-icons'
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -37,6 +39,14 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+          <ImageBackground source={{ uri: 'https://www.richbeganyphoto.com/wp-content/uploads/2018/07/Awake-GelacticDreamHydratingMasK-SmearOnly-128.jpg' }} style={styles.backgroundImage}>
+          <Ionicons 
+            name="ios-arrow-round-back" 
+            color="white"
+            size={70} 
+            style={styles.backBtn}
+            onPress={() => this.props.navigation.navigate('Welcome')}
+            />
           <Text style={styles.header}>Login</Text>
           <TextInput
             style={styles.input}
@@ -60,18 +70,13 @@ class LoginScreen extends Component {
           }
           <View style={styles.btnContainer}>
             <TouchableOpacity
-              style={styles.userBtn}
+              style={styles.userBtnLogin}
               onPress={() => this.logIn()}
             >
-              <Text style={styles.btnText}>Login</Text>
+              <Text style={styles.btnTextLogin}>Login</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={styles.redirect}>Need an account? Sign up here!</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={{fontSize: 16, marginTop: 10}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
-          </TouchableOpacity>
+          </ImageBackground>
       </View>
     );
   }
@@ -90,38 +95,81 @@ export default connect(mapState, mapDispatch)(LoginScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white"
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: 'white'
   },
-  header: {
-    textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    resizeMode: 'cover', 
+  },
+  backBtn: {
+    marginTop: 20,
+    marginLeft: 20,
   },
   input: {
     width: "75%",
     padding: 15,
     marginBottom: 10,
-    backgroundColor: "#dadada"
+    backgroundColor: "white",
+    borderRadius: 25,
+    alignSelf: 'center'
+  },
+  header: {
+    fontFamily: 'Avenir',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 65,
+    marginBottom: 60,
+    marginTop: "30%",
+    color: "white",
+    letterSpacing: 3,
   },
   btnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
   userBtn: {
-    backgroundColor: "#dadada",
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 25,
+    backgroundColor: "white",
     padding: 15,
-    width: "75%",
-    display: "flex",
-    borderRadius: 7,
+    width: '75%',
+    display: 'flex',
+    marginBottom: 10,
   },
   btnText: {
     fontSize: 18,
-    textAlign: "center"
+    textAlign: 'center',
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: '#b1d5e0',
+    letterSpacing: 2,
+  },
+  userBtnLogin: {
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 25,
+    backgroundColor: "transparent",
+    padding: 15,
+    width: '75%',
+    display: 'flex',
+    marginBottom: 10,
+  },
+  btnTextLogin: {
+    fontSize: 18,
+    textAlign: 'center',
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: 'white',
+    letterSpacing: 2,
   },
   redirect: {
     marginTop: 20,

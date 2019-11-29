@@ -7,6 +7,7 @@ const gotToxicityScore = score => ({
   score
 })
 
+
 export const getToxicityScore = productId => async dispatch => {
   const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/products/${productId}`)
   let totalToxicity = 0
@@ -26,7 +27,7 @@ export const getToxicityScore = productId => async dispatch => {
 }
 
 const initialState = {
-  score: 0
+  score: 0,
 }
 
 export default function(state = initialState, action) {

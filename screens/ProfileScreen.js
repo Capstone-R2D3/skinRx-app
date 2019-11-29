@@ -8,7 +8,8 @@ import { View,
   ScrollView,
 } from 'react-native'
 import { connect } from 'react-redux';
-import { updateUserProfile } from '../redux/reducers/users';
+import { updateUserProfile, logout } from '../redux/reducers/users';
+import {clearRecs} from '../redux/reducers/recommendations'
 
 
 class ProfileScreen extends React.Component {
@@ -23,12 +24,19 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  handleLogout() {
+    this.props.logout()
+    this.props.clearRecs()
+    this.props.navigation.navigate('Welcome')
+  }
+
   render() {
 
     // console.log('from profile page', this.props.user)
 
     return (
       <View style={styles.container}>
+
           <Text style={styles.header}>Hi, {this.state.name} </Text>
 
           <ScrollView>
@@ -97,7 +105,7 @@ class ProfileScreen extends React.Component {
           <View style={styles.btnContainer}>
               <TouchableOpacity
                   style={styles.userBtn}
-                  onPress={() => this.props.navigation.navigate('Welcome')}>
+                  onPress={() => this.handleLogout()}>
                   <Text style={styles.btnText}>Logout</Text>
               </TouchableOpacity>
           </View>
@@ -123,7 +131,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  updateUserProfile: (id, firstName, lastName, email) => dispatch(updateUserProfile(id, firstName, lastName, email))
+  updateUserProfile: (id, firstName, lastName, email) => dispatch(updateUserProfile(id, firstName, lastName, email)),
+  logout: () => dispatch(logout()),
+  clearRecs: () => dispatch(clearRecs())
 })
 
 export default connect(mapState, mapDispatch)(ProfileScreen)
