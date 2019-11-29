@@ -39,7 +39,8 @@ class SignupScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Sign Up</Text>
+        <Text style={styles.header}>New around town?</Text>
+        <Text style={{fontSize: 18, marginBottom: 45,}}>We're happy you're here.</Text>
         <TextInput
             style={styles.input}
             placeholder="First name"
@@ -86,7 +87,7 @@ class SignupScreen extends Component {
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={styles.redirect}>Already have an account? Login here!</Text>
+          <Text style={styles.redirect}>Already have an account? Log in here.</Text>
         </TouchableOpacity>
       </View>
     );
@@ -114,14 +115,16 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
+    fontSize: 32,
+    marginBottom: 15, 
+    fontWeight: "bold",
   },
   input: {
     width: "75%",
     padding: 15,
     marginBottom: 10,
-    backgroundColor: "#dadada"
+    borderWidth: 1, 
+    borderColor: "#dadada",
   },
   btnContainer: {
     display: "flex",
@@ -129,15 +132,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   userBtn: {
-    backgroundColor: "#dadada",
+    marginTop: 15,
     padding: 15,
     width: "75%",
     display: "flex",
-    borderRadius: 7,
+    borderRadius: 25,
+    backgroundColor: "#BFD7ED",
   },
   btnText: {
     fontSize: 18,
-    textAlign: "center"
+    textAlign: "center", 
+    textTransform: "uppercase", 
+    letterSpacing: 2,
+    color: "white", 
+    fontWeight: "bold",
   },
   redirect: {
     marginTop: 20,

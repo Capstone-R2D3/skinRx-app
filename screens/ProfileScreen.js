@@ -29,9 +29,9 @@ class ProfileScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-          <Text style={styles.header}>Hi, {this.state.name} </Text>
+        <Text style={styles.header}>Hi, {this.state.name} </Text>
 
-          <ScrollView>
+        <ScrollView>
           <View title="box1" style={styles.box1}>
             {/* SKIN TYPE QUESTION! */}
             <View style={styles.box1b}>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     alignItems: "center",
     marginTop: 100,
-    marginBottom: 25,
+    marginBottom: 35,
     backgroundColor: "white",
     borderTopLeftRadius: 50,
     zIndex: 10,
@@ -220,13 +220,3 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 });
-
-
-
-{/* <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                onChangeText={text => this.setState({ password: text })}
-                value={this.state.password}
-              /> */}

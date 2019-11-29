@@ -37,7 +37,8 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <Text style={styles.header}>Login</Text>
+          <Text style={styles.header}>Nice to see you.</Text>
+          <Text style={{fontSize: 18, marginBottom: 45, }}>Please log in.</Text>
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -63,11 +64,11 @@ class LoginScreen extends Component {
               style={styles.userBtn}
               onPress={() => this.logIn()}
             >
-              <Text style={styles.btnText}>Login</Text>
+              <Text style={styles.btnText}>Next</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={styles.redirect}>Need an account? Sign up here!</Text>
+            <Text style={styles.redirect}>Need an account? Sign up here.</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Text style={{fontSize: 16, marginTop: 10}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
@@ -98,14 +99,16 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
+    fontSize: 32,
+    marginBottom: 20, 
+    fontWeight: "bold",
   },
   input: {
     width: "75%",
     padding: 15,
     marginBottom: 10,
-    backgroundColor: "#dadada"
+    borderWidth: 1, 
+    borderColor: "#dadada",
   },
   btnContainer: {
     display: "flex",
@@ -113,15 +116,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   userBtn: {
-    backgroundColor: "#dadada",
+    marginTop: 15,
     padding: 15,
     width: "75%",
     display: "flex",
-    borderRadius: 7,
+    borderRadius: 25,
+    backgroundColor: "#BFD7ED",
   },
   btnText: {
     fontSize: 18,
-    textAlign: "center"
+    textAlign: "center", 
+    textTransform: "uppercase", 
+    letterSpacing: 2,
+    color: "white", 
+    fontWeight: "bold",
   },
   redirect: {
     marginTop: 20,
