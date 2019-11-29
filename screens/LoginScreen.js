@@ -4,6 +4,7 @@ import { View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView
 } from 'react-native'
 import {auth} from '../redux/reducers/users'
 import {connect} from 'react-redux'
@@ -36,7 +37,8 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={{ marginTop: "32%" }}>
+        <View style={styles.container}>
           <Text style={styles.header}>Nice to see you.</Text>
           <Text style={{fontSize: 18, marginBottom: 45, }}>Please log in.</Text>
           <TextInput
@@ -64,7 +66,7 @@ class LoginScreen extends Component {
               style={styles.userBtn}
               onPress={() => this.logIn()}
             >
-              <Text style={styles.btnText}>Next</Text>
+              <Text style={styles.btnText}>Continue</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
@@ -73,7 +75,8 @@ class LoginScreen extends Component {
           <TouchableOpacity>
             <Text style={{fontSize: 16, marginTop: 10}} onPress={() => this.props.navigation.navigate('Dashboard')}>Continue as guest</Text>
           </TouchableOpacity>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
     width: "75%",
     display: "flex",
     borderRadius: 25,
-    backgroundColor: "#BFD7ED",
+    backgroundColor: "#a7caeb",
   },
   btnText: {
     fontSize: 18,
