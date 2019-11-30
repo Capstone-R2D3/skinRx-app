@@ -7,9 +7,9 @@ export default class SkinTypeQuiz extends Component {
         this.getSkinType = this.getSkinType.bind(this);
         this.startQuiz = this.startQuiz.bind(this);
     }
-
+    
     getSkinType() {
-        this.props.navigation.navigate('SkinTypes');
+      this.props.navigation.navigate('SkinTypes');
     }
 
     startQuiz() {
