@@ -10,13 +10,16 @@ import { View,
 import { TextInputMask } from 'react-native-masked-text'
 import {addEntry, updateEntry} from '../redux/reducers/journey'
 import { connect } from 'react-redux'
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 class JourneyForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
         date: "",
-        imageUrl: "https://cdn.imgbin.com/14/2/14/imgbin-cartoon-girl-skin-care-mask-7TXRD4K1yKn7iYbCgwzQWuqng.jpg",
+        image: null,
         stressLevel: 0,
         diet: "",
         description: ""
@@ -24,12 +27,37 @@ class JourneyForm extends Component {
     this.handleSubmission = this.handleSubmission.bind(this)
   }
 
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result });
+    }
+  };
+
   componentDidMount () {
+    this.getPermissionAsync();
     const entry = this.props.navigation.getParam("entry");
     if(entry !== null){
       this.setState({
         date: entry.date,
-        imageUrl: entry.imageUrl,
+        // imageUrl: entry.imageUrl,
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description
@@ -43,7 +71,6 @@ class JourneyForm extends Component {
       await this.props.addEntry(this.props.userId, this.state)
       this.props.navigation.navigate('Journey');
     } else {
-      console.log('UPDATING A PREEXISTING ENTRY!')
       await this.props.updateEntry(this.props.userId, entry.id, this.state)
       this.props.navigation.navigate('Journey');
     }
@@ -87,6 +114,14 @@ class JourneyForm extends Component {
             onChangeText={text => this.setState({ description: text })}
             value={this.state.description}
         />
+        <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => this._pickImage()}
+        >
+            <Text style={styles.btnText}>Pick an Image</Text>
+        </TouchableOpacity>
+        {this.state.image &&
+          <Image source={{ uri: this.state.image.uri }} style={{ width: 200, height: 200 }} />}
         <TouchableOpacity
             style={styles.userBtn}
             onPress={() => this.handleSubmission()}
