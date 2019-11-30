@@ -4,10 +4,11 @@ import { View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Slider
+  Slider,
+  Image
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
-import {addEntry} from '../redux/reducers/journey'
+import {addEntry, updateEntry} from '../redux/reducers/journey'
 import { connect } from 'react-redux'
 
 class JourneyForm extends Component {
@@ -43,6 +44,8 @@ class JourneyForm extends Component {
       this.props.navigation.navigate('Journey');
     } else {
       console.log('UPDATING A PREEXISTING ENTRY!')
+      await this.props.updateEntry(this.props.userId, entry.id, this.state)
+      this.props.navigation.navigate('Journey');
     }
   }
 
@@ -100,7 +103,8 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  addEntry: (id, entry) => dispatch(addEntry(id, entry))
+  addEntry: (id, entry) => dispatch(addEntry(id, entry)),
+  updateEntry: (id, entryId, entry) => dispatch(updateEntry(id, entryId, entry))
 })
 
 export default connect(mapState, mapDispatch)(JourneyForm)

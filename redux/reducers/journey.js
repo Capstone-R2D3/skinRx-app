@@ -30,7 +30,6 @@ export const getEntries = (userId) => async dispatch => {
 
 export const addEntry = (userId, newEntry) => async dispatch => {
     try {
-        console.log('about to make axios request: ', userId)
         await axios.post(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries`, newEntry);
         dispatch(getEntries(userId));
     } catch (error) {
@@ -40,8 +39,8 @@ export const addEntry = (userId, newEntry) => async dispatch => {
 
 export const updateEntry = (userId, entryId, updatedFields) => async dispatch => {
     try {
-        const {data} = await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${entryId}`, updatedFields);
-        dispatch(updatedEntry(data));
+        await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${entryId}`, updatedFields);
+        dispatch(getEntries(userId));
     } catch (error) {
         console.error(error);
     }
