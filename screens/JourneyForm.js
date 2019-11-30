@@ -5,7 +5,8 @@ import { View,
   TextInput,
   TouchableOpacity,
   Slider,
-  Image
+  Image,
+  Platform
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
 import {addEntry, updateEntry} from '../redux/reducers/journey'
@@ -44,11 +45,28 @@ class JourneyForm extends Component {
       quality: 1
     });
 
-    console.log(result);
+    console.log(result)
 
     if (!result.cancelled) {
       this.setState({ image: result });
     }
+  };
+
+  createFormData = (image, body) => {
+    const data = new FormData();
+  
+    data.append('entryImage', {
+      name: 'entry_image.jpg',
+      type: 'image',
+      uri:
+        Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+    });
+  
+    Object.keys(body).forEach(key => {
+      data.append(key, body[key]);
+    });
+  
+    return data;
   };
 
   componentDidMount () {
@@ -57,7 +75,7 @@ class JourneyForm extends Component {
     if(entry !== null){
       this.setState({
         date: entry.date,
-        // imageUrl: entry.imageUrl,
+        image: {uri: entry.imageUrl},
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description
@@ -67,11 +85,18 @@ class JourneyForm extends Component {
 
   async handleSubmission () {
     const entry = this.props.navigation.getParam("entry");
+    const formData = this.createFormData(this.state.image, {
+      date: this.state.date,
+      stressLevel: this.state.stressLevel,
+      diet: this.state.diet,
+      description: this.state.description
+    })
     if(entry === null){
-      await this.props.addEntry(this.props.userId, this.state)
+      await this.props.addEntry(this.props.userId, formData)
+      // await this.props.addEntry(this.props.userId, this.state)
       this.props.navigation.navigate('Journey');
     } else {
-      await this.props.updateEntry(this.props.userId, entry.id, this.state)
+      await this.props.updateEntry(this.props.userId, entry.id, formData)
       this.props.navigation.navigate('Journey');
     }
   }

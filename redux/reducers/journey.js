@@ -1,22 +1,10 @@
 import axios from 'axios';
 
 const GOT_ENTRIES = 'GOT_ENTRIES';
-const ADDED_ENTRY = 'ADDED_ENTRY';
-const UPDATED_ENTRY = 'UPDATED_ENTRY';
 
 const gotEntries = (entries) => ({
     type: GOT_ENTRIES,
     entries
-})
-
-const addedEntry = (entry) => ({
-    type: ADDED_ENTRY,
-    entry
-})
-
-const updatedEntry = (entry) => ({
-    type: UPDATED_ENTRY,
-    entry
 })
 
 export const getEntries = (userId) => async dispatch => {
@@ -30,7 +18,14 @@ export const getEntries = (userId) => async dispatch => {
 
 export const addEntry = (userId, newEntry) => async dispatch => {
     try {
-        await axios.post(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries`, newEntry);
+        await fetch(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries`, {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'multipart/form-data'
+            },
+            method: 'POST',
+            body: newEntry
+        });
         dispatch(getEntries(userId));
     } catch (error) {
         console.error(error);
@@ -39,7 +34,14 @@ export const addEntry = (userId, newEntry) => async dispatch => {
 
 export const updateEntry = (userId, entryId, updatedFields) => async dispatch => {
     try {
-        await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${entryId}`, updatedFields);
+        await fetch(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${entryId}`, {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'multipart/form-data'
+            },
+            method: 'PUT',
+            body: updatedFields
+        });
         dispatch(getEntries(userId));
     } catch (error) {
         console.error(error);
@@ -64,8 +66,6 @@ const journey = (state = initialState, action) => {
     switch (action.type) {
         case GOT_ENTRIES:
             return { ...state, entries: action.entries }
-        case UPDATED_ENTRY:
-            return { ...state, entries: [...state.entries, action.entry] }
         default:
             return state
     }
