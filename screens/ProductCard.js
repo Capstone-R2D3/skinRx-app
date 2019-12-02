@@ -67,7 +67,20 @@ const styles = StyleSheet.create({
     flexDirection: "column", 
     justifyContent: "space-evenly", 
     alignItems: "center", 
-    marginRight: 18
+    marginRight: 18,
+    
+    // borderWidth: 2,
+    // borderColor: "#ebeff2"
+    
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 100,
+    // },
+    // shadowOpacity: 0.11,
+    // shadowRadius: 2.11,
+
+    // elevation: 14,
   }, 
   image: {
     width: 225, 
