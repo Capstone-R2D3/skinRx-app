@@ -8,7 +8,8 @@ import { View,
   ScrollView,
 } from 'react-native'
 import { connect } from 'react-redux';
-import { updateUserProfile } from '../redux/reducers/users';
+import { updateUserProfile, logout } from '../redux/reducers/users';
+import {clearRecs} from '../redux/reducers/recommendations'
 
 
 class ProfileScreen extends React.Component {
@@ -23,13 +24,20 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  handleLogout() {
+    this.props.logout()
+    this.props.clearRecs()
+    this.props.navigation.navigate('Welcome')
+  }
+
   render() {
 
     // console.log('from profile page', this.props.user)
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Hi, {this.state.name} </Text>
+
+          <Text style={styles.header}>Hi, {this.state.name} </Text>
 
         <ScrollView>
           <View title="box1" style={styles.box1}>
@@ -99,18 +107,17 @@ class ProfileScreen extends React.Component {
                     </TouchableOpacity>
             </View>
 
+            {/* LOGOUT BUTTON BELOW */}
+            <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Done for the day?</Text>
+            <View style={styles.btnContainer}>
+                <TouchableOpacity
+                    style={styles.userBtn}
+                    onPress={() => this.handleLogout()}>
+                    <Text style={styles.btnText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
+
           </View>
-
-
-          {/* LOGOUT BUTTON BELOW */}
-          <View style={styles.btnContainer}>
-              <TouchableOpacity
-                  style={styles.userBtn}
-                  onPress={() => this.props.navigation.navigate('Welcome')}>
-                  <Text style={styles.btnText}>Logout</Text>
-              </TouchableOpacity>
-          </View>
-
 
               {/* see calendar */}
               <View style={styles.btnContainer}>
@@ -132,7 +139,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password))
+  updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password)),
+  logout: () => dispatch(logout()),
+  clearRecs: () => dispatch(clearRecs())
 })
 
 export default connect(mapState, mapDispatch)(ProfileScreen)
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#BFD7ED",
+    backgroundColor: "#A7CAEB",
   },
   header: {
     textAlign: "left",
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
     width: "65%",
     marginTop: 10,
     marginBottom: 10,
-    borderBottomColor: "#BFD7ED", 
+    borderBottomColor: "#dadada", 
     borderBottomWidth: 2, 
     color: "grey",
   },
@@ -201,8 +210,8 @@ const styles = StyleSheet.create({
   },
   userBtn: {
     marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: "#dadada",
+    marginBottom: 50,
+    backgroundColor: "#A7CAEB",
     padding: 11,
     width: "50%",
     display: "flex",
@@ -214,6 +223,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase", 
     letterSpacing: 2, 
     fontWeight: "bold",
+    color: "white",
   },
   redirect: {
     marginTop: 10,

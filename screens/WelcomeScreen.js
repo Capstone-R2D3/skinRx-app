@@ -13,7 +13,7 @@ import {
 export default function WelcomeScreen(props) {
   return (
       <View style={styles.container}>
-        <ImageBackground source={{ uri: 'https://www.richbeganyphoto.com/wp-content/uploads/2018/07/Awake-GelacticDreamHydratingMasK-SmearOnly-128.jpg' }} style={styles.backgroundImage}>
+        <ImageBackground source={require('./images/homescreen.jpg')} style={styles.backgroundImage}>
 
         <Text style={styles.header}>skinRx</Text>
         <View style={styles.btnContainer}>
@@ -31,12 +31,6 @@ export default function WelcomeScreen(props) {
           </TouchableOpacity>
 
        </View>
-       {/* <View style={styles.btnContainer}>
-       </View> */}
-       <TouchableOpacity>
-        <Text style={{fontSize: 16}} onPress={() => props.navigation.navigate('Dashboard')}>Continue as guest</Text>
-       </TouchableOpacity>
-
        </ImageBackground>
 
       </View>

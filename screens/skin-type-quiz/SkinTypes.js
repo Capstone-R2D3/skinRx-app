@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {addSkinType} from '../../redux/reducers/users'
+
 
 class SkinTypes extends Component {
     constructor(props) {
         super(props);
-        this.addSkinType = this.addSkinType.bind(this);
     }
 
-    async addSkinType(typeId) {
+    async addUserSkinType(typeId) {
       const userId = parseInt(this.props.user.id, 10);
       let result;
       (typeId === 1) && (result = 'Oily');
@@ -17,11 +18,8 @@ class SkinTypes extends Component {
       (typeId === 3) && (result = 'Normal');
       (typeId === 4) && (result = 'Combination');
       (typeId === 5) && (result = 'Sensitive');
-      await axios.put(`https://skinrx-server.herokuapp.com/auth/users/${userId}`, {result});
-      this.props.navigation.navigate('Home', {
-        userId: userId,
-        skinTypeId: typeId
-      });
+      await this.props.addSkinTypeThunk(userId, result)
+      this.props.navigation.navigate('Home')
     }
 
     render() {
@@ -33,7 +31,7 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(4)}
+                    onPress={() => this.addUserSkinType(4)}
                     >
                         <Text style={styles.btnText}>combination</Text>
                     </TouchableOpacity>
@@ -41,7 +39,7 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(2)}
+                    onPress={() => this.addUserSkinType(2)}
                     >
                         <Text style={styles.btnText}>dry</Text>
                     </TouchableOpacity>
@@ -49,7 +47,7 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(1)}
+                    onPress={() => this.addUserSkinType(1)}
                     >
                         <Text style={styles.btnText}>oily</Text>
                     </TouchableOpacity>
@@ -57,7 +55,7 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(5)}
+                    onPress={() => this.addUserSkinType(5)}
                     >
                         <Text style={styles.btnText}>sensitive</Text>
                     </TouchableOpacity>
@@ -65,7 +63,7 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(3)}
+                    onPress={() => this.addUserSkinType(3)}
                     >
                         <Text style={styles.btnText}>normal</Text>
                     </TouchableOpacity>
@@ -79,9 +77,11 @@ const mapState = state => ({
     user: state.users.user
 })
 
+mapDispatch = dispatch => ({
+  addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result))
+})
 
-  
-export default connect(mapState, null)(SkinTypes)
+export default connect(mapState, mapDispatch)(SkinTypes)
 
 const styles = StyleSheet.create({
     container: {

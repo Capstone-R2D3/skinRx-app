@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
-import { View, 
+import React, { Component } from "react";
+import {
+  View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   ScrollView
-} from 'react-native'
-import {signUp} from '../redux/reducers/users'
-import {connect} from 'react-redux'
+} from "react-native";
+import { signUp, me, logout } from "../redux/reducers/users";
+import { connect } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
 class SignupScreen extends Component {
   constructor(props) {
@@ -17,81 +19,109 @@ class SignupScreen extends Component {
       lastName: "",
       email: "",
       password: "",
-      showMessage: false
+      showMessage: false,
+      incorrect: false
     };
-    this.userSignUp = this.userSignUp.bind(this)
   }
 
   async userSignUp() {
-    await this.props.signUpThunk(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
-    if (!this.props.user) {
-      this.toggleMessage()
+    await this.props.me(this.state.email)
+    if (
+      !this.state.firstName ||
+      !this.state.lastName ||
+      !this.state.password ||
+      !this.state.email
+    ) {
+      this.toggleMessage();
+    } else if (!this.props.user.length) {
+      await this.props.signUpThunk(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.password
+      );
+      this.props.navigation.navigate("SkinTypeQuiz", {
+        email: this.state.email
+      });
     } else {
-      this.props.navigation.navigate('SkinTypeQuiz')
+      await this.props.logout()
+      this.toggleIncorrect()
     }
   }
 
   toggleMessage() {
     this.setState({
       showMessage: !this.state.showMessage
-    })
+    });
+  }
+
+  toggleIncorrect() {
+    this.setState({
+      incorrect: !this.state.incorrect
+    });
   }
 
   render() {
     return (
-      <ScrollView style={{marginTop: "30%"}}>
-      <View style={styles.container}>
-        <Text style={styles.header}>New around town?</Text>
-        <Text style={{fontSize: 18, marginBottom: 45,}}>We're happy you're here.</Text>
-        <TextInput
+      <ScrollView>
+        <Ionicons
+            name="ios-arrow-round-back"
+            color="#dadada"
+            size={50}
+            style={styles.backBtn}
+            onPress={() => this.props.navigation.navigate("Welcome")} />
+        <View style={styles.container}>
+          <Text style={styles.header}>New around town?</Text>
+          <Text style={{fontSize: 18, marginBottom: 45,}}>We're happy you're here.</Text>
+          <TextInput
             style={styles.input}
             placeholder="First name"
             textContentType="name"
             autoCapitalize="words"
             onChangeText={text => this.setState({ firstName: text })}
-            value={this.state.firstName}
-          />
+            value={this.state.firstName} />
           <TextInput
             style={styles.input}
             placeholder="Last name"
             textContentType="name"
             autoCapitalize="words"
             onChangeText={text => this.setState({ lastName: text })}
-            value={this.state.lastName}
-          />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          onChangeText={text => this.setState({ email: text })}
-          value={this.state.email}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          autoCapitalize="none"
-          secureTextEntry
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password}
-        />
-        {
-            this.state.showMessage ? 
-              <Text style={styles.incorrect}>An account with this email already exists. Please login or create a new account to continue.</Text>
-            : null
-          }
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={styles.userBtn}
-            onPress={() => this.userSignUp()}
-          >
-            <Text style={styles.btnText}>Continue</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={styles.redirect}>Already have an account? Log in here.</Text>
+            value={this.state.lastName} />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            onChangeText={text => this.setState({ email: text })}
+            value={this.state.email} />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            autoCapitalize="none"
+            secureTextEntry
+            onChangeText={text => this.setState({ password: text })}
+            value={this.state.password} />
+          {this.state.showMessage ? (
+            <Text style={styles.incorrect}>
+              Please fill in all fields to create your account.
+            </Text>
+          ) : null}
+          {this.state.incorrect ? (
+            <Text style={styles.incorrect}>
+              An account with this email already exists. Please login or create
+              a new account to continue.
+            </Text>
+          ) : null}
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.userBtnLogin}
+              onPress={() => this.userSignUp()}>
+              <Text style={styles.btnTextLogin}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={styles.redirect}>Already have an account? Log in here.</Text>
         </TouchableOpacity>
-         
       </View>
       </ScrollView>
     );
@@ -100,13 +130,15 @@ class SignupScreen extends Component {
 
 const mapState = state => ({
   user: state.users.user
-})
+});
 
 const mapDispatch = dispatch => ({
-  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password))
-})
+  signUpThunk: (firstName, lastName, email, password) => dispatch(signUp(firstName, lastName, email, password)),
+  me: (email) => dispatch(me(email)),
+  logout: () => dispatch(logout())
+});
 
-export default connect(mapState, mapDispatch)(SignupScreen)
+export default connect(mapState, mapDispatch)(SignupScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -115,13 +147,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    marginTop: 25,
   },
-  header: {
-    textAlign: "center",
-    fontSize: 32,
-    marginBottom: 15, 
-    fontWeight: "bold",
+  backBtn: {
+    marginTop: 25,
+    marginLeft: 20
   },
   input: {
     width: "75%",
@@ -130,12 +161,18 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderColor: "#dadada",
   },
+  header: {
+    textAlign: "center",
+    fontSize: 32,
+    marginBottom: 15, 
+    fontWeight: "bold",
+  },
   btnContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  userBtn: {
+  userBtnLogin: {
     marginTop: 15,
     padding: 15,
     width: "75%",
@@ -143,7 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: "#a7caeb",
   },
-  btnText: {
+  btnTextLogin: {
     fontSize: 18,
     textAlign: "center", 
     textTransform: "uppercase", 
@@ -158,7 +195,7 @@ const styles = StyleSheet.create({
   incorrect: {
     color: 'red',
     marginBottom: 10,
-    width: '75%',
-    textAlign: 'center'
+    width: "80%",
+    textAlign: "center",
   }
 });
