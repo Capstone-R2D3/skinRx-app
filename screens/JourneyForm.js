@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import { View, 
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Slider,
   Image,
   Platform,
-  ImageBackground,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
 import {addEntry, updateEntry} from '../redux/reducers/journey'
@@ -49,8 +48,6 @@ class JourneyForm extends Component {
       quality: 1
     });
 
-    console.log(result)
-
     if (!result.cancelled) {
       this.setState({ image: result });
     }
@@ -60,7 +57,7 @@ class JourneyForm extends Component {
     const data = new FormData();
   
     data.append('entryImage', {
-      name: 'entry_image.jpg',
+      name: `entry_image_${this.props.userId}.jpg`,
       type: 'image',
       uri:
         Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
@@ -87,24 +84,28 @@ class JourneyForm extends Component {
   }
 
   async handleSubmission () {
-    const entry = this.props.navigation.getParam("entry");
-    const formData = this.createFormData(this.state.image, {
-      date: this.state.date,
-      stressLevel: this.state.stressLevel,
-      diet: this.state.diet,
-      description: this.state.description
-    })
-    if(entry === null){
-      await this.props.addEntry(this.props.userId, formData)
-      // await this.props.addEntry(this.props.userId, this.state)
-      this.props.navigation.navigate('Journey');
+    if(this.state.image === null){
+      Alert.alert('Please add an image to your entry');
     } else {
-      await this.props.updateEntry(this.props.userId, entry.id, formData)
-      this.props.navigation.navigate('Journey');
+      const entry = this.props.navigation.getParam("entry");
+      const formData = this.createFormData(this.state.image, {
+        date: this.state.date,
+        stressLevel: this.state.stressLevel,
+        diet: this.state.diet,
+        description: this.state.description
+      })
+      if(entry === null){
+        await this.props.addEntry(this.props.userId, formData)
+        this.props.navigation.navigate('Journey');
+      } else {
+        await this.props.updateEntry(this.props.userId, entry.id, formData)
+        this.props.navigation.navigate('Journey');
+      }
     }
   }
 
   render() {
+    console.log('STATE OF THE JOURNEY FORM: ', this.state)
     return (
       <ScrollView style={styles.container}>
           <Text style={styles.header}>Entry</Text>
@@ -129,7 +130,7 @@ class JourneyForm extends Component {
           <Slider 
               style={{width: 300, alignSelf: 'center'}}
               maximumValue={5} 
-              minimumValue={0} 
+              minimumValue={1} 
               value={this.state.stressLevel}
               step={1}
               onValueChange={value => this.setState({stressLevel: value})} 
