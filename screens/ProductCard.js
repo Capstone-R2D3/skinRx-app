@@ -22,6 +22,7 @@ class ProductCard extends React.Component {
         brand: this.props.state.brand,
         id: this.props.state.id,
         ingredients: this.props.state.ingredients,
+        category: this.props.state.category
     }
   }
 
@@ -39,7 +40,7 @@ class ProductCard extends React.Component {
             <View>
               <TouchableOpacity 
                 style={{width: 45, borderWidth: 1, borderColor: '#dadada', borderRadius:10, padding: 15}}
-                onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients});}}> 
+                onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients, category: this.state.category});}}> 
                 <Text style={{ fontWeight: "bold", fontSize: 18, color: "grey" }}>></Text>
               </TouchableOpacity>
             </View>

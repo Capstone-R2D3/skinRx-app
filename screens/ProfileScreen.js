@@ -8,7 +8,7 @@ import { View,
   ScrollView,
 } from 'react-native'
 import { connect } from 'react-redux';
-import { updateUserProfile, logout } from '../redux/reducers/users';
+import { updateUserProfile, logout, getSkinType } from '../redux/reducers/users';
 import {clearRecs} from '../redux/reducers/recommendations'
 
 
@@ -24,6 +24,10 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getSkinType(this.props.user.skinTypeId)
+  }
+
   handleLogout() {
     this.props.logout()
     this.props.clearRecs()
@@ -31,8 +35,6 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-
-    // console.log('from profile page', this.props.user)
 
     return (
       <View style={styles.container}>
@@ -48,11 +50,16 @@ class ProfileScreen extends React.Component {
               </View>
               <View>
                 {/*********** need to set up router and pass in skintype prop ***********/}
-                <Text>SKIN TYPE: {'Pass In Prop Here'}</Text>
+                <Text>SKIN TYPE: {
+                  this.props.skinType ? this.props.skinType : null
+                  
+                  }</Text>
                 <Text />
                 {/*********** need to have a link for users to retake quiz ***********/}
                 <Text>Think it might be different?</Text>
-                <Text>Retake our quiz!</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}>
+                  <Text>Retake our quiz!</Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -135,10 +142,12 @@ class ProfileScreen extends React.Component {
 }
 
 const mapState = state => ({
-  user: state.users.user
+  user: state.users.user,
+  skinType: state.users.skinType.name
 })
 
 const mapDispatch = dispatch => ({
+  getSkinType: (id) => dispatch(getSkinType(id)),
   updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password)),
   logout: () => dispatch(logout()),
   clearRecs: () => dispatch(clearRecs())
