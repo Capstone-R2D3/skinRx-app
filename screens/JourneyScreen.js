@@ -17,6 +17,7 @@ class JourneyScreen extends React.Component {
   constructor() {
     super();
     this.delete = this.delete.bind(this);
+    this.update = this.update.bind(this);
   }
 
   componentDidMount() {
@@ -24,8 +25,10 @@ class JourneyScreen extends React.Component {
     this.props.getEntries(userId);
   }
 
-  update(entryId) {
-    const userId = this.props.user.id;
+  update(entry) {
+    this.props.navigation.navigate("JourneyForm", {
+      entry: entry
+    });
   }
 
   delete(entryId) {
@@ -35,19 +38,21 @@ class JourneyScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <TouchableOpacity style={styles.userBtn}> 
           <Button title="Add Entry" textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
             onPress={() => {
-              this.props.navigation.navigate("JourneyForm");
+              this.props.navigation.navigate("JourneyForm", {
+                entry: null
+              });
             }}></Button>
         </TouchableOpacity>
         <View>
           {
-            (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} />})
+            (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
           }
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -73,8 +78,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white"
   },
   header: {

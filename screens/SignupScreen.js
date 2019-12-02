@@ -21,7 +21,7 @@ class SignupScreen extends Component {
       password: "",
       showMessage: false,
       incorrect: false
-    };
+    }
   }
 
   async userSignUp() {
