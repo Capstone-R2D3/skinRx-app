@@ -16,13 +16,15 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
+import Carousel from 'react-native-snap-carousel';
+import { anyTypeAnnotation } from '@babel/types'
 
 class JourneyForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
         date: "",
-        image: null,
+        images: [],
         stressLevel: 0,
         diet: "",
         description: ""
@@ -39,7 +41,7 @@ class JourneyForm extends Component {
     }
   }
 
-  _pickImage = async () => {
+  pickImage = async () => {
     await this.getPermissionAsync();
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -49,19 +51,23 @@ class JourneyForm extends Component {
     });
 
     if (!result.cancelled) {
-      this.setState({ image: result });
+      const imagesState = this.state.images;
+      imagesState.push(result.uri)
+      this.setState({ images: imagesState });
     }
   };
 
-  createFormData = (image, body) => {
+  createFormData = (images, body) => {
     const data = new FormData();
-  
-    data.append('entryImage', {
-      name: `entry_image_${this.props.userId}.jpg`,
-      type: 'image',
-      uri:
-        Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
-    });
+
+    for(let i=0; i < images.length; i++){
+      data.append('entryImages', {
+        name: `entry_image_${this.props.userId}${i}.jpg`,
+        type: 'image',
+        uri:
+          Platform.OS === 'android' ? images[i] : images[i].replace('file://', ''),
+      })
+    }
   
     Object.keys(body).forEach(key => {
       data.append(key, body[key]);
@@ -75,7 +81,7 @@ class JourneyForm extends Component {
     if(entry !== null){
       this.setState({
         date: entry.date,
-        image: {uri: entry.imageUrl},
+        images: entry.imageUrls,
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description
@@ -88,7 +94,7 @@ class JourneyForm extends Component {
       Alert.alert('Please add an image to your entry');
     } else {
       const entry = this.props.navigation.getParam("entry");
-      const formData = this.createFormData(this.state.image, {
+      const formData = this.createFormData(this.state.images, {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
         diet: this.state.diet,
@@ -105,13 +111,12 @@ class JourneyForm extends Component {
   }
 
   render() {
-    console.log('STATE OF THE JOURNEY FORM: ', this.state)
     return (
       <ScrollView style={styles.container}>
           <Text style={styles.header}>Entry</Text>
           {
-            this.state.image ?
-            <Image source={{ uri: this.state.image.uri }} style={styles.image} /> : null
+            this.state.images.length > 0 ?
+            <Image source={{ uri: this.state.images[0] }} style={styles.image} /> : null
           }
           <TextInputMask
               style={styles.input}
@@ -151,7 +156,7 @@ class JourneyForm extends Component {
           />
           <TouchableOpacity
               style={styles.AddImageBtn}
-              onPress={() => this._pickImage()}
+              onPress={() => this.pickImage()}
           >
               <Text style={styles.AddImageText}>Add Image</Text>
           </TouchableOpacity>
