@@ -39,7 +39,7 @@ class ProfileScreen extends React.Component {
 
           <Text style={styles.header}>Hi, {this.state.name} </Text>
 
-        <ScrollView>
+        <ScrollView style={{marginTop: 30}}>
           <View title="box1" style={styles.box1}>
             {/* SKIN TYPE QUESTION! */}
             <View style={styles.box1b}>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontSize: 35,
     marginBottom: 5,
-    marginTop: 30,
+    marginTop: 55,
     marginLeft: 35,
     color: "white",
     fontFamily: "Avenir",

@@ -38,7 +38,10 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: RecommendationScreen,
+    Home: {
+        screen: RecommendationScreen,
+        navigationOptions: { header: null }
+    },
     SingleProduct: SingleProduct,
   },
 );
@@ -78,7 +81,10 @@ LinksStack.path = '';
 const ScanStack = createStackNavigator(
   {
     Scan: ScanScreen,
-    ScannedProduct: ScannedProduct
+    ScannedProduct: {
+      screen: ScannedProduct,
+      navigationOptions: { header: null }
+    },
   },
   config
 );
@@ -125,7 +131,10 @@ JourneyStack.path = '';
 
 const ProfileStack = createStackNavigator(
   {
-    Profile: ProfileScreen,
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: { header: null }
+    },
     JourneyCalendar: JourneyCalendar
   },
   config

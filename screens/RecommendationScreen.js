@@ -24,7 +24,7 @@ class RecommendationScreen extends React.Component {
       skinTypeId: this.props.user.skinTypeId, 
       selected: 'cleanser',    
       // screenWidth: Dimensions.get('window').width,
-      screenWidth: 330,
+      screenWidth: 320,
     }
     this.scrollToA = this.scrollToA.bind(this)
     this.scrollToB = this.scrollToB.bind(this)
@@ -59,7 +59,6 @@ class RecommendationScreen extends React.Component {
   
 
   render() {
-
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
           
@@ -68,16 +67,16 @@ class RecommendationScreen extends React.Component {
           {/* <Text></Text> */}
           <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 25}}>
             <TouchableOpacity onPress={this.scrollToA}>
-              <Text style={ this.state.selected === 'cleanser' ? styles.clicked : '' }>Cleanser</Text>
+              <Text style={ this.state.selected === 'cleanser' ? styles.clicked : styles.unselected }>Cleanser</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.scrollToB}>
-              <Text style={ this.state.selected === 'toner' ? styles.clicked : '' }>Toner</Text>
+              <Text style={ this.state.selected === 'toner' ? styles.clicked : styles.unselected }>Toner</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.scrollToC}>
-              <Text style={ this.state.selected === 'serum' ? styles.clicked : '' }>Serum</Text>
+              <Text style={ this.state.selected === 'serum' ? styles.clicked : styles.unselected }>Serum</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.scrollToD}>
-              <Text style={ this.state.selected === 'moisturizer' ? styles.clicked : '' }>Moisturizer</Text>
+              <Text style={ this.state.selected === 'moisturizer' ? styles.clicked : styles.unselected }>Moisturizer</Text>
             </TouchableOpacity>
           </View>
 
@@ -86,7 +85,7 @@ class RecommendationScreen extends React.Component {
               contentContainerStyle={styles.contentContainer} 
               horizontal= {true}
               decelerationRate={0}
-              snapToInterval={330} //element width
+              snapToInterval={320} //element width
               snapToAlignment={"center"}
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={10}
@@ -121,38 +120,41 @@ class RecommendationScreen extends React.Component {
 }
 
 
-RecommendationScreen.navigationOptions = {
-  title: 'Recommended Products',
-};
+// RecommendationScreen.navigationOptions = {
+//   title: 'Recommended Products',
+// };
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10,
+    paddingHorizontal: 15,
+    // backgroundColor: "#f9f9f9",
+    backgroundColor: "#ebeff2",
+    // backgroundColor: "#a7caeb"
+  },
+  contentContainer: {
+    paddingHorizontal: 7,
+  },
   header: {
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
+    marginTop: 50,
+    marginBottom: 17,
   }, 
   text: {
     fontSize: 20,
     fontWeight: "bold",
   }, 
-  container: {
-    flex: 1,
-    paddingTop: 10,
-    paddingHorizontal: 15,
-    // backgroundColor: "#e1e9f0",
-    backgroundColor: "#e6ebf0"
-  },
-  contentContainer: {
-    paddingBottom: 75,
-    paddingHorizontal: 7,
-  }, 
   clicked: {
-    color: "white", 
+    color: "black", 
     fontWeight: "bold",
-    borderBottomWidth: 2, 
-    borderBottomColor: "white",
-    // fontSize: 15,
+  },
+  unselected: {
+    fontWeight: "bold",
+    color: "grey"
   }
 })
 
