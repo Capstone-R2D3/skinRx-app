@@ -74,9 +74,8 @@ class SingleProduct extends React.Component {
             <Text style={styles.score}>{this.props.score}</Text>
           </View>
         </View>
-        <ScrollView style={{zIndex: 99}}>
-
-        <View style={styles.scrollContainer}>
+        <ScrollView style={{zIndex: 5}}>
+        <View style={styles.scrollContainer} >
             <Text style={styles.ingredients}>Ingredients</Text>
                 <View style={styles.barContainer}>
                 {this.state.ingredients.map((ingredient, index) => { 
@@ -119,30 +118,23 @@ SingleProduct.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#BFD7ED",
+    backgroundColor: "#A7CAEB",
+    height: "100%",
+    margin: 0,
   },
   topContainer: {
     marginTop: 60,
     marginLeft: 20,
     marginRight: 20,
     width: "100%",
-    backgroundColor: "#BFD7ED",
+    backgroundColor: "#A7CAEB",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    zIndex: 0,
-    position: 'absolute'
+    position: 'absolute',
   }, 
-  image: {
-    width: "100%",
-    height: 300,
-    margin: 0,
-    resizeMode: "cover",
-    borderBottomRightRadius: 50
-  },
   scrollContainer: {
     width: "100%",
-    zIndex: 90,
     backgroundColor: 'white',
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
