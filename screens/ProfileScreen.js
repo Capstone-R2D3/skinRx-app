@@ -20,7 +20,7 @@ class ProfileScreen extends React.Component {
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName, 
       email: this.props.user.email,
-      password: '',
+      password: null,
     }
   }
 
@@ -39,7 +39,7 @@ class ProfileScreen extends React.Component {
 
           <Text style={styles.header}>Hi, {this.state.name} </Text>
 
-          <ScrollView>
+        <ScrollView>
           <View title="box1" style={styles.box1}>
             {/* SKIN TYPE QUESTION! */}
             <View style={styles.box1b}>
@@ -59,7 +59,7 @@ class ProfileScreen extends React.Component {
 
             {/* UPDATE PROFILE FORM */}
             <View title="box2" style={{width: "80%"}}>
-                <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Any changes recently?</Text>
+                <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Need to make changes?</Text>
                 <View style={styles.editProfile}>
                   <Text>First Name</Text>
                   <TextInput
@@ -87,29 +87,37 @@ class ProfileScreen extends React.Component {
                   onChangeText={text => this.setState({ email: text })}
                   value={this.state.email} />
                 </View>
+                <View style={styles.editProfile}>
+                  <Text>Password</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="•••••••"
+                    secureTextEntry
+                    onChangeText={text => this.setState({ password: text })}
+                    value={this.state.password} />
+                </View>
             </View>
 
             {/* UPDATE BUTTON */}
             <View style={styles.btnContainer}>
                     <TouchableOpacity
                       style={styles.userBtn}
-                      onPress={() => this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email)}>
+                      onPress={() => this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password)}>
                       <Text style={styles.btnText}>Update Info</Text>
                     </TouchableOpacity>
             </View>
 
+            {/* LOGOUT BUTTON BELOW */}
+            <Text style={{ fontSize: 20, fontWeight:'bold', textAlign: 'left', marginBottom: 15 }}>Done for the day?</Text>
+            <View style={styles.btnContainer}>
+                <TouchableOpacity
+                    style={styles.userBtn}
+                    onPress={() => this.handleLogout()}>
+                    <Text style={styles.btnText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
+
           </View>
-
-
-          {/* LOGOUT BUTTON BELOW */}
-          <View style={styles.btnContainer}>
-              <TouchableOpacity
-                  style={styles.userBtn}
-                  onPress={() => this.handleLogout()}>
-                  <Text style={styles.btnText}>Logout</Text>
-              </TouchableOpacity>
-          </View>
-
 
               {/* see calendar */}
               <View style={styles.btnContainer}>
@@ -131,7 +139,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  updateUserProfile: (id, firstName, lastName, email) => dispatch(updateUserProfile(id, firstName, lastName, email)),
+  updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password)),
   logout: () => dispatch(logout()),
   clearRecs: () => dispatch(clearRecs())
 })
@@ -149,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#BFD7ED",
+    backgroundColor: "#A7CAEB",
   },
   header: {
     textAlign: "left",
@@ -168,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     alignItems: "center",
     marginTop: 100,
-    marginBottom: 25,
+    marginBottom: 35,
     backgroundColor: "white",
     borderTopLeftRadius: 50,
     zIndex: 10,
@@ -191,7 +199,7 @@ const styles = StyleSheet.create({
     width: "65%",
     marginTop: 10,
     marginBottom: 10,
-    borderBottomColor: "#BFD7ED", 
+    borderBottomColor: "#dadada", 
     borderBottomWidth: 2, 
     color: "grey",
   },
@@ -202,8 +210,8 @@ const styles = StyleSheet.create({
   },
   userBtn: {
     marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: "#dadada",
+    marginBottom: 50,
+    backgroundColor: "#A7CAEB",
     padding: 11,
     width: "50%",
     display: "flex",
@@ -215,19 +223,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase", 
     letterSpacing: 2, 
     fontWeight: "bold",
+    color: "white",
   },
   redirect: {
     marginTop: 10,
     fontSize: 16
   },
 });
-
-
-
-{/* <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                onChangeText={text => this.setState({ password: text })}
-                value={this.state.password}
-              /> */}
