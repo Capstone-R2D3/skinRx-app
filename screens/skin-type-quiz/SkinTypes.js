@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {addSkinType} from '../../redux/reducers/users'
+import {getRecommendations} from '../../redux/reducers/recommendations'
 
 
 class SkinTypes extends Component {
@@ -31,7 +32,10 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addUserSkinType(4)}
+                    onPress={() => {
+                        this.addUserSkinType(4)
+                        this.props.getRecommendations(this.props.user.id, 4)
+                    }}
                     >
                         <Text style={styles.btnText}>combination</Text>
                     </TouchableOpacity>
@@ -39,7 +43,10 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addUserSkinType(2)}
+                    onPress={() => {
+                        this.addUserSkinType(2)
+                        this.props.getRecommendations(this.props.user.id, 2)
+                    }}
                     >
                         <Text style={styles.btnText}>dry</Text>
                     </TouchableOpacity>
@@ -47,7 +54,10 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addUserSkinType(1)}
+                    onPress={() => {
+                        this.addUserSkinType(1)
+                        this.props.getRecommendations(this.props.user.id, 1)
+                    }}
                     >
                         <Text style={styles.btnText}>oily</Text>
                     </TouchableOpacity>
@@ -55,7 +65,10 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addUserSkinType(5)}
+                    onPress={() => {
+                        this.addUserSkinType(5)
+                        this.props.getRecommendations(this.props.user.id, 5)
+                    }}
                     >
                         <Text style={styles.btnText}>sensitive</Text>
                     </TouchableOpacity>
@@ -63,7 +76,10 @@ class SkinTypes extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addUserSkinType(3)}
+                    onPress={() => {
+                        this.addUserSkinType(3)
+                        this.props.getRecommendations(userId, 3)
+                    }}
                     >
                         <Text style={styles.btnText}>normal</Text>
                     </TouchableOpacity>
@@ -78,7 +94,8 @@ const mapState = state => ({
 })
 
 mapDispatch = dispatch => ({
-  addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result))
+  addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result)),
+  getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
 })
 
 export default connect(mapState, mapDispatch)(SkinTypes)

@@ -38,11 +38,11 @@ class SingleProduct extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  // componentWillReceiveProps(nextProps) {
     // console.log('nextProps is....',nextProps.navigation.getParam("name"))
     // let root = nextProps.navigation.state.params
     // this.setState({name: root.name, brand: root.brand, productId: root.productId, imageUrl: root.imageUrl, ingredients:root.ingredients, category: root.category, })
-  }
+  // }
 
 
   IngredientsPage = ({ label }) => (
@@ -90,10 +90,11 @@ class SingleProduct extends React.Component {
                     <TouchableOpacity
                       style={styles.userBtn} 
                       onPress={() => {
-                        this.state.getNewProductRec(this.state.productId, 3)
+                        console.log('hi')
+                        // this.state.getNewProductRec(this.state.productId, 3)
                         // console.log(this.state.productId)
                       }}>
-                      <Text style={styles.btnText}>Get a new { this.state.category.toLowerCase() }! </Text>
+                      <Text style={styles.btnText}>Get a new { this.state.category ? this.state.category.toLowerCase() : null }! </Text>
                     </TouchableOpacity>
             </View>
     </View>

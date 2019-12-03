@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {addSkinType} from '../../redux/reducers/users'
+import {getRecommendations} from '../../redux/reducers/recommendations'
 
 class Result extends Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class Result extends Component {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => this.addSkinType(result)}
+                    onPress={() => {
+                      this.addSkinType(result)
+                      this.props.getRecommendations(this.props.user.id, result)
+                    }}
                     >
                         <Text style={styles.btnText}>Take me to my products!</Text>
                     </TouchableOpacity>
@@ -41,7 +45,8 @@ const mapState = state => ({
 })
 
 mapDispatch = dispatch => ({
-  addSkinType: (userId, result) => dispatch(addSkinType(userId, result))
+  addSkinType: (userId, result) => dispatch(addSkinType(userId, result)),
+  getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
 })
 
 
