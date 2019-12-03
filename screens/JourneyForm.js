@@ -7,7 +7,8 @@ import { View,
   Image,
   Platform,
   ScrollView,
-  Alert
+  Alert,
+  Dimensions
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
 import {addEntry, updateEntry} from '../redux/reducers/journey'
@@ -17,7 +18,9 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import Carousel from 'react-native-snap-carousel';
-import { anyTypeAnnotation } from '@babel/types'
+
+
+const { height, width } = Dimensions.get('window');
 
 class JourneyForm extends Component {
   constructor(props) {
@@ -27,7 +30,10 @@ class JourneyForm extends Component {
         images: [],
         stressLevel: 0,
         diet: "",
-        description: ""
+        description: "",
+        entries: [
+          'https://i.imgur.com/UYiroysl.jpg' 
+        ]
     }
     this.handleSubmission = this.handleSubmission.bind(this)
   }
@@ -110,13 +116,30 @@ class JourneyForm extends Component {
     }
   }
 
+  renderItem = ({ item }) => {
+    return (
+        <Image source={{ uri: item }} style={styles.logoStyle} />
+    );
+  }
+
   render() {
+    console.log(this.state)
     return (
       <ScrollView style={styles.container}>
           <Text style={styles.header}>Entry</Text>
           {
             this.state.images.length > 0 ?
-            <Image source={{ uri: this.state.images[0] }} style={styles.image} /> : null
+            <Carousel
+              inactiveSlideOpacity={0.6}
+              inactiveSlideScale={0.65}
+              firstItem={1}
+              sliderWidth={width}
+              itemWidth={width/3}
+              data={this.state.images}
+              renderItem={this.renderItem}
+              containerCustomStyle={{ overflow: 'visible' }}
+              contentContainerCustomStyle={{ overflow: 'visible' }}
+            /> : null
           }
           <TextInputMask
               style={styles.input}
@@ -244,10 +267,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#BFD7ED'
   },
-  image: { 
-    width: 200, 
-    height: 200,
-    marginBottom: 30,
-    alignSelf: 'center'
+  logoStyle: {
+    width: width / 3,
+    height: width / 3
   }
 })
