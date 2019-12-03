@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import Stars from 'react-native-stars';
-import Button from 'apsl-react-native-button';
 import { withNavigation } from "react-navigation";
 import {connect} from 'react-redux'
 
@@ -26,6 +24,12 @@ class ProductCard extends React.Component {
     }
   }
 
+  // since props are being passed down from the parent, parent state updates will only update through this lifecycle hook!!!
+  componentWillReceiveProps(nextProps) {
+    this.setState({name: nextProps.state.name, imageUrl: nextProps.state.imageUrl, brand: nextProps.state.brand, id: nextProps.state.id, ingredients: nextProps.state.ingredients})
+  }
+
+
   render() {
     return (
       <View style={styles.card}>
@@ -40,11 +44,28 @@ class ProductCard extends React.Component {
             <View>
               <TouchableOpacity 
                 style={{width: 45, borderWidth: 1, borderColor: '#dadada', borderRadius:10, padding: 15}}
-                onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients, category: this.state.category});}}> 
+                onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients, category: this.state.category, getNewProductRec: this.props.getNewProductRec});}}> 
                 <Text style={{ fontWeight: "bold", fontSize: 18, color: "grey" }}>></Text>
               </TouchableOpacity>
             </View>
           </View>
+
+        
+        {/***** WILL NEED TO MOVE THIS CODE TO SINGLE PRODUCT VIEW! TESTING HERE FOR NOW *****/}
+          <View>
+            <TouchableOpacity 
+              // style={styles.seeProduct}
+              // onPress is taking in the stateId and the ratingId *** DUMMY DATA FOR RATING RIGHT NOW ***
+              onPress={() => 
+                this.props.getNewProductRec(this.state.id, 3)
+              }
+            > 
+              <Text style={{ fontWeight: "bold", fontSize: 18, }}>New Recommendations</Text>
+            </TouchableOpacity>
+          </View>
+        {/* MOVE EVERYTHING BT COMMENTS TO SINGLE PRODUCT VIEW */}
+          
+
       </View>
     )
   }
@@ -56,6 +77,7 @@ const mapState = state => ({
 
 
 export default withNavigation(connect(mapState, null)(ProductCard))
+
 
 const styles = StyleSheet.create({
   card: {
@@ -69,19 +91,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly", 
     alignItems: "center", 
     marginRight: 18,
-    
-    // borderWidth: 2,
-    // borderColor: "#ebeff2"
-    
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 100,
-    // },
-    // shadowOpacity: 0.11,
-    // shadowRadius: 2.11,
-
-    // elevation: 14,
   }, 
   image: {
     width: 225, 
@@ -96,5 +105,15 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "bold", 
     fontSize: 17
+  }, 
+  seeProduct: {
+    width: 45, 
+    borderWidth: 1, 
+    borderColor: "#a7caeb", 
+    borderRadius: 100, 
+    backgroundColor: "#a7caeb",
+    paddingTop: 7,
+    paddingBottom: 10,
+    paddingLeft: 15,
   }
 })
