@@ -33,9 +33,17 @@ class SingleProduct extends React.Component {
       category: this.props.navigation.getParam("category"),
       userId: this.props.user.id,
       viewIngredients: true,
-      viewReview: false
+      viewReview: false,
+      getNewProductRec: this.props.navigation.getParam("getNewProductRec"),
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('nextProps is....',nextProps.navigation.getParam("name"))
+    // let root = nextProps.navigation.state.params
+    // this.setState({name: root.name, brand: root.brand, productId: root.productId, imageUrl: root.imageUrl, ingredients:root.ingredients, category: root.category, })
+  }
+
 
   IngredientsPage = ({ label }) => (
     <View style={{ marginTop: 30 }} >
@@ -80,7 +88,11 @@ class SingleProduct extends React.Component {
       </Text>
      <View style={styles.btnContainer}>
                     <TouchableOpacity
-                      style={styles.userBtn} >
+                      style={styles.userBtn} 
+                      onPress={() => {
+                        this.state.getNewProductRec(this.state.productId, 3)
+                        // console.log(this.state.productId)
+                      }}>
                       <Text style={styles.btnText}>Get a new { this.state.category.toLowerCase() }! </Text>
                     </TouchableOpacity>
             </View>

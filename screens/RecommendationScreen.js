@@ -113,20 +113,21 @@ class RecommendationScreen extends React.Component {
           {/* Product no 1 - cleanser */}
           { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser} getNewProductRec={this.getNewProductRec} /> : null }
 
+
           <Text></Text>
           
           {/* Product no 2 - toner */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner}  /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner}  getNewProductRec={this.getNewProductRec}/> : null }
 
           <Text></Text>
 
           {/* product no. 3 - moisturizer */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer} /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum} getNewProductRec={this.getNewProductRec}/> : null }
 
           <Text></Text>
 
           {/* product no. 4 - sunscreen */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum}  /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer}  getNewProductRec={this.getNewProductRec}/> : null }
 
           <Text></Text>
 
