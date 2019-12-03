@@ -15,8 +15,7 @@ const clearedRecs = () => ({
 // for new users when they sign up only --> hook up to submit page 
 export const getRecommendations = (userId, skinTypeId) => async dispatch => {
   try {
-    // https://skinrx-server.herokuapp.com/api/recommendations/${userId}
-    const {data} = await axios.post(`http://172.16.26.91:8080/api/recommendations/${userId}`, {skinTypeId})
+    const {data} = await axios.post(`https://skinrx-server.herokuapp.com/api/recommendations/${userId}`, {skinTypeId})
     dispatch(gotRecommendations(data))
   } catch (error) {
     console.log(error)
@@ -26,7 +25,7 @@ export const getRecommendations = (userId, skinTypeId) => async dispatch => {
 // for exisiting users  
 export const getExistingUserRecs = (userId) => async dispatch => {
   try {
-    const {data} = await axios.get(`http://172.16.26.91:8080/api/recommendations/${userId}`)
+    const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/recommendations/${userId}`)
     dispatch(gotRecommendations(data))
   } catch (error) {
     console.error(error)
@@ -36,7 +35,7 @@ export const getExistingUserRecs = (userId) => async dispatch => {
 
 export const getNewRecommendation = (userId, category, productId, skinTypeId, userRating) => async dispatch => {
   try {
-    await axios.put(`http://172.16.26.91:8080/api/recommendations/${userId}`, {category, productId, skinTypeId, userRating})
+    await axios.put(`https://skinrx-server.herokuapp.com/api/recommendations/${userId}`, {category, productId, skinTypeId, userRating})
     dispatch(getExistingUserRecs(userId))
   } catch (error) {
     console.error(error)
