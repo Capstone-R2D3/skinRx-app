@@ -22,8 +22,7 @@ class RecommendationScreen extends React.Component {
       userId: this.props.user.id,
       skinTypeId: this.props.user.skinTypeId, 
       selected: 'cleanser',    
-      // screenWidth: Dimensions.get('window').width,
-      screenWidth: 320,
+      screenWidth: Dimensions.get('window').width - 55,
     }
     this.getNewProductRec = this.getNewProductRec.bind(this)
     this.scrollToA = this.scrollToA.bind(this)
@@ -40,8 +39,10 @@ class RecommendationScreen extends React.Component {
   }
 
   async getNewProductRec(productId, userRating) {
-    console.log('hitting product card & coming back!',productId, userRating)
+    // console.log('hitting product card & coming back!',productId, userRating)
     await this.props.getNewRecommendation(this.state.userId, this.state.selected, productId, this.state.skinTypeId, userRating)
+    // console.log('lets see the state', this.props.recommendations)
+    await this.props.getExistingUserRecs(this.state.userId)
   }
 
   // scrolling functionality
@@ -67,15 +68,11 @@ class RecommendationScreen extends React.Component {
   
 
   render() {
-
-    // console.log('omg pls work wts going on', this.props.recommendations)
-
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
           
           <Text style={styles.header}>An easy four step process curated just for you</Text> 
-          
-          {/* <Text></Text> */}
+              
           <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 17, marginBottom: 17,}}>
             <TouchableOpacity onPress={this.scrollToA}>
               <Text style={ this.state.selected === 'cleanser' ? styles.clicked : styles.unselected }>Cleanser</Text>
@@ -96,35 +93,40 @@ class RecommendationScreen extends React.Component {
               contentContainerStyle={styles.contentContainer} 
               horizontal= {true}
               decelerationRate={0}
-              snapToInterval={320} //element width
+              snapToInterval={this.state.screenWidth} //element width
               snapToAlignment={"center"}
               showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={10}
+              scrollEventThrottle={1000}
               pagingEnabled
               ref={(scroller) => {this.scroller = scroller}}
+              onScroll={(event) => {
+                let nextx = event.nativeEvent.contentOffset.x;
+                let lowerBound = this.state.screenWidth * 0.85;
+                let upperBound = this.state.screenWidth * 1.15;
+                if(nextx < lowerBound / 2) this.setState({selected: "cleanser"})
+                else if(nextx > lowerBound && nextx < upperBound) this.setState({selected: "toner"})
+                else if(nextx > (lowerBound * 2) && nextx < (upperBound * 2)) this.setState({selected: "serum"})
+                else if(nextx > (lowerBound * 3) && nextx < (upperBound * 3)) this.setState({selected: "moisturizer"})
+              }}
           >
 
           {/* Product no 1 - cleanser */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser} getNewProductRec={this.getNewProductRec}/> : null }
-         {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser[0]} getNewProductRec={this.getNewProductRec}/> : null } */}
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser} getNewProductRec={this.getNewProductRec} /> : null }
 
           <Text></Text>
           
           {/* Product no 2 - toner */}
           { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner}  /> : null }
-          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner[0]}  /> : null } */}
 
           <Text></Text>
 
           {/* product no. 3 - moisturizer */}
           { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer} /> : null }
-          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer[0]}  /> : null } */}
 
           <Text></Text>
 
           {/* product no. 4 - sunscreen */}
           { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum}  /> : null }
-          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum[0]}  /> : null } */}
 
           <Text></Text>
 
@@ -148,17 +150,12 @@ const mapDispatch = dispatch => ({
 export default connect(mapState, mapDispatch)(RecommendationScreen)
 
 
-// RecommendationScreen.navigationOptions = {
-//   title: 'Recommended Products',
-// };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10,
     paddingHorizontal: 15,
-    // backgroundColor: "#f9f9f9",
     backgroundColor: "#ebeff2",
     // backgroundColor: "#a7caeb"
   },
@@ -169,8 +166,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 50,
-    marginBottom: 17,
+    marginTop: "11%",
+    marginBottom: "7%",
   }, 
   text: {
     fontSize: 20,
