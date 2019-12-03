@@ -3,13 +3,16 @@ import axios from 'axios'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_SKIN_TYPE = 'ADD_SKIN_TYPE'
+const GET_SKIN_TYPE = 'GET_SKIN_TYPE'
 
 const initialState = {
-  user: {}
+  user: {},
+  skinType: {}
 }
 
 const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER, user: {}})
+const removeUser = () => ({type: REMOVE_USER, user: {}, skinType: {}})
+const gotSkinType = skinType => ({type: GET_SKIN_TYPE, skinType})
 
 export const me = (email) => async dispatch => {
   try {
@@ -72,6 +75,16 @@ export const addSkinType = (userId, result) => async dispatch => {
   }
 }
 
+export const getSkinType = (id) => async dispatch => {
+  try {
+    const res = await axios.get(`https://skinrx-server.herokuapp.com/api/skintypes/${id}`)
+    console.log('dataaaaaaaaaa', res.data)
+    dispatch(gotSkinType(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const logout = () => async dispatch => {
   try {
     dispatch(removeUser())
@@ -85,7 +98,9 @@ export default function(state = initialState, action) {
     case GET_USER:
       return {...state, user: action.user}
     case REMOVE_USER:
-      return {...state, user: action.user}
+      return {...state, user: action.user, skinType: action.skinType}
+    case GET_SKIN_TYPE:
+      return {...state, skinType: action.skinType}
     default:
       return state
   }
