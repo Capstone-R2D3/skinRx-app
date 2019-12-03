@@ -30,10 +30,7 @@ class JourneyForm extends Component {
         images: [],
         stressLevel: 0,
         diet: "",
-        description: "",
-        entries: [
-          'https://i.imgur.com/UYiroysl.jpg' 
-        ]
+        description: ""
     }
     this.handleSubmission = this.handleSubmission.bind(this)
   }
@@ -118,7 +115,7 @@ class JourneyForm extends Component {
 
   renderItem = ({ item }) => {
     return (
-        <Image source={{ uri: item }} style={styles.logoStyle} />
+        <Image source={{ uri: item }} style={styles.image} />
     );
   }
 
@@ -129,17 +126,21 @@ class JourneyForm extends Component {
           <Text style={styles.header}>Entry</Text>
           {
             this.state.images.length > 0 ?
-            <Carousel
-              inactiveSlideOpacity={0.6}
-              inactiveSlideScale={0.65}
-              firstItem={1}
-              sliderWidth={width}
-              itemWidth={width/3}
-              data={this.state.images}
-              renderItem={this.renderItem}
-              containerCustomStyle={{ overflow: 'visible' }}
-              contentContainerCustomStyle={{ overflow: 'visible' }}
-            /> : null
+            <View style={{marginBottom: 20}}>
+              <Carousel
+                inactiveSlideOpacity={0.6}
+                inactiveSlideScale={0.65}
+                firstItem={0}
+                sliderWidth={width}
+                itemWidth={width/2}
+                data={this.state.images}
+                renderItem={this.renderItem}
+                containerCustomStyle={{ overflow: 'visible' }}
+                contentContainerCustomStyle={{ overflow: 'visible' }}
+                layout={'stack'} 
+                layoutCardOffset={9}
+              />
+            </View> : null
           }
           <TextInputMask
               style={styles.input}
@@ -267,8 +268,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#BFD7ED'
   },
-  logoStyle: {
-    width: width / 3,
-    height: width / 3
+  image: {
+    width: width / 2,
+    height: width / 2,
+    borderRadius: 15
   }
 })
