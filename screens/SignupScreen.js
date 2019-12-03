@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ImageBackground
+  ScrollView
 } from "react-native";
 import { signUp, me, logout } from "../redux/reducers/users";
 import { connect } from "react-redux";
@@ -21,7 +21,7 @@ class SignupScreen extends Component {
       password: "",
       showMessage: false,
       incorrect: false
-    };
+    }
   }
 
   async userSignUp() {
@@ -63,54 +63,44 @@ class SignupScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={{
-            uri:
-              "https://www.richbeganyphoto.com/wp-content/uploads/2018/07/Awake-GelacticDreamHydratingMasK-SmearOnly-128.jpg"
-          }}
-          style={styles.backgroundImage}
-        >
-          <Ionicons
+      <ScrollView>
+        <Ionicons
             name="ios-arrow-round-back"
-            color="white"
-            size={70}
+            color="#dadada"
+            size={50}
             style={styles.backBtn}
-            onPress={() => this.props.navigation.navigate("Welcome")}
-          />
-          <Text style={styles.header}>Sign Up</Text>
+            onPress={() => this.props.navigation.navigate("Welcome")} />
+        <View style={styles.container}>
+          <Text style={styles.header}>New around town?</Text>
+          <Text style={{fontSize: 18, marginBottom: 45,}}>We're happy you're here.</Text>
           <TextInput
             style={styles.input}
             placeholder="First name"
             textContentType="name"
             autoCapitalize="words"
             onChangeText={text => this.setState({ firstName: text })}
-            value={this.state.firstName}
-          />
+            value={this.state.firstName} />
           <TextInput
             style={styles.input}
             placeholder="Last name"
             textContentType="name"
             autoCapitalize="words"
             onChangeText={text => this.setState({ lastName: text })}
-            value={this.state.lastName}
-          />
+            value={this.state.lastName} />
           <TextInput
             style={styles.input}
             placeholder="Email"
             textContentType="emailAddress"
             autoCapitalize="none"
             onChangeText={text => this.setState({ email: text })}
-            value={this.state.email}
-          />
+            value={this.state.email} />
           <TextInput
             style={styles.input}
             placeholder="Password"
             autoCapitalize="none"
             secureTextEntry
             onChangeText={text => this.setState({ password: text })}
-            value={this.state.password}
-          />
+            value={this.state.password} />
           {this.state.showMessage ? (
             <Text style={styles.incorrect}>
               Please fill in all fields to create your account.
@@ -125,13 +115,15 @@ class SignupScreen extends Component {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.userBtnLogin}
-              onPress={() => this.userSignUp()}
-            >
-              <Text style={styles.btnTextLogin}>Next</Text>
+              onPress={() => this.userSignUp()}>
+              <Text style={styles.btnTextLogin}>Continue</Text>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={styles.redirect}>Already have an account? Log in here.</Text>
+        </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -154,88 +146,56 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: "white"
-  },
-  backgroundImage: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    resizeMode: "cover"
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: 25,
   },
   backBtn: {
-    marginTop: 20,
+    marginTop: 25,
     marginLeft: 20
   },
   input: {
     width: "75%",
     padding: 15,
     marginBottom: 10,
-    backgroundColor: "white",
-    borderRadius: 25,
-    alignSelf: "center"
+    borderWidth: 1, 
+    borderColor: "#dadada",
   },
   header: {
-    fontFamily: "Avenir",
-    fontWeight: "bold",
     textAlign: "center",
-    fontSize: 55,
-    marginBottom: 60,
-    marginTop: "20%",
-    color: "white",
-    letterSpacing: 3
+    fontSize: 32,
+    marginBottom: 15, 
+    fontWeight: "bold",
   },
   btnContainer: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20
-  },
-  userBtn: {
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 25,
-    backgroundColor: "white",
-    padding: 15,
-    width: "75%",
-    display: "flex",
-    marginBottom: 10
-  },
-  btnText: {
-    fontSize: 18,
-    textAlign: "center",
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    color: "#b1d5e0",
-    letterSpacing: 2
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   userBtnLogin: {
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 25,
-    backgroundColor: "transparent",
+    marginTop: 15,
     padding: 15,
     width: "75%",
     display: "flex",
-    marginBottom: 10
+    borderRadius: 25,
+    backgroundColor: "#a7caeb",
   },
   btnTextLogin: {
     fontSize: 18,
-    textAlign: "center",
-    textTransform: "uppercase",
+    textAlign: "center", 
+    textTransform: "uppercase", 
+    letterSpacing: 2,
+    color: "white", 
     fontWeight: "bold",
-    color: "white",
-    letterSpacing: 2
   },
   redirect: {
     marginTop: 20,
     fontSize: 16
   },
   incorrect: {
-    color: "white",
+    color: 'red',
     marginBottom: 10,
     width: "80%",
     textAlign: "center",
-    marginLeft: "10%"
   }
 });

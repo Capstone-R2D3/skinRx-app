@@ -47,9 +47,14 @@ export const signUp = (firstName, lastName, email, password) => async dispatch =
   }
 }
 
-export const updateUserProfile = (id, firstName, lastName, email) => async dispatch => {
+export const updateUserProfile = (id, firstName, lastName, email, password) => async dispatch => {
+  let res
   try {
-    const res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email})
+    if (password) {
+      res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email, password})
+    } else {
+      res = await axios.put(`https://skinrx-server.herokuapp.com/auth/${id}`, {firstName, lastName, email})
+    }
     dispatch(getUser(res.data))
   } catch(error) {
     console.error(error)
