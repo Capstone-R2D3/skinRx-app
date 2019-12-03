@@ -26,6 +26,9 @@ class ProductCard extends React.Component {
   }
 
   render() {
+
+    // console.log('from product card pls', this.props.state)
+
     return (
       <View style={styles.card}>
           <Image source={{uri: this.state.imageUrl}} style={styles.image} />
@@ -38,12 +41,27 @@ class ProductCard extends React.Component {
 
             <View>
               <TouchableOpacity 
-                style={{width: 45, borderWidth: 1, borderColor: '#dadada', borderRadius:10, padding: 15}}
+                style={styles.seeProduct}
                 onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients});}}> 
-                <Text style={{ fontWeight: "bold", fontSize: 18, color: "grey" }}>></Text>
+                <Text style={{ fontWeight: "bold", fontSize: 18, color: "white" }}>></Text>
               </TouchableOpacity>
             </View>
           </View>
+
+        
+        {/***** WILL NEED TO MOVE THIS CODE TO SINGLE PRODUCT VIEW! TESTING HERE FOR NOW *****/}
+          <View>
+            <TouchableOpacity 
+              // style={styles.seeProduct}
+              // onPress is taking in the stateId and the ratingId *** DUMMY DATA FOR RATING RIGHT NOW ***
+              onPress={() => this.props.getNewProductRec(this.state.id, 5)}
+            > 
+              <Text style={{ fontWeight: "bold", fontSize: 18, }}>New Recommendations</Text>
+            </TouchableOpacity>
+          </View>
+        {/* MOVE EVERYTHING BT COMMENTS TO SINGLE PRODUCT VIEW */}
+          
+
       </View>
     )
   }
@@ -55,6 +73,7 @@ const mapState = state => ({
 
 
 export default withNavigation(connect(mapState, null)(ProductCard))
+
 
 const styles = StyleSheet.create({
   card: {
@@ -95,5 +114,16 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "bold", 
     fontSize: 17
+  }, 
+  seeProduct: {
+    width: 45, 
+    borderWidth: 1, 
+    borderColor: "#a7caeb", 
+    borderRadius: 100, 
+    backgroundColor: "#a7caeb",
+    paddingTop: 7,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    // paddingRight: 0,
   }
 })

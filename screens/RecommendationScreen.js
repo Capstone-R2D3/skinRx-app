@@ -11,10 +11,9 @@ import {
 } from 'react-native';
 import ProductCard from './ProductCard';
 import {connect} from 'react-redux'
-import {getRecommendations} from '../redux/reducers/recommendations'
+import { getRecommendations, getExistingUserRecs, getNewRecommendation } from '../redux/reducers/recommendations'
 import { ThemeConsumer } from 'react-native-elements';
 
-let scrollYPos = 0;
 
 class RecommendationScreen extends React.Component {
   constructor(props) {
@@ -26,6 +25,7 @@ class RecommendationScreen extends React.Component {
       // screenWidth: Dimensions.get('window').width,
       screenWidth: 320,
     }
+    this.getNewProductRec = this.getNewProductRec.bind(this)
     this.scrollToA = this.scrollToA.bind(this)
     this.scrollToB = this.scrollToB.bind(this)
     this.scrollToC = this.scrollToC.bind(this)
@@ -33,7 +33,15 @@ class RecommendationScreen extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getRecommendations(this.state.userId, this.state.skinTypeId)
+    // FOR EXISTING USERS!
+    await this.props.getExistingUserRecs(this.state.userId)
+    // *** FOR NEW USERS ***
+    // await this.props.getRecommendations(this.state.userId, this.state.skinTypeId)
+  }
+
+  async getNewProductRec(productId, userRating) {
+    console.log('hitting product card & coming back!',productId, userRating)
+    await this.props.getNewRecommendation(this.state.userId, this.state.selected, productId, this.state.skinTypeId, userRating)
   }
 
   // scrolling functionality
@@ -59,13 +67,16 @@ class RecommendationScreen extends React.Component {
   
 
   render() {
+
+    // console.log('omg pls work wts going on', this.props.recommendations)
+
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
           
           <Text style={styles.header}>An easy four step process curated just for you</Text> 
           
           {/* <Text></Text> */}
-          <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 25}}>
+          <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 17, marginBottom: 17,}}>
             <TouchableOpacity onPress={this.scrollToA}>
               <Text style={ this.state.selected === 'cleanser' ? styles.clicked : styles.unselected }>Cleanser</Text>
             </TouchableOpacity>
@@ -94,22 +105,26 @@ class RecommendationScreen extends React.Component {
           >
 
           {/* Product no 1 - cleanser */}
-         { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser[0]} /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser} getNewProductRec={this.getNewProductRec}/> : null }
+         {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].cleanser[0]} getNewProductRec={this.getNewProductRec}/> : null } */}
 
           <Text></Text>
           
           {/* Product no 2 - toner */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner[0]}  /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner}  /> : null }
+          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].toner[0]}  /> : null } */}
 
           <Text></Text>
 
           {/* product no. 3 - moisturizer */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer[0]}  /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer} /> : null }
+          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer[0]}  /> : null } */}
 
           <Text></Text>
 
           {/* product no. 4 - sunscreen */}
-          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum[0]}  /> : null }
+          { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum}  /> : null }
+          {/* { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].serum[0]}  /> : null } */}
 
           <Text></Text>
 
@@ -118,6 +133,19 @@ class RecommendationScreen extends React.Component {
     )
   }
 }
+
+const mapState = state => ({
+  recommendations: state.recommendations,
+  user: state.users.user,
+})
+
+const mapDispatch = dispatch => ({
+  getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
+  getExistingUserRecs: (userId) => dispatch(getExistingUserRecs(userId)),
+  getNewRecommendation: (userId, category, productId, skinTypeId, userRating) => dispatch(getNewRecommendation(userId, category, productId, skinTypeId, userRating))
+})
+
+export default connect(mapState, mapDispatch)(RecommendationScreen)
 
 
 // RecommendationScreen.navigationOptions = {
@@ -157,15 +185,3 @@ const styles = StyleSheet.create({
     color: "grey"
   }
 })
-
-
-const mapState = state => ({
-  recommendations: state.recommendations,
-  user: state.users.user,
-})
-
-const mapDispatch = dispatch => ({
-  getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId))
-})
-
-export default connect(mapState, mapDispatch)(RecommendationScreen)

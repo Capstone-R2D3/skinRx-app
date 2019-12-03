@@ -22,7 +22,8 @@ export const me = (email) => async dispatch => {
 
 export const auth = (email, password) => async dispatch => {
   try {
-    const res = await axios.post(`https://skinrx-server.herokuapp.com/auth/login`, {email, password})
+    // CHANGE BACK ROUTE!
+    const res = await axios.post(`http://172.16.26.91:8080/auth/login`, {email, password})
     if (res.request.response === 'Wrong username and/or password') {
       dispatch(getUser(res.request.response))
     } else {
