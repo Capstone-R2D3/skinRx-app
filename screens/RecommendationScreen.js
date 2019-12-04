@@ -68,7 +68,7 @@ class RecommendationScreen extends React.Component {
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
         <ImageBackground source={require('./images/background1.png')} style={styles.backgroundImage}>
           
-          <Text style={styles.header}>An easy four step process curated just for you</Text> 
+          <Text style={styles.header}>An easy, four-step process curated just for you</Text> 
               
           <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 17, marginBottom: 17,}}>
             <TouchableOpacity onPress={this.scrollToA}>
