@@ -28,9 +28,10 @@ class JourneyForm extends Component {
     this.state = {
         date: "",
         images: [],
-        stressLevel: 0,
+        stressLevel: 3,
         diet: "",
-        description: ""
+        description: "",
+        entry: null
     }
     this.handleSubmission = this.handleSubmission.bind(this)
   }
@@ -79,36 +80,65 @@ class JourneyForm extends Component {
     return data;
   };
 
-  componentDidMount () {
-    const entry = this.props.navigation.getParam("entry");
+  componentWillReceiveProps(props){
+    const entry = props.entry
     if(entry !== null){
       this.setState({
         date: entry.date,
         images: entry.imageUrls,
         stressLevel: entry.stressLevel,
         diet: entry.diet,
-        description: entry.description
+        description: entry.description,
+        entry: entry.id
       })
     }
   }
+  // componentDidMount () {
+  //   const entry = this.props.navigation.getParam("entry");
+  //   if(entry !== null){
+  //     this.setState({
+  //       date: entry.date,
+  //       images: entry.imageUrls,
+  //       stressLevel: entry.stressLevel,
+  //       diet: entry.diet,
+  //       description: entry.description
+  //     })
+  //   }
+  // }
 
   async handleSubmission () {
     if(this.state.image === null){
       Alert.alert('Please add an image to your entry');
     } else {
-      const entry = this.props.navigation.getParam("entry");
+      // const entry = this.props.navigation.getParam("entry");
       const formData = this.createFormData(this.state.images, {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
         diet: this.state.diet,
         description: this.state.description
       })
-      if(entry === null){
+      if(this.state.entry === null){
         await this.props.addEntry(this.props.userId, formData)
-        this.props.navigation.navigate('JourneyEntries');
+        this.setState({
+          date: "",
+          images: [],
+          stressLevel: 1,
+          diet: "",
+          description: "",
+          entry: null
+        })
+        Alert.alert('Entry Added!');
       } else {
-        await this.props.updateEntry(this.props.userId, entry.id, formData)
-        this.props.navigation.navigate('JourneyEntries');
+        await this.props.updateEntry(this.props.userId, this.state.entry, formData)
+        this.setState({
+          date: "",
+          images: [],
+          stressLevel: 1,
+          diet: "",
+          description: "",
+          entry: null
+        })
+        Alert.alert('Entry Added!');
       }
     }
   }
@@ -122,23 +152,23 @@ class JourneyForm extends Component {
   render() {
     console.log(this.state)
     return (
-      <ScrollView style={styles.container}>
-          <Text style={styles.header}>Entry</Text>
+      <ScrollView contentContainerStyle={styles.container}>
+          {/* <Text style={styles.header}>Entry</Text> */}
           {
             this.state.images.length > 0 ?
-            <View style={{marginBottom: 20}}>
+            <View style={{marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <Carousel
                 inactiveSlideOpacity={0.6}
                 inactiveSlideScale={0.65}
                 firstItem={0}
-                sliderWidth={width}
-                itemWidth={width/2}
+                sliderWidth={300}
+                itemWidth={240}
                 data={this.state.images}
                 renderItem={this.renderItem}
                 containerCustomStyle={{ overflow: 'visible' }}
                 contentContainerCustomStyle={{ overflow: 'visible' }}
                 layout={'stack'} 
-                layoutCardOffset={9}
+                layoutCardOffset={2}
               />
             </View> : null
           }
@@ -157,14 +187,14 @@ class JourneyForm extends Component {
               }}
           />
           <Slider 
-              style={{width: 300, alignSelf: 'center'}}
+              style={{width: '100%', alignSelf: 'center'}}
               maximumValue={5} 
               minimumValue={1} 
               value={this.state.stressLevel}
               step={1}
               onValueChange={value => this.setState({stressLevel: value})} 
-              minimumTrackTintColor={'white'}
-              maximumTrackTintColor={'#778899'}
+              minimumTrackTintColor={'#BFD7ED'}
+              maximumTrackTintColor={'#dadada'}
           />
           <AutoGrowingTextInput
               style={styles.input}
@@ -210,25 +240,26 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: '#BFD7ED'
+    backgroundColor: 'white',
+    padding: '7%'
   },
-  header: {
-    fontFamily: 'Avenir',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 35,
-    marginBottom: 30,
-    marginTop: "10%",
-    color: "white",
-    letterSpacing: 3,
-  },
+  // header: {
+  //   fontFamily: 'Avenir',
+  //   fontWeight: 'bold',
+  //   textAlign: 'center',
+  //   fontSize: 35,
+  //   marginBottom: 30,
+  //   marginTop: "10%",
+  //   color: "white",
+  //   letterSpacing: 3,
+  // },
   input: {
-    width: "75%",
-    padding: 10,
+    width: "100%",
+    padding: 15,
     marginBottom: 10,
-    backgroundColor: "white",
-    borderRadius: 5,
-    alignSelf: 'center'
+    borderWidth: 1, 
+    borderColor: "#dadada",
+    borderRadius: 10
   },
   AddImageBtn: {
     borderWidth: 2,
@@ -242,35 +273,31 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   SaveBtn: {
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 25,
-    backgroundColor: "white",
-    padding: 15,
+    backgroundColor: "#BFD7ED",
+    padding: 10,
     width: '60%',
-    display: 'flex',
-    marginBottom: 10,
-    alignSelf: 'center'
+    marginBottom: 5,
+    alignSelf: 'center',
+    borderRadius: 15
   },
   AddImageText: {
     fontSize: 15,
+    textAlign: "center",
+    letterSpacing: 2, 
+    fontWeight: "bold",
+    color: '#a8a8a8'
+  },
+  SaveText: {
+    fontSize: 20,
     textAlign: "center",
     textTransform: "uppercase", 
     letterSpacing: 2, 
     fontWeight: "bold",
     color: 'white'
   },
-  SaveText: {
-    fontSize: 15,
-    textAlign: "center",
-    textTransform: "uppercase", 
-    letterSpacing: 2, 
-    fontWeight: "bold",
-    color: '#BFD7ED'
-  },
   image: {
-    width: width / 2,
-    height: width / 2,
-    borderRadius: 15
+    width: 180,
+    height: 180,
+    borderRadius: 10
   }
 })
