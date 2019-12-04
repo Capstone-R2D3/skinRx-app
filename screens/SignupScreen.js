@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    marginTop: 25,
+    marginTop: "11%",
   },
   backBtn: {
     marginTop: 25,
