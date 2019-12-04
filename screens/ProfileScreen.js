@@ -8,7 +8,7 @@ import { View,
   ScrollView,
 } from 'react-native'
 import { connect } from 'react-redux';
-import { updateUserProfile, logout } from '../redux/reducers/users';
+import { updateUserProfile, logout, getSkinType } from '../redux/reducers/users';
 import {clearRecs} from '../redux/reducers/recommendations'
 
 
@@ -21,7 +21,13 @@ class ProfileScreen extends React.Component {
       lastName: this.props.user.lastName, 
       email: this.props.user.email,
       password: null,
+      changedField: false, 
+      showMessage: false
     }
+  }
+
+  componentDidMount() {
+    this.props.getSkinType(this.props.user.skinTypeId)
   }
 
   handleLogout() {
@@ -31,8 +37,6 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-
-    // console.log('from profile page', this.props.user)
 
     return (
       <View style={styles.container}>
@@ -47,12 +51,12 @@ class ProfileScreen extends React.Component {
                 <Image source={require('./images/skincare-icon.png')} style={{width:75, height:75, marginRight: 18,}}></Image>
               </View>
               <View>
-                {/*********** need to set up router and pass in skintype prop ***********/}
-                <Text>SKIN TYPE: {'Pass In Prop Here'}</Text>
+                <Text>Skin Type: { this.props.skinType ? this.props.skinType : null }</Text>
                 <Text />
-                {/*********** need to have a link for users to retake quiz ***********/}
                 <Text>Think it might be different?</Text>
-                <Text>Retake our quiz!</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}>
+                  <Text>Retake our quiz!</Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -66,7 +70,7 @@ class ProfileScreen extends React.Component {
                     style={styles.input}
                     placeholder="First name"
                     textContentType="givenName"
-                    onChangeText={text => this.setState({ firstName: text })}
+                    onChangeText={text => this.setState({ firstName: text, changedField: true })}
                     value={this.state.firstName} />
                 </View>
                 <View style={styles.editProfile}>
@@ -75,7 +79,7 @@ class ProfileScreen extends React.Component {
                   style={styles.input}
                   placeholder="Last name"
                   textContentType="familyName"
-                  onChangeText={text => this.setState({ lastName: text })}
+                  onChangeText={text => this.setState({ lastName: text, changedField: true })}
                   value={this.state.lastName} />
                 </View>
                 <View style={styles.editProfile}>
@@ -84,7 +88,7 @@ class ProfileScreen extends React.Component {
                   style={styles.input}
                   placeholder="Email"
                   textContentType="emailAddress"
-                  onChangeText={text => this.setState({ email: text })}
+                  onChangeText={text => this.setState({ email: text, changedField: true })}
                   value={this.state.email} />
                 </View>
                 <View style={styles.editProfile}>
@@ -93,16 +97,25 @@ class ProfileScreen extends React.Component {
                     style={styles.input}
                     placeholder="•••••••"
                     secureTextEntry
-                    onChangeText={text => this.setState({ password: text })}
+                    onChangeText={text => this.setState({ password: text, changedField: true })}
                     value={this.state.password} />
                 </View>
             </View>
+
+            {
+              this.state.showMessage ? <Text style={styles.incorrect}>Please edit a field to update your profile.</Text> : <Text style={styles.incorrect}> </Text>
+            }
 
             {/* UPDATE BUTTON */}
             <View style={styles.btnContainer}>
                     <TouchableOpacity
                       style={styles.userBtn}
-                      onPress={() => this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password)}>
+                      onPress={() => {
+                        this.state.changedField 
+                        ? ( this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password),
+                          this.setState({showMessage: false}) ) 
+                        : this.setState({showMessage: true})
+                      }}>
                       <Text style={styles.btnText}>Update Info</Text>
                     </TouchableOpacity>
             </View>
@@ -126,10 +139,12 @@ class ProfileScreen extends React.Component {
 }
 
 const mapState = state => ({
-  user: state.users.user
+  user: state.users.user,
+  skinType: state.users.skinType.name
 })
 
 const mapDispatch = dispatch => ({
+  getSkinType: (id) => dispatch(getSkinType(id)),
   updateUserProfile: (id, firstName, lastName, email, password) => dispatch(updateUserProfile(id, firstName, lastName, email, password)),
   logout: () => dispatch(logout()),
   clearRecs: () => dispatch(clearRecs())
@@ -200,7 +215,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   userBtn: {
-    marginTop: 20,
+    marginTop: 7,
     marginBottom: 50,
     backgroundColor: "#A7CAEB",
     padding: 11,
@@ -220,4 +235,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16
   },
+  incorrect: {
+    marginTop: 5,
+    color: 'red',
+  }
 });

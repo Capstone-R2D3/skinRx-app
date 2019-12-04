@@ -11,9 +11,11 @@ import recommendations from './reducers/recommendations'
 const reducer = combineReducers({ products, users, productReviews, journey, recommendations })
 
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
+  applyMiddleware(thunkMiddleware, )
 )
 
 const store = createStore(reducer, middleware)
 
 export default store
+
+// createLogger({collapsed: true})

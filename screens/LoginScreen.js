@@ -39,7 +39,6 @@ class LoginScreen extends Component {
   render() {
     return (
       <ScrollView>
-        {/* <Text style={{color: "#a7caeb", opacity: .1, fontSize: 150, zIndex: 0, position: "absolute", margin}}>skinRx</Text> */}
         <Ionicons 
             name="ios-arrow-round-back" 
             color="#dadada"
@@ -102,13 +101,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     // backgroundColor: "#f1f1f1",
-    marginTop: "12%", 
-    // zIndex: 10,
+    marginTop: "20%", 
   },
   backBtn: {
     marginTop: 25,
     marginLeft: 20, 
-    // zIndex: 5,
   },
   input: {
     width: "75%",
