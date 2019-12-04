@@ -113,15 +113,9 @@ const JourneyStack = createStackNavigator(
       screen: JourneyCalendar,
       navigationOptions: {header: null}
     },
-    JourneyEntries: {
-      screen: JourneyScreen,
-      navigationOptions: {header: null}
-    },
+    JourneyEntries: JourneyScreen,
     
-    JourneyForm: {
-      screen: JourneyForm,
-      navigationOptions: {header: null}
-    },
+    JourneyForm: JourneyForm,
   },
   config
 );

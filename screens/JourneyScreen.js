@@ -12,7 +12,6 @@ import {
 import { connect } from 'react-redux';
 import { getEntries, deleteEntry } from '../redux/reducers/journey';
 import JourneyCard from './JourneyCard';
-import { Agenda } from 'react-native-calendars';
 
 class JourneyScreen extends React.Component {
   constructor() {
@@ -43,14 +42,18 @@ class JourneyScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <TouchableOpacity style={styles.userBtn}> 
-          <Button title="Add Entry" textStyle={{color: 'grey'}} style={{borderWidth: 1, borderColor: 'grey', borderRadius:10}} 
-            onPress={() => {
-              this.props.navigation.navigate("JourneyForm", {
-                entry: null
-              });
-            }}></Button>
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Your Entries</Text>
+          <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("JourneyForm", {
+                  entry: null
+                });
+              }}
+          >
+              <Text>+</Text>
+          </TouchableOpacity>
+        </View>
         <View>
           {
             (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
@@ -73,21 +76,18 @@ const mapDispatch = dispatch => ({
 
 export default connect(mapState, mapDispatch)(JourneyScreen);
 
-JourneyScreen.navigationOptions = {
-  title: 'My Skin Journey',
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "white"
+    backgroundColor: "#A7CAEB"
   },
   header: {
-    textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   btnContainer: {
     display: "flex",
@@ -106,7 +106,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center"
   },
-  text: {
-    fontSize: 20,
-  }
+  headerText: {
+    color: 'white',
+    margin: '6%',
+    fontFamily: 'Avenir',
+    fontWeight: 'bold',
+    fontSize: 35,
+    letterSpacing: 2,
+    shadowColor: '#699add',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1
+  }, 
 });

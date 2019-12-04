@@ -44,7 +44,7 @@ class JourneyCalendar extends Component {
               textMonthFontFamily: 'Avenir',
               textDayHeaderFontFamily: 'Avenir',
               monthTextColor: 'white',
-              todayTextColor: 'navy',
+              todayTextColor: '#699add',
               dayTextColor: 'white',
               arrowColor: 'white',
               calendarBackground: '#A7CAEB',
@@ -99,12 +99,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2
   },
   btnText: {
-    color: '#A7CAEB',
     margin: '4%',
     fontFamily: 'Avenir',
     fontWeight: 'bold',
     fontSize: 14,
     letterSpacing: 2,
-    color: 'navy'
+    color: '#699add'
   },
 });

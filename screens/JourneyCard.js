@@ -16,33 +16,33 @@ class JourneyCard extends Component {
         return (
             <View style={styles.row}>
                 <View style={styles.date}>
-                    <Text>
+                    <Text style={{fontFamily: 'Avenir', color: 'white'} }>
                         {this.props.entry.date}
                     </Text>
                 </View>
                 <Image source={require('./images/entry-icon.png')} style={styles.bullet}/>
                 <View style={styles.entryContainer}>
                     <View style={styles.entry}>
-                        <Text>
+                        <Text style={styles.text}>
                             Stress Level: {this.props.entry.stressLevel}
                         </Text>
-                        <Text>
+                        <Text style={styles.text}>
                             Diet: {this.props.entry.diet}
                         </Text>
-                        <Text>
+                        <Text style={styles.text}>
                             Description: {this.props.entry.description}
                         </Text>
                         <TouchableOpacity
                             style={styles.userBtn}
                             onPress={() => this.props.delete(entryId)}
                         >
-                            <Text style={styles.btnText}>Delete</Text>
+                            <Text style={styles.text}>Delete</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.userBtn}
                             onPress={() => this.props.update(this.props.entry)}
                         >
-                            <Text style={styles.btnText}>Update</Text>
+                            <Text style={styles.text}>Update</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -62,27 +62,33 @@ const styles = StyleSheet.create({
     },
     date:{
         width: '20%',
-        padding: '4%'
+        padding: '5%'
     },
     bullet: {
         height: 14,
         width: 14,
         position: 'absolute',
-        left: '18%'
+        left: '18%',
+        zIndex: 2
     },
     entryContainer: {
         borderLeftWidth: 1,
-        borderLeftColor: '#A7CAEB',
+        borderLeftColor: 'white',
         flex: 1
     },
     entry: {
-        width: '80%',
-        backgroundColor: '#A7CAEB',
+        width: '85%',
+        backgroundColor: 'white',
         borderRadius: 5,
-        margin: 20,
-        shadowColor: '#000',
+        margin: '10%',
+        shadowColor: '#699add',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.8,
-        shadowRadius: 2
+        shadowRadius: 2,
+        padding: '7%',
+    },
+    text: {
+        color: '#699add',
+        fontFamily: 'Avenir'
     }
 });
