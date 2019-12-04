@@ -16,7 +16,8 @@ class ScanScreen extends React.Component {
     super(props) 
     this.state = {
       hasCameraPermission: null,
-      scanned: false
+      scanned: false,
+      ingredients: []
     }
   }
 
@@ -75,7 +76,9 @@ class ScanScreen extends React.Component {
       // get product information using the barcode and the barcode lookup api
       const res = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
       const productInfo = res.data.products[0];
+      
       await this.props.getProduct(productInfo.product_name.split(' - ')[1])
+
       Alert.alert(
         'Product scanned',
         `${productInfo.product_name}`,

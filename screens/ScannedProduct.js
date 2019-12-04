@@ -10,14 +10,13 @@ class ScannedProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: []
+      isInDatabase: false
     }
   }
 
   componentDidMount() {
-    console.log('mounted')
+    this.props.getToxicityScore(this.props.product.id)
   }
-
 
   IngredientsPage = ({ label, ingredients }) => (
     <View style={{ marginTop: 30 }} >
@@ -64,7 +63,7 @@ class ScannedProduct extends React.Component {
               <Text style={styles.name}>{productName}</Text>
             </View>
             <View style={styles.scoreContainer}>
-              <Text style={styles.score}>1</Text>
+              <Text style={styles.score}>{ this.props.score ? this.props.score : null }</Text>
           </View>
           </View>
 
@@ -89,6 +88,18 @@ class ScannedProduct extends React.Component {
     );
   }
 }
+
+const mapState = state => ({
+  score: state.products.score,
+  product: state.products.product,
+})
+
+const mapDispatch = dispatch => ({
+  getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
+  getProduct: (name) => dispatch(getProduct(name))
+})
+
+export default connect(mapState, mapDispatch)(ScannedProduct);
 
 const styles = StyleSheet.create({
   container: {
@@ -173,15 +184,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 20,
-  },
-});
-
-const mapState = state => ({
-  score: state.products.score
+  }
 })
-
-const mapDispatch = dispatch => ({
-  getToxicityScore: (productId) => dispatch(getToxicityScore(productId))
-})
-
-export default connect(mapState, mapDispatch)(ScannedProduct);

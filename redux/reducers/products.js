@@ -33,9 +33,7 @@ export const getToxicityScore = productId => async dispatch => {
 
 export const getProduct = name => async dispatch => {
   try {
-    console.log('in getProduct thunk')
-    const {data} = await axios.get(`http://192.168.1.164:8080/api/products/name?name=${name}`)
-    console.log('getProduct thunk data', data[0])
+    const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/products/name?name=${name}`)
     dispatch(gotProduct(data[0]))
   } catch (error) {
     console.log(error)

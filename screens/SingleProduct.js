@@ -19,6 +19,7 @@ import { getToxicityScore } from "../redux/reducers/products";
 import IngredientScoreBar from "../components/IngredientScoreBar";
 import TabBar from "react-native-underline-tabbar";
 import ScrollableTabView from "react-native-scrollable-tab-view";
+import ToxicityInfo from '../components/ToxicityInfo'
 
 
 class SingleProduct extends React.Component {
@@ -83,20 +84,23 @@ class SingleProduct extends React.Component {
         fullStar={require("./images/starFilled.png")}
         emptyStar={require("./images/starEmpty.png")}
       />
-      <Text style={{ textAlign: "center", fontSize: 18, marginTop: 40 }}>
-        Ready for a new recommendation?
-      </Text>
-     <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                      style={styles.userBtn} 
-                      onPress={() => {
-                        console.log('hi')
-                        // this.state.getNewProductRec(this.state.productId, 3)
-                        // console.log(this.state.productId)
-                      }}>
-                      <Text style={styles.btnText}>Get a new { this.state.category ? this.state.category.toLowerCase() : null }! </Text>
-                    </TouchableOpacity>
-            </View>
+      <Text style={{ marginTop: 20, width: "80%", fontSize: 16, textAlign: 'center' }}>Adding a product review helps us recommend future products you'll love!</Text>
+      <View style={{ marginTop: 40 }}>
+        <Text style={{ textAlign: "center", fontSize: 18, marginTop: 40 }}>
+          Ready for a new recommendation?
+        </Text>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.userBtn} 
+            onPress={() => {
+              console.log('hi')
+              // this.state.getNewProductRec(this.state.productId, 3)
+              // console.log(this.state.productId)
+            }}>
+            <Text style={styles.btnText}>Get a new { this.state.category ? this.state.category.toLowerCase() : null }! </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 
@@ -121,16 +125,19 @@ class SingleProduct extends React.Component {
             <Text style={styles.name}>{this.state.name}</Text>
           </View>
           <View style={styles.scoreContainer}>
-            <Text style={styles.score}>{this.props.score}</Text>
+              <View style={styles.scoreButton}>
+                <Text style={styles.score}>{this.props.score}</Text>  
+              </View>
           </View>
         </View>
         <ScrollView style={{ zIndex: 5 }}>
           <View style={styles.scrollContainer}>
             <ScrollableTabView
               tabBarActiveTextColor="black"
-              renderTabBar={() => <TabBar tabBarStyle={{ alignItems: 'center', border: 'none' }} underlineColor="#A7CAEB" tabBarTextStyle={{ fontSize: 22 }} />}
+              renderTabBar={() => <TabBar tabBarStyle={{ alignItems: 'center', border: 'none' }} underlineColor="#A7CAEB" tabBarTextStyle={{ fontSize: 18 }} />}
             >
               <this.IngredientsPage tabLabel={{ label: "Ingredients" }} label="Ingredients"  />
+              <ToxicityInfo tabLabel={{ label: "Toxicity Score"}} label="Toxicity Score" />
               <this.ReviewPage tabLabel={{ label: "Review" }} label="Review"  />
               
             </ScrollableTabView>
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     margin: 0
   },
   topContainer: {
-    marginTop: 60,
+    marginTop: 35,
     marginLeft: 20,
     marginRight: 20,
     width: "100%",
@@ -185,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
-    marginTop: 200,
+    marginTop: 225,
     display: "flex",
     flexDirection: "column",
     paddingTop: 30
@@ -199,9 +206,9 @@ const styles = StyleSheet.create({
   scoreContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
-    margin: 20,
-    paddingRight: 10
+    alignItems: "flex-start",
+    width: "30%",
+    marginRight: "10%"
   },
   stars: {
     marginTop: 20,
@@ -225,11 +232,17 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: "white"
   },
+  scoreButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'white',
+  },
   score: {
-    fontSize: 100,
-    color: "white",
-    marginRight: 60,
-    marginTop: -30
+    fontSize: 80,
+    color: "#525252",
+    textAlignVertical: 'center',
+    textAlign: 'center'
   },
   barContainer: {
     display: "flex",
