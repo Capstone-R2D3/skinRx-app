@@ -1,18 +1,16 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Dimensions,
+  ImageBackground
 } from 'react-native';
 import ProductCard from './ProductCard';
 import {connect} from 'react-redux'
 import { getRecommendations, getExistingUserRecs, getNewRecommendation } from '../redux/reducers/recommendations'
-import { ThemeConsumer } from 'react-native-elements';
 
 
 class RecommendationScreen extends React.Component {
@@ -22,7 +20,7 @@ class RecommendationScreen extends React.Component {
       userId: this.props.user.id,
       skinTypeId: this.props.user.skinTypeId, 
       selected: 'cleanser',    
-      screenWidth: Dimensions.get('window').width - 55,
+      screenWidth: Dimensions.get('window').width * 0.85,
     }
     this.getNewProductRec = this.getNewProductRec.bind(this)
     this.scrollToA = this.scrollToA.bind(this)
@@ -39,9 +37,7 @@ class RecommendationScreen extends React.Component {
   }
 
   async getNewProductRec(productId, userRating) {
-    // console.log('hitting product card & coming back!',productId, userRating)
     await this.props.getNewRecommendation(this.state.userId, this.state.selected, productId, this.state.skinTypeId, userRating)
-    // console.log('lets see the state', this.props.recommendations)
     await this.props.getExistingUserRecs(this.state.userId)
   }
 
@@ -70,6 +66,7 @@ class RecommendationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ImageBackground source={require('./images/background1.png')} style={styles.backgroundImage}>
           
           <Text style={styles.header}>An easy four step process curated just for you</Text> 
               
@@ -89,11 +86,11 @@ class RecommendationScreen extends React.Component {
           </View>
 
           <ScrollView 
-              style={styles.container} 
-              contentContainerStyle={styles.contentContainer} 
+              style={{paddingLeft: "3.5%"}}
+              contentContainerStyle={{paddingHorizontal: "6%"}}
               horizontal= {true}
               decelerationRate={0}
-              snapToInterval={this.state.screenWidth} //element width
+              snapToInterval={this.state.screenWidth * 1.05} //element width
               snapToAlignment={"center"}
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={1000}
@@ -129,9 +126,8 @@ class RecommendationScreen extends React.Component {
           {/* product no. 4 - sunscreen */}
           { this.props.recommendations.recommendations.length > 0 ? <ProductCard state={this.props.recommendations.recommendations[0].moisturizer}  getNewProductRec={this.getNewProductRec}/> : null }
 
-          <Text></Text>
-
         </ScrollView>
+       </ImageBackground>
       </View>
     )
   }
@@ -153,15 +149,17 @@ export default connect(mapState, mapDispatch)(RecommendationScreen)
 
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    resizeMode: 'center', 
+  },
   container: {
     flex: 1,
-    paddingTop: 10,
-    paddingHorizontal: 15,
-    backgroundColor: "#ebeff2",
-    // backgroundColor: "#a7caeb"
   },
   contentContainer: {
-    paddingHorizontal: 7,
+    // paddingHorizontal: 7,
   },
   header: {
     fontSize: 25,
@@ -169,6 +167,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: "11%",
     marginBottom: "7%",
+    color: "white"
   }, 
   text: {
     fontSize: 20,
@@ -180,6 +179,6 @@ const styles = StyleSheet.create({
   },
   unselected: {
     fontWeight: "bold",
-    color: "grey"
+    color: "white"
   }
 })

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { withNavigation } from "react-navigation";
 import {connect} from 'react-redux'
+import { AntDesign } from '@expo/vector-icons'
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -36,17 +37,18 @@ class ProductCard extends React.Component {
           <Image source={{uri: this.state.imageUrl}} style={styles.image} />
 
           <View style={{display: "flex", flexDirection: "row"}}>
-            <View style={{width: "80%"}}>
+            <View style={{width: "77%"}}>
               <Text style={styles.brand}>{this.state.brand}</Text>
               <Text style={styles.name}>{this.state.name}</Text>
             </View>
 
             <View>
-              <TouchableOpacity 
-                style={{width: 45, borderWidth: 1, borderColor: '#dadada', borderRadius:10, padding: 15}}
-                onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients, category: this.state.category, getNewProductRec: this.props.getNewProductRec});}}> 
-                <Text style={{ fontWeight: "bold", fontSize: 18, color: "grey" }}>></Text>
-              </TouchableOpacity>
+              <AntDesign 
+              name="rightcircleo" 
+              color="#a7caeb"
+              size={35} 
+              style={{marginTop: 5}}
+              onPress={() => { this.props.navigation.navigate("SingleProduct", {imageUrl: this.state.imageUrl, name: this.state.name, brand: this.state.brand, id: this.state.id, ingredients: this.state.ingredients, category: this.state.category, getNewProductRec: this.props.getNewProductRec});}} />
             </View>
           </View>
 
@@ -90,7 +92,16 @@ const styles = StyleSheet.create({
     flexDirection: "column", 
     justifyContent: "space-evenly", 
     alignItems: "center", 
-    marginRight: 18,
+    marginRight: 20,
+    
+    // shadowColor: "#000",
+    // shadowOffset:{
+    //   width: 0,
+    //   height: 0.6,
+    // },
+    // shadowOpacity: 0.10,
+    // shadowRadius: .7,
+    // elevation: 1,
   }, 
   image: {
     width: 225, 
