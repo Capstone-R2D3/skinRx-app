@@ -35,7 +35,7 @@ export default class SkinQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(2)}
                                 >
-                                    <Text style={styles.btnText}>tight, dry, and flaky, sometimes even cracked, staying shine-free throughout the day.</Text>
+                                    <Text style={styles.btnText}>usually tight and dry. It can even peel or crack.</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -51,7 +51,7 @@ export default class SkinQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(5)}
                                 >
-                                    <Text style={styles.btnText}>red and itchy with rashes and bumps. It stings and burns.</Text>
+                                    <Text style={styles.btnText}>typically red and itchy. It can sting and burn.</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -59,7 +59,7 @@ export default class SkinQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(3)}
                                 >
-                                    <Text style={styles.btnText}>even and balanced. It shows no sign of dry flakes or oily shine.</Text>
+                                    <Text style={styles.btnText}>even and balanced, showing no signs of flakes or shine.</Text>
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.bodyText}>
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     btnText: {
       fontSize: 16,
       color: "#A7CAEB",
-      textAlign: "left"
+      textAlign: "center"
     },
     bodyText: {
         fontSize: 12,

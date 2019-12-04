@@ -55,7 +55,7 @@ export default class PoreQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(3)}
                                 >
-                                    <Text style={styles.btnText}>unnoticeable and uncongested since I don't typically get blackheads.</Text>
+                                    <Text style={styles.btnText}>unnoticeable and uncongested. I don't typically get blackheads.</Text>
                                 </TouchableOpacity>
                             </View>  
                             <View style={styles.btnContainer}>
@@ -63,7 +63,7 @@ export default class PoreQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(5)}
                                 >
-                                    <Text style={styles.btnText}>normal to large but can vary since my skin often reacts to products differently.</Text>
+                                    <Text style={styles.btnText}>normal to large but can vary since my skin often reacts to products.</Text>
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.bodyText}>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     color: "#A7CAEB",
-    textAlign: "left"
+    textAlign: "center"
   },
   bodyText: {
       fontSize: 12,
