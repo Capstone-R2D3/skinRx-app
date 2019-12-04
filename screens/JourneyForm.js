@@ -105,10 +105,10 @@ class JourneyForm extends Component {
       })
       if(entry === null){
         await this.props.addEntry(this.props.userId, formData)
-        this.props.navigation.navigate('Journey');
+        this.props.navigation.navigate('JourneyEntries');
       } else {
         await this.props.updateEntry(this.props.userId, entry.id, formData)
-        this.props.navigation.navigate('Journey');
+        this.props.navigation.navigate('JourneyEntries');
       }
     }
   }

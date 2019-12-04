@@ -12,12 +12,16 @@ import {
 import { connect } from 'react-redux';
 import { getEntries, deleteEntry } from '../redux/reducers/journey';
 import JourneyCard from './JourneyCard';
+import { Agenda } from 'react-native-calendars';
 
 class JourneyScreen extends React.Component {
   constructor() {
     super();
     this.delete = this.delete.bind(this);
     this.update = this.update.bind(this);
+    this.state = {
+      items: {}
+    }
   }
 
   componentDidMount() {

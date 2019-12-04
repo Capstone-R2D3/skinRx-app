@@ -119,15 +119,6 @@ class ProfileScreen extends React.Component {
 
           </View>
 
-              {/* see calendar */}
-              <View style={styles.btnContainer}>
-              <TouchableOpacity
-                  style={styles.userBtn}
-                  onPress={() => this.props.navigation.navigate('JourneyCalendar')}>
-                  <Text style={styles.btnText}>Calendar</Text>
-              </TouchableOpacity>
-          </View>
-
         </ScrollView>
       </View>
     )

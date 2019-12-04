@@ -27,8 +27,7 @@ import SkinTypeQuiz from '../screens/skin-type-quiz/SkinTypeQuiz'
 import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
 
 import JourneyForm from '../screens/JourneyForm'
-
-import JourneyCalendar from '../screens/calendar'
+import JourneyCalendar from '../screens/JourneyCalendar'
 
 
 const config = Platform.select({
@@ -80,7 +79,10 @@ LinksStack.path = '';
 
 const ScanStack = createStackNavigator(
   {
-    Scan: ScanScreen,
+    Scan: {
+      screen: ScanScreen,
+      navigationOptions: {header: null}
+    },
     ScannedProduct: {
       screen: ScannedProduct,
       navigationOptions: { header: null }
@@ -107,8 +109,19 @@ ScanStack.path = ''
 
 const JourneyStack = createStackNavigator(
   {
-    Journey: JourneyScreen,
-    JourneyForm: JourneyForm
+    JourneyCalendar: {
+      screen: JourneyCalendar,
+      navigationOptions: {header: null}
+    },
+    JourneyEntries: {
+      screen: JourneyScreen,
+      navigationOptions: {header: null}
+    },
+    
+    JourneyForm: {
+      screen: JourneyForm,
+      navigationOptions: {header: null}
+    },
   },
   config
 );
@@ -135,7 +148,6 @@ const ProfileStack = createStackNavigator(
       screen: ProfileScreen,
       navigationOptions: { header: null }
     },
-    JourneyCalendar: JourneyCalendar
   },
   config
 );

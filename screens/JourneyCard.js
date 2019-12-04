@@ -14,42 +14,37 @@ class JourneyCard extends Component {
     render() {
         const entryId = this.props.entry.id;
         return (
-            <View>
-                <View>
+            <View style={styles.row}>
+                <View style={styles.date}>
                     <Text>
                         {this.props.entry.date}
                     </Text>
                 </View>
-                <View>
-                    <Text>
-                        Stress Level: {this.props.entry.stressLevel}
-                    </Text>
-                </View>
-                <View>
-                    <Text>
-                        Diet: {this.props.entry.diet}
-                    </Text>
-                </View>
-                <View>
-                    <Text>
-                        Description: {this.props.entry.description}
-                    </Text>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => this.props.delete(entryId)}
-                    >
-                        <Text style={styles.btnText}>Delete</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => this.props.update(this.props.entry)}
-                    >
-                        <Text style={styles.btnText}>Update</Text>
-                    </TouchableOpacity>
+                <Image source={require('./images/entry-icon.png')} style={styles.bullet}/>
+                <View style={styles.entryContainer}>
+                    <View style={styles.entry}>
+                        <Text>
+                            Stress Level: {this.props.entry.stressLevel}
+                        </Text>
+                        <Text>
+                            Diet: {this.props.entry.diet}
+                        </Text>
+                        <Text>
+                            Description: {this.props.entry.description}
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => this.props.delete(entryId)}
+                        >
+                            <Text style={styles.btnText}>Delete</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => this.props.update(this.props.entry)}
+                        >
+                            <Text style={styles.btnText}>Update</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
@@ -59,37 +54,35 @@ class JourneyCard extends Component {
 export default JourneyCard;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "white"
+    row: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center"
     },
-    header: {
-      textAlign: "center",
-      fontSize: 30,
-      marginBottom: 20
+    date:{
+        width: '20%',
+        padding: '4%'
     },
-    btnContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
+    bullet: {
+        height: 14,
+        width: 14,
+        position: 'absolute',
+        left: '18%'
     },
-    userBtn: {
-      backgroundColor: "#dadada",
-      padding: 15,
-      width: "75%",
-      display: "flex",
-      borderRadius: 7,
-      margin: 5
+    entryContainer: {
+        borderLeftWidth: 1,
+        borderLeftColor: '#A7CAEB',
+        flex: 1
     },
-    btnText: {
-      fontSize: 18,
-      textAlign: "center"
-    },
-    text: {
-      fontSize: 20,
+    entry: {
+        width: '80%',
+        backgroundColor: '#A7CAEB',
+        borderRadius: 5,
+        margin: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2
     }
-  });
+});
