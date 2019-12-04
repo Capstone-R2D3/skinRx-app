@@ -20,7 +20,7 @@ export default class CleanserQuestion extends Component {
             <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
-                        <Text style={styles.header}>After cleansing, my skin</Text>
+                        <Text style={styles.header}>The right cleanser will</Text>
                     </View>
                     <View style={{ zIndex: 5 }}>
                         <View style={styles.scrollContainer}>
@@ -29,7 +29,7 @@ export default class CleanserQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(2)}
                                 >
-                                    <Text style={styles.btnText}>feels tight and dehydrated, so I stay away from products that are even more drying.</Text>
+                                    <Text style={styles.btnText}>clean my skin without drying it more than it already is.</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -37,7 +37,7 @@ export default class CleanserQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(5)}
                                 >
-                                    <Text style={styles.btnText}>is clean and a bit dry but can get irritated depending on the product.</Text>
+                                    <Text style={styles.btnText}>not irritate or sting my reactive skin.</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -45,7 +45,7 @@ export default class CleanserQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(1)}
                                 >
-                                    <Text style={styles.btnText}>feels clean and refreshed but eventually gets oily again.</Text>
+                                    <Text style={styles.btnText}>refresh my congested skin, even though it'll get oily again.</Text>
                                 </TouchableOpacity>
                             </View>                
                             <View style={styles.btnContainer}>
@@ -53,7 +53,7 @@ export default class CleanserQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(4)}
                                 >
-                                    <Text style={styles.btnText}>is oil-free around my nose but tight and dry around my cheeks.</Text>
+                                    <Text style={styles.btnText}>clear out my congested T-zone without drying out my cheeks.</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -61,7 +61,7 @@ export default class CleanserQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.nextQuestion(3)}
                                 >
-                                    <Text style={styles.btnText}>is clean and clear — not too parched, oily, or sensitive.</Text>
+                                    <Text style={styles.btnText}>maintain my clear complexion.</Text>
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.bodyText}>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     color: "#A7CAEB",
-    textAlign: "left"
+    textAlign: "center"
   },
   bodyText: {
       fontSize: 12,

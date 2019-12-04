@@ -50,7 +50,7 @@ class MoisturizerQuestion extends Component {
                                 style={styles.userBtn}
                                 onPress={() => this.getResult(4)}
                                 >
-                                    <Text style={styles.btnText}>takes care of my different skin textures (like oily and dry).</Text>
+                                    <Text style={styles.btnText}>takes care of my different skin textures (oily and dry).</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     color: "#A7CAEB",
-    textAlign: "left"
+    textAlign: "center"
   },
   bodyText: {
       fontSize: 12,
