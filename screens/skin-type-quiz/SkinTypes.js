@@ -29,10 +29,10 @@ class SkinTypes extends Component {
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
                         <Text style={styles.header}>
-                            I have
+                            My skin type is
                         </Text>
                     </View>
-                    <View style={{ zIndex: 5 }}>
+                    <View style={{ zIndex: 5, width: '100%', margin: 0 }}>
                         <View style={styles.scrollContainer}>
                             <View style={styles.btnContainer}>
                                 <TouchableOpacity
@@ -42,7 +42,7 @@ class SkinTypes extends Component {
                                     this.props.getRecommendations(this.props.user.id, 4)
                                 }}
                                 >
-                                    <Text style={styles.btnText}>combination skin</Text>
+                                    <Text style={styles.btnText}>combination</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -53,7 +53,7 @@ class SkinTypes extends Component {
                                     this.props.getRecommendations(this.props.user.id, 2)
                                 }}
                                 >
-                                    <Text style={styles.btnText}>dry skin</Text>
+                                    <Text style={styles.btnText}>dry</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -64,7 +64,7 @@ class SkinTypes extends Component {
                                     this.props.getRecommendations(this.props.user.id, 1)
                                 }}
                                 >
-                                    <Text style={styles.btnText}>oily skin</Text>
+                                    <Text style={styles.btnText}>oily</Text>
                                 </TouchableOpacity>
                             </View>                
                             <View style={styles.btnContainer}>
@@ -75,7 +75,7 @@ class SkinTypes extends Component {
                                     this.props.getRecommendations(this.props.user.id, 5)
                                 }}
                                 >
-                                    <Text style={styles.btnText}>sensitive skin</Text>
+                                    <Text style={styles.btnText}>sensitive</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.btnContainer}>
@@ -86,7 +86,7 @@ class SkinTypes extends Component {
                                     this.props.getRecommendations(userId, 3)
                                 }}
                                 >
-                                    <Text style={styles.btnText}>normal skin</Text>
+                                    <Text style={styles.btnText}>normal</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -127,13 +127,14 @@ const styles = StyleSheet.create({
         position: "absolute"
       },
     header: {
-        marginTop: "auto",
+      marginTop: "25%",
       textAlign: "center",
       fontSize: 34,
       color: "white"
     },
     scrollContainer: {
         width: "100%",
+        height: "100%",
         backgroundColor: "white",
         borderTopLeftRadius: 35,
         borderTopRightRadius: 35,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         display: "flex",
         flexDirection: "column",
-        paddingTop: "13%",
+        paddingTop: "20%",
         paddingLeft: "10%",
         paddingRight: "10%",
         paddingBottom: "15%"
@@ -151,7 +152,9 @@ const styles = StyleSheet.create({
     btnContainer: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-around",
+      justifyContent: "center",
+      alignItems: 'center',
+      width: "100%",
     },
     userBtn: {
       backgroundColor: "white",
@@ -159,7 +162,8 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       padding: 15,
       borderRadius: 25,
-      marginBottom: 10
+      marginBottom: 10,
+      width: "85%",
     },
     btnText: {
       fontSize: 18,
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
       textAlign: "center"
     },
     bodyText: {
-        fontSize: 12,
+        fontSize: 18,
         textAlign: "center",
         margin: 15
     }

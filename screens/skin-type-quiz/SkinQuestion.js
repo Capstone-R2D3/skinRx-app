@@ -20,7 +20,7 @@ export default class SkinQuestion extends Component {
                     <View style={styles.topContainer}>
                         <Text style={styles.header}>My skin is</Text>
                     </View>
-                    <View style={{ zIndex: 5 }}>
+                    <View style={{ zIndex: 5, width: '100%', margin: 0 }}>
                         <View style={styles.scrollContainer}>
                             <View style={styles.btnContainer}>
                                 <TouchableOpacity
@@ -92,17 +92,18 @@ const styles = StyleSheet.create({
         position: "absolute"
       },
     header: {
-        marginTop: "auto",
+      marginTop: "20%",
       textAlign: "center",
       fontSize: 34,
       color: "white"
     },
     scrollContainer: {
         width: "100%",
+        height: "100%",
         backgroundColor: "white",
         borderTopLeftRadius: 35,
         borderTopRightRadius: 35,
-        marginTop: 250,
+        marginTop: 200,
         marginLeft: 0,
         marginRight: 0,
         marginBottom: 0,
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
+      width: "100%",
     },
     userBtn: {
       backgroundColor: "white",
@@ -124,12 +126,13 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       padding: 15,
       borderRadius: 25,
-      marginBottom: 10
+      marginBottom: 10,
+      width: "95%",
     },
     btnText: {
-      fontSize: 18,
+      fontSize: 16,
       color: "#A7CAEB",
-      textAlign: "center"
+      textAlign: "left"
     },
     bodyText: {
         fontSize: 12,

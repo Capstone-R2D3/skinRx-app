@@ -76,66 +76,69 @@ export default class CleanserQuestion extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      height: "100%",
+  container: {
+    height: "100%",
+    width: "100%",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  topContainer: {
+      marginTop: "auto",
+      marginLeft: 20,
+      marginRight: 20,
       width: "100%",
-      margin: 0,
-      padding: 0,
+      height: 200,
+      position: "absolute"
+    },
+  header: {
+    marginTop: "20%",
+    textAlign: "center",
+    fontSize: 34,
+    color: "white"
+  },
+  scrollContainer: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: "white",
+      borderTopLeftRadius: 35,
+      borderTopRightRadius: 35,
+      marginTop: 200,
+      marginLeft: 0,
+      marginRight: 0,
+      marginBottom: 0,
       display: "flex",
       flexDirection: "column",
-      alignItems: "center"
+      paddingTop: "13%",
+      paddingLeft: "10%",
+      paddingRight: "10%",
+      paddingBottom: "15%"
     },
-    topContainer: {
-        marginTop: "auto",
-        marginLeft: 20,
-        marginRight: 20,
-        width: "100%",
-        height: 200,
-        position: "absolute"
-      },
-    header: {
-        marginTop: "auto",
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+  userBtn: {
+    backgroundColor: "white",
+    borderColor: "#A7CAEB",
+    borderWidth: 2,
+    padding: 15,
+    borderRadius: 25,
+    marginBottom: 10,
+    width: "95%",
+  },
+  btnText: {
+    fontSize: 16,
+    color: "#A7CAEB",
+    textAlign: "left"
+  },
+  bodyText: {
+      fontSize: 12,
       textAlign: "center",
-      fontSize: 34,
-      color: "white"
-    },
-    scrollContainer: {
-        width: "100%",
-        backgroundColor: "white",
-        borderTopLeftRadius: 35,
-        borderTopRightRadius: 35,
-        marginTop: 250,
-        marginLeft: 0,
-        marginRight: 0,
-        marginBottom: 0,
-        display: "flex",
-        flexDirection: "column",
-        paddingTop: "13%",
-        paddingLeft: "10%",
-        paddingRight: "10%",
-        paddingBottom: "15%"
-      },
-    btnContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-around",
-    },
-    userBtn: {
-      backgroundColor: "white",
-      borderColor: "#A7CAEB",
-      borderWidth: 2,
-      padding: 15,
-      borderRadius: 25,
-      marginBottom: 10
-    },
-    btnText: {
-      fontSize: 18,
-      color: "#A7CAEB",
-      textAlign: "center"
-    },
-    bodyText: {
-        fontSize: 12,
-        textAlign: "center",
-        margin: 15
-    }
+      margin: 15
+  }
 });
