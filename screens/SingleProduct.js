@@ -85,7 +85,7 @@ class SingleProduct extends React.Component {
         emptyStar={require("./images/starEmpty.png")}
       />
       <Text style={{ marginTop: 20, width: "80%", fontSize: 16, textAlign: 'center' }}>Adding a product review helps us recommend future products you'll love!</Text>
-      <View style={{ marginTop: 40 }}>
+      {/* <View style={{ marginTop: 40 }}>
         <Text style={{ textAlign: "center", fontSize: 18, marginTop: 40 }}>
           Ready for a new recommendation?
         </Text>
@@ -100,7 +100,7 @@ class SingleProduct extends React.Component {
             <Text style={styles.btnText}>Get a new { this.state.category ? this.state.category.toLowerCase() : null }! </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    width: "60%"
+    width: "50%"
   },
   scoreContainer: {
     display: "flex",

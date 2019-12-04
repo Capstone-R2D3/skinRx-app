@@ -54,20 +54,20 @@ class ProductCard extends React.Component {
 
         
         {/***** WILL NEED TO MOVE THIS CODE TO SINGLE PRODUCT VIEW! TESTING HERE FOR NOW *****/}
-          <View>
+          <View style={styles.btnContainer}>
             <TouchableOpacity 
+              style={styles.userBtn} 
               // style={styles.seeProduct}
               // onPress is taking in the stateId and the ratingId *** DUMMY DATA FOR RATING RIGHT NOW ***
               onPress={() => 
                 this.props.getNewProductRec(this.state.id, 3)
               }
             > 
-              <Text style={{ fontWeight: "bold", fontSize: 18, }}>New Recommendations</Text>
+              <Text style={styles.btnText}>Get a new {this.state.category}</Text>
             </TouchableOpacity>
           </View>
         {/* MOVE EVERYTHING BT COMMENTS TO SINGLE PRODUCT VIEW */}
           
-
       </View>
     )
   }
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
     width: 300, 
-    height: 410,
+    height: 450,
     borderRadius: 10,
     padding: 10,
     display: "flex", 
@@ -126,5 +126,30 @@ const styles = StyleSheet.create({
     paddingTop: 7,
     paddingBottom: 10,
     paddingLeft: 15,
+  },
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: 250
+  },
+  userBtn: {
+    marginTop: 20,
+    backgroundColor: "white",
+    borderColor: "#A7CAEB",
+    borderWidth: 2,
+    padding: 11,
+    display: "flex",
+    borderRadius: 22,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 250
+  },
+  btnText: {
+    fontSize: 15,
+    textAlign: "center",
+    letterSpacing: 1, 
+    fontWeight: "bold",
+    color: "#A7CAEB",
   }
 })
