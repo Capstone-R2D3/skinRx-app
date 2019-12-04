@@ -14,42 +14,37 @@ class JourneyCard extends Component {
     render() {
         const entryId = this.props.entry.id;
         return (
-            <View>
-                <View>
-                    <Text>
+            <View style={styles.row}>
+                <View style={styles.date}>
+                    <Text style={{fontFamily: 'Avenir', color: 'white'} }>
                         {this.props.entry.date}
                     </Text>
                 </View>
-                <View>
-                    <Text>
-                        Stress Level: {this.props.entry.stressLevel}
-                    </Text>
-                </View>
-                <View>
-                    <Text>
-                        Diet: {this.props.entry.diet}
-                    </Text>
-                </View>
-                <View>
-                    <Text>
-                        Description: {this.props.entry.description}
-                    </Text>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => this.props.delete(entryId)}
-                    >
-                        <Text style={styles.btnText}>Delete</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => this.props.update(this.props.entry)}
-                    >
-                        <Text style={styles.btnText}>Update</Text>
-                    </TouchableOpacity>
+                <Image source={require('./images/entry-icon.png')} style={styles.bullet}/>
+                <View style={styles.entryContainer}>
+                    <View style={styles.entry}>
+                        <Text style={styles.text}>
+                            Stress Level: {this.props.entry.stressLevel}
+                        </Text>
+                        <Text style={styles.text}>
+                            Diet: {this.props.entry.diet}
+                        </Text>
+                        <Text style={styles.text}>
+                            Description: {this.props.entry.description}
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => this.props.delete(entryId)}
+                        >
+                            <Text style={styles.text}>Delete</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => this.props.update(this.props.entry)}
+                        >
+                            <Text style={styles.text}>Update</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
@@ -59,37 +54,41 @@ class JourneyCard extends Component {
 export default JourneyCard;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "white"
+    row: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center"
     },
-    header: {
-      textAlign: "center",
-      fontSize: 30,
-      marginBottom: 20
+    date:{
+        width: '20%',
+        padding: '5%'
     },
-    btnContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
+    bullet: {
+        height: 14,
+        width: 14,
+        position: 'absolute',
+        left: '18%',
+        zIndex: 2
     },
-    userBtn: {
-      backgroundColor: "#dadada",
-      padding: 15,
-      width: "75%",
-      display: "flex",
-      borderRadius: 7,
-      margin: 5
+    entryContainer: {
+        borderLeftWidth: 1,
+        borderLeftColor: 'white',
+        flex: 1
     },
-    btnText: {
-      fontSize: 18,
-      textAlign: "center"
+    entry: {
+        width: '85%',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        margin: '10%',
+        shadowColor: '#699add',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        padding: '7%',
     },
     text: {
-      fontSize: 20,
+        color: '#699add',
+        fontFamily: 'Avenir'
     }
-  });
+});

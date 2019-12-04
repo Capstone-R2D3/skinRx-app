@@ -7,7 +7,8 @@ import { View,
   Image,
   Platform,
   ScrollView,
-  Alert
+  Alert,
+  Dimensions
 } from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
 import {addEntry, updateEntry} from '../redux/reducers/journey'
@@ -16,13 +17,17 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
+import Carousel from 'react-native-snap-carousel';
+
+
+const { height, width } = Dimensions.get('window');
 
 class JourneyForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
         date: "",
-        image: null,
+        images: [],
         stressLevel: 0,
         diet: "",
         description: ""
@@ -39,7 +44,7 @@ class JourneyForm extends Component {
     }
   }
 
-  _pickImage = async () => {
+  pickImage = async () => {
     await this.getPermissionAsync();
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -49,19 +54,23 @@ class JourneyForm extends Component {
     });
 
     if (!result.cancelled) {
-      this.setState({ image: result });
+      const imagesState = this.state.images;
+      imagesState.push(result.uri)
+      this.setState({ images: imagesState });
     }
   };
 
-  createFormData = (image, body) => {
+  createFormData = (images, body) => {
     const data = new FormData();
-  
-    data.append('entryImage', {
-      name: `entry_image_${this.props.userId}.jpg`,
-      type: 'image',
-      uri:
-        Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
-    });
+
+    for(let i=0; i < images.length; i++){
+      data.append('entryImages', {
+        name: `entry_image_${this.props.userId}${i}.jpg`,
+        type: 'image',
+        uri:
+          Platform.OS === 'android' ? images[i] : images[i].replace('file://', ''),
+      })
+    }
   
     Object.keys(body).forEach(key => {
       data.append(key, body[key]);
@@ -75,7 +84,7 @@ class JourneyForm extends Component {
     if(entry !== null){
       this.setState({
         date: entry.date,
-        image: {uri: entry.imageUrl},
+        images: entry.imageUrls,
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description
@@ -88,7 +97,7 @@ class JourneyForm extends Component {
       Alert.alert('Please add an image to your entry');
     } else {
       const entry = this.props.navigation.getParam("entry");
-      const formData = this.createFormData(this.state.image, {
+      const formData = this.createFormData(this.state.images, {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
         diet: this.state.diet,
@@ -96,22 +105,42 @@ class JourneyForm extends Component {
       })
       if(entry === null){
         await this.props.addEntry(this.props.userId, formData)
-        this.props.navigation.navigate('Journey');
+        this.props.navigation.navigate('JourneyEntries');
       } else {
         await this.props.updateEntry(this.props.userId, entry.id, formData)
-        this.props.navigation.navigate('Journey');
+        this.props.navigation.navigate('JourneyEntries');
       }
     }
   }
 
+  renderItem = ({ item }) => {
+    return (
+        <Image source={{ uri: item }} style={styles.image} />
+    );
+  }
+
   render() {
-    console.log('STATE OF THE JOURNEY FORM: ', this.state)
+    console.log(this.state)
     return (
       <ScrollView style={styles.container}>
           <Text style={styles.header}>Entry</Text>
           {
-            this.state.image ?
-            <Image source={{ uri: this.state.image.uri }} style={styles.image} /> : null
+            this.state.images.length > 0 ?
+            <View style={{marginBottom: 20}}>
+              <Carousel
+                inactiveSlideOpacity={0.6}
+                inactiveSlideScale={0.65}
+                firstItem={0}
+                sliderWidth={width}
+                itemWidth={width/2}
+                data={this.state.images}
+                renderItem={this.renderItem}
+                containerCustomStyle={{ overflow: 'visible' }}
+                contentContainerCustomStyle={{ overflow: 'visible' }}
+                layout={'stack'} 
+                layoutCardOffset={9}
+              />
+            </View> : null
           }
           <TextInputMask
               style={styles.input}
@@ -151,7 +180,7 @@ class JourneyForm extends Component {
           />
           <TouchableOpacity
               style={styles.AddImageBtn}
-              onPress={() => this._pickImage()}
+              onPress={() => this.pickImage()}
           >
               <Text style={styles.AddImageText}>Add Image</Text>
           </TouchableOpacity>
@@ -239,10 +268,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#BFD7ED'
   },
-  image: { 
-    width: 200, 
-    height: 200,
-    marginBottom: 30,
-    alignSelf: 'center'
+  image: {
+    width: width / 2,
+    height: width / 2,
+    borderRadius: 15
   }
 })
