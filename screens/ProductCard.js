@@ -63,7 +63,7 @@ class ProductCard extends React.Component {
                 this.props.getNewProductRec(this.state.id, 3)
               }
             > 
-              <Text style={styles.btnText}>Get a new {this.state.category}</Text>
+              <Text style={styles.btnText}>Get a new {this.state.category ? this.state.category : "recommendation"}</Text>
             </TouchableOpacity>
           </View>
         {/* MOVE EVERYTHING BT COMMENTS TO SINGLE PRODUCT VIEW */}
