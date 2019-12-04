@@ -4,16 +4,20 @@ import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
 import {BARCODE_API_KEY} from '../secrets.json'
+import {connect} from 'react-redux'
+import {getProduct} from '../redux/reducers/products'
+
 
 // ScanScreen is a stateful component
-export default class ScanScreen extends React.Component {
+class ScanScreen extends React.Component {
   // it has two properties on its state
   // hasCameraPermissions and scanned
   constructor(props) {
     super(props) 
     this.state = {
       hasCameraPermission: null,
-      scanned: false
+      scanned: false,
+      ingredients: []
     }
   }
 
@@ -72,7 +76,9 @@ export default class ScanScreen extends React.Component {
       // get product information using the barcode and the barcode lookup api
       const res = await axios.get(`https://api.barcodelookup.com/v2/products?barcode=${data}&formatted=y&key=${BARCODE_API_KEY}`)
       const productInfo = res.data.products[0];
-      console.log(productInfo)
+      
+      await this.props.getProduct(productInfo.product_name.split(' - ')[1])
+
       Alert.alert(
         'Product scanned',
         `${productInfo.product_name}`,
@@ -84,7 +90,8 @@ export default class ScanScreen extends React.Component {
             productImage: productInfo.images[0],
             productName: productInfo.product_name,
             productUrl: productInfo.stores[0].product_url,
-            productPrice: productInfo.stores[0].store_price
+            productPrice: productInfo.stores[0].store_price,
+            ingredients: this.props.product.ingredients
           }) }
         ]
       )
@@ -106,3 +113,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+
+const mapState = state => ({
+  product: state.products.product,
+})
+
+const mapDispatch = dispatch => ({
+  getProduct: (name) => dispatch(getProduct(name)),
+})
+
+export default connect(mapState, mapDispatch)(ScanScreen)

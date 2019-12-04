@@ -8,10 +8,11 @@ import productReviews from './reducers/productReviews'
 import journey from './reducers/journey'
 import recommendations from './reducers/recommendations'
 
+
 const reducer = combineReducers({ products, users, productReviews, journey, recommendations })
 
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, )
+  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
 
 const store = createStore(reducer, middleware)
