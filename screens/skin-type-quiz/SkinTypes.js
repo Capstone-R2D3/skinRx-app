@@ -101,7 +101,7 @@ const mapState = state => ({
     user: state.users.user
 })
 
-mapDispatch = dispatch => ({
+const mapDispatch = dispatch => ({
   addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result)),
   getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
 })
