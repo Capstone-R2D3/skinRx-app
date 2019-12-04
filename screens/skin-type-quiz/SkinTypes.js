@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {addSkinType} from '../../redux/reducers/users'
@@ -25,66 +25,74 @@ class SkinTypes extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.header}>
-                    My skin type is
-                </Text>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => {
-                        this.addUserSkinType(4)
-                        this.props.getRecommendations(this.props.user.id, 4)
-                    }}
-                    >
-                        <Text style={styles.btnText}>combination</Text>
-                    </TouchableOpacity>
+            <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
+                <View style={styles.container}>
+                    <View style={styles.topContainer}>
+                        <Text style={styles.header}>
+                            I have
+                        </Text>
+                    </View>
+                    <View style={{ zIndex: 5 }}>
+                        <View style={styles.scrollContainer}>
+                            <View style={styles.btnContainer}>
+                                <TouchableOpacity
+                                style={styles.userBtn}
+                                onPress={() => {
+                                    this.addUserSkinType(4)
+                                    this.props.getRecommendations(this.props.user.id, 4)
+                                }}
+                                >
+                                    <Text style={styles.btnText}>combination skin</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.btnContainer}>
+                                <TouchableOpacity
+                                style={styles.userBtn}
+                                onPress={() => {
+                                    this.addUserSkinType(2)
+                                    this.props.getRecommendations(this.props.user.id, 2)
+                                }}
+                                >
+                                    <Text style={styles.btnText}>dry skin</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.btnContainer}>
+                                <TouchableOpacity
+                                style={styles.userBtn}
+                                onPress={() => {
+                                    this.addUserSkinType(1)
+                                    this.props.getRecommendations(this.props.user.id, 1)
+                                }}
+                                >
+                                    <Text style={styles.btnText}>oily skin</Text>
+                                </TouchableOpacity>
+                            </View>                
+                            <View style={styles.btnContainer}>
+                                <TouchableOpacity
+                                style={styles.userBtn}
+                                onPress={() => {
+                                    this.addUserSkinType(5)
+                                    this.props.getRecommendations(this.props.user.id, 5)
+                                }}
+                                >
+                                    <Text style={styles.btnText}>sensitive skin</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.btnContainer}>
+                                <TouchableOpacity
+                                style={styles.userBtn}
+                                onPress={() => {
+                                    this.addUserSkinType(3)
+                                    this.props.getRecommendations(userId, 3)
+                                }}
+                                >
+                                    <Text style={styles.btnText}>normal skin</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => {
-                        this.addUserSkinType(2)
-                        this.props.getRecommendations(this.props.user.id, 2)
-                    }}
-                    >
-                        <Text style={styles.btnText}>dry</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => {
-                        this.addUserSkinType(1)
-                        this.props.getRecommendations(this.props.user.id, 1)
-                    }}
-                    >
-                        <Text style={styles.btnText}>oily</Text>
-                    </TouchableOpacity>
-                </View>                
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => {
-                        this.addUserSkinType(5)
-                        this.props.getRecommendations(this.props.user.id, 5)
-                    }}
-                    >
-                        <Text style={styles.btnText}>sensitive</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity
-                    style={styles.userBtn}
-                    onPress={() => {
-                        this.addUserSkinType(3)
-                        this.props.getRecommendations(userId, 3)
-                    }}
-                    >
-                        <Text style={styles.btnText}>normal</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            </ImageBackground>
         )
     }
 }
@@ -102,33 +110,65 @@ export default connect(mapState, mapDispatch)(SkinTypes)
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      height: "100%",
+      width: "100%",
+      margin: 0,
+      padding: 0,
       display: "flex",
       flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "white"
+      alignItems: "center"
     },
+    topContainer: {
+        marginTop: "auto",
+        marginLeft: 20,
+        marginRight: 20,
+        width: "100%",
+        height: 200,
+        position: "absolute"
+      },
     header: {
+        marginTop: "auto",
       textAlign: "center",
-      fontSize: 30,
-      marginBottom: 20
+      fontSize: 34,
+      color: "white"
     },
+    scrollContainer: {
+        width: "100%",
+        backgroundColor: "white",
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
+        marginTop: 250,
+        marginLeft: 0,
+        marginRight: 0,
+        marginBottom: 0,
+        display: "flex",
+        flexDirection: "column",
+        paddingTop: "13%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        paddingBottom: "15%"
+      },
     btnContainer: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "space-around",
     },
     userBtn: {
-      backgroundColor: "#dadada",
+      backgroundColor: "white",
+      borderColor: "#A7CAEB",
+      borderWidth: 2,
       padding: 15,
-      width: "75%",
-      display: "flex",
-      borderRadius: 7,
-      margin: 5
+      borderRadius: 25,
+      marginBottom: 10
     },
     btnText: {
       fontSize: 18,
+      color: "#A7CAEB",
       textAlign: "center"
+    },
+    bodyText: {
+        fontSize: 12,
+        textAlign: "center",
+        margin: 15
     }
 });
