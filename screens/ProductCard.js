@@ -36,13 +36,13 @@ class ProductCard extends React.Component {
       <View style={styles.card}>
           <Image source={{uri: this.state.imageUrl}} style={styles.image} />
 
-          <View style={{display: "flex", flexDirection: "row"}}>
-            <View style={{width: "77%"}}>
+          <View style={{display: "flex", flexDirection: "row", justifyContent: 'space-between', padding: 10, width: 300}}>
+            <View style={{width: "60%", marginLeft: 30}}>
               <Text style={styles.brand}>{this.state.brand}</Text>
               <Text style={styles.name}>{this.state.name}</Text>
             </View>
 
-            <View>
+            <View style={{marginBottom: 25, marginRight: 20,}}>
               <AntDesign 
               name="rightcircleo" 
               color="#a7caeb"
@@ -72,6 +72,7 @@ class ProductCard extends React.Component {
     )
   }
 }
+
 
 const mapState = state => ({
   user: state.users.user,
@@ -105,8 +106,9 @@ const styles = StyleSheet.create({
   }, 
   image: {
     width: 225, 
-    height: 275, 
+    height: 225, 
     resizeMode: "cover", 
+    marginTop: 40,
     marginBottom: 25
   },
   brand: {
@@ -130,26 +132,23 @@ const styles = StyleSheet.create({
   btnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
-    width: 250
+    justifyContent: "space-between",
   },
   userBtn: {
-    marginTop: 20,
-    backgroundColor: "white",
-    borderColor: "#A7CAEB",
-    borderWidth: 2,
+    marginTop: 35,
+    marginBottom: 20,
+    backgroundColor: "#A7CAEB",
     padding: 11,
+    width: "85%",
     display: "flex",
     borderRadius: 22,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: 250
   },
   btnText: {
-    fontSize: 15,
+    fontSize: 12,
     textAlign: "center",
-    letterSpacing: 1, 
+    textTransform: "uppercase", 
+    letterSpacing: 2, 
     fontWeight: "bold",
-    color: "#A7CAEB",
-  }
+    color: "white",
+  },
 })
