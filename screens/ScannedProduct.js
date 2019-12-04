@@ -1,14 +1,48 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, Image } from "react-native";
 import { connect } from "react-redux";
+import {getProduct, getToxicityScore} from '../redux/reducers/products'
+import TabBar from "react-native-underline-tabbar";
+import ScrollableTabView from "react-native-scrollable-tab-view";
+import IngredientScoreBar from '../components/IngredientScoreBar'
 
 class ScannedProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: []
+      isInDatabase: false
     }
   }
+
+  componentDidMount() {
+    this.props.getToxicityScore(this.props.product.id)
+  }
+
+  IngredientsPage = ({ label, ingredients }) => (
+    <View style={{ marginTop: 30 }} >
+      <View style={styles.barContainer}>
+        {ingredients.map((ingredient, index) => {
+          if (ingredient === " : ") {
+            return null;
+          } else {
+            return (
+              <IngredientScoreBar
+                style={styles.bar}
+                key={index}
+                ingredient={ingredient}
+              />
+            );
+          }
+        })}
+      </View>
+    </View>
+  );
+
+  DescriptionPage = ({ label, description }) => (
+    <View style={{ marginTop: 30 }} >
+      <Text style={{ marginLeft: 30, marginRight: 30 }}>{description}</Text>
+  </View>
+  )
 
   render() {
     const productName = this.props.navigation.getParam("productName");
@@ -16,9 +50,10 @@ class ScannedProduct extends React.Component {
     const productDescription = this.props.navigation.getParam(
       "productDescription"
     );
-    const productImage = this.props.navigation.getParam("productImage");
-    const productUrl = this.props.navigation.getParam("productUrl");
-    const productPrice = this.props.navigation.getParam("productPrice");
+    // const productImage = this.props.navigation.getParam("productImage");
+    // const productUrl = this.props.navigation.getParam("productUrl");
+    // const productPrice = this.props.navigation.getParam("productPrice");
+    const ingredients = this.props.navigation.getParam("ingredients");
 
     return (
         <View style={styles.container}>
@@ -28,7 +63,7 @@ class ScannedProduct extends React.Component {
               <Text style={styles.name}>{productName}</Text>
             </View>
             <View style={styles.scoreContainer}>
-              <Text style={styles.score}>1</Text>
+              <Text style={styles.score}>{ this.props.score ? this.props.score : null }</Text>
           </View>
           </View>
 
@@ -37,24 +72,34 @@ class ScannedProduct extends React.Component {
 
         <ScrollView style={{zIndex: 5}}>
         <View style={styles.scrollContainer} >
-            <Text style={styles.ingredients}>Description</Text>
-                <View style={styles.barContainer}>
-                  <Text style={{ margin: 10 }}>{productDescription}</Text>
-                {/* {this.state.ingredients.map((ingredient, index) => { 
-                  if (ingredient === " : ") {
-                    return null 
-                  } else {
-                    return <IngredientScoreBar style={styles.bar} key={index} ingredient={ingredient} /> 
-                  }
-                }
-                )}     */}
-              </View>
+          {/* {this.state.ingredients.length ? <Text>{this.state.ingredients[1]}</Text> : null } */}
+        {/* {ingredients ? <Text>{ingredients[1]}</Text> : null } */}
+        <ScrollableTabView
+              tabBarActiveTextColor="black"
+              renderTabBar={() => <TabBar tabBarStyle={{ alignItems: 'center', border: 'none' }} underlineColor="#A7CAEB" tabBarTextStyle={{ fontSize: 22 }} />}
+            >
+              <this.IngredientsPage tabLabel={{ label: "Ingredients" }} label="Ingredients" ingredients={ingredients} />
+              <this.DescriptionPage tabLabel={{ label: "Description" }} label="Description" description={productDescription} />
+              
+            </ScrollableTabView>
         </View>
         </ScrollView>
       </View>
     );
   }
 }
+
+const mapState = state => ({
+  score: state.products.score,
+  product: state.products.product,
+})
+
+const mapDispatch = dispatch => ({
+  getToxicityScore: (productId) => dispatch(getToxicityScore(productId)),
+  getProduct: (name) => dispatch(getProduct(name))
+})
+
+export default connect(mapState, mapDispatch)(ScannedProduct);
 
 const styles = StyleSheet.create({
   container: {
@@ -127,7 +172,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 900,
+    marginBottom: 30,
   },
   bar: {
     marginBottom: 20,
@@ -139,7 +184,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 20,
-  },
-});
-
-export default connect(null)(ScannedProduct);
+  }
+})
