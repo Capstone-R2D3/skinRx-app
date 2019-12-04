@@ -15,14 +15,17 @@ class JourneyCard extends Component {
         const entryId = this.props.entry.id;
         return (
             <View style={styles.row}>
-                <View style={styles.date}>
-                    <Text style={{fontFamily: 'Avenir', color: 'white'} }>
+                {/* <View style={styles.date}>
+                    <Text style={{fontFamily: 'Avenir', color: '#A7CAEB'} }>
                         {this.props.entry.date}
                     </Text>
                 </View>
-                <Image source={require('./images/entry-icon.png')} style={styles.bullet}/>
+                <Image source={require('./images/entry-icon.png')} style={styles.bullet}/> */}
                 <View style={styles.entryContainer}>
                     <View style={styles.entry}>
+                        <Text style={{fontFamily: 'Avenir', color: 'white', fontWeight: 'bold'} }>
+                            {this.props.entry.date}
+                        </Text>
                         <Text style={styles.text}>
                             Stress Level: {this.props.entry.stressLevel}
                         </Text>
@@ -36,14 +39,14 @@ class JourneyCard extends Component {
                             style={styles.userBtn}
                             onPress={() => this.props.delete(entryId)}
                         >
-                            <Text style={styles.text}>Delete</Text>
+                            <Text style={{fontFamily: 'Avenir', color: 'white', fontWeight: 'bold'}}>Delete</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             style={styles.userBtn}
                             onPress={() => this.props.update(this.props.entry)}
                         >
                             <Text style={styles.text}>Update</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </View>
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     row: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center"
     },
     date:{
@@ -72,15 +75,16 @@ const styles = StyleSheet.create({
         zIndex: 2
     },
     entryContainer: {
-        borderLeftWidth: 1,
-        borderLeftColor: 'white',
         flex: 1
     },
     entry: {
         width: '85%',
-        backgroundColor: 'white',
-        borderRadius: 5,
-        margin: '10%',
+        backgroundColor: '#BFD7ED',
+        borderRadius: 3,
+        marginLeft: '7%',
+        marginRight: '7%',
+        marginBottom: '3.5%',
+        marginTop: '3.5%',
         shadowColor: '#699add',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.8,
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         padding: '7%',
     },
     text: {
-        color: '#699add',
+        color: 'white',
         fontFamily: 'Avenir'
     }
 });
