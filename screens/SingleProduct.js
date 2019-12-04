@@ -49,7 +49,7 @@ class SingleProduct extends React.Component {
   IngredientsPage = ({ label }) => (
     <View style={{ marginTop: 30 }} >
       <View style={styles.barContainer}>
-        {this.state.ingredients.map((ingredient, index) => {
+        { this.state.ingredients.length ? this.state.ingredients.map((ingredient, index) => {
           if (ingredient === " : ") {
             return null;
           } else {
@@ -61,7 +61,7 @@ class SingleProduct extends React.Component {
               />
             );
           }
-        })}
+        }) : null}
       </View>
     </View>
   );
@@ -137,7 +137,7 @@ class SingleProduct extends React.Component {
               renderTabBar={() => <TabBar tabBarStyle={{ alignItems: 'center', border: 'none' }} underlineColor="#A7CAEB" tabBarTextStyle={{ fontSize: 18 }} />}
             >
               <this.IngredientsPage tabLabel={{ label: "Ingredients" }} label="Ingredients"  />
-              <ToxicityInfo tabLabel={{ label: "Toxicity Score"}} label="Toxicity Score" />
+              {/* <ToxicityInfo tabLabel={{ label: "Toxicity Score"}} label="Toxicity Score" /> */}
               <this.ReviewPage tabLabel={{ label: "Review" }} label="Review"  />
               
             </ScrollableTabView>
