@@ -17,11 +17,11 @@ class Result extends Component {
     }
 
     render() {
-        const result = this.props.navigation.getParam('result');
+        const result = this.props.navigation.getParam('result').toLowerCase();
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>
-                    Your skin type is {result}.
+                    You have {result} skin.
                 </Text>
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
