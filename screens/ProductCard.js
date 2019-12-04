@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     alignItems: "center", 
     marginRight: 20,
     
-    shadowColor: "#000",
-    shadowOffset:{
-      width: 0,
-      height: 0.6,
-    },
-    shadowOpacity: 0.10,
-    shadowRadius: .7,
-    elevation: 1,
+    // shadowColor: "#000",
+    // shadowOffset:{
+    //   width: 0,
+    //   height: 0.6,
+    // },
+    // shadowOpacity: 0.10,
+    // shadowRadius: .7,
+    // elevation: 1,
   }, 
   image: {
     width: 225, 

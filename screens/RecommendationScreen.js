@@ -66,7 +66,7 @@ class RecommendationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <ImageBackground source={require('./images/background2.png')} style={styles.backgroundImage}>
+        <ImageBackground source={require('./images/background1.png')} style={styles.backgroundImage}>
           
           <Text style={styles.header}>An easy four step process curated just for you</Text> 
               
