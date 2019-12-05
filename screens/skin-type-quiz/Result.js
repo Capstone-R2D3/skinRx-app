@@ -12,7 +12,6 @@ class Result extends Component {
     async goHome(result) {
       if (this.props.recommendations.length === 0) {
         await this.props.getRecommendations(this.props.user.id, result)
-        await this.props.getExistingUserRecs(this.props.user.id)
         this.props.navigation.navigate('Dashboard');
       } else {
         await this.props.updateRecommendations(this.props.user.id)

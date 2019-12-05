@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import {addSkinType} from '../../redux/reducers/users'
-import {getRecommendations} from '../../redux/reducers/recommendations'
+import {getRecommendations, updateRecommendations} from '../../redux/reducers/recommendations'
 
 
 class SkinTypes extends Component {
@@ -19,8 +19,14 @@ class SkinTypes extends Component {
       (typeId === 4) && (result = 'Combination');
       (typeId === 5) && (result = 'Sensitive');
       await this.props.addSkinTypeThunk(userId, result)
-      await this.props.getRecommendations(this.props.user.id, typeId)
-      this.props.navigation.navigate('Dashboard')
+
+      if (this.props.recommendations.length === 0) {
+        await this.props.getRecommendations(this.props.user.id, result)
+        this.props.navigation.navigate('Dashboard');
+      } else {
+        await this.props.updateRecommendations(this.props.user.id)
+        this.props.navigation.navigate('Dashboard');
+      }
     }
 
     render() {
@@ -93,12 +99,14 @@ class SkinTypes extends Component {
 }
 
 const mapState = state => ({
-    user: state.users.user
+    user: state.users.user,
+    recommendations: state.recommendations.recommendations
 })
 
 const mapDispatch = dispatch => ({
   addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result)),
   getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
+  updateRecommendations: (userId) => dispatch(updateRecommendations(userId))
 })
 
 export default connect(mapState, mapDispatch)(SkinTypes)
