@@ -31,9 +31,11 @@ class JourneyForm extends Component {
         stressLevel: 3,
         diet: "",
         description: "",
+        status: null,
         entry: null
     }
     this.handleSubmission = this.handleSubmission.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
   }
 
   getPermissionAsync = async () => {
@@ -89,6 +91,7 @@ class JourneyForm extends Component {
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description,
+        status: entry.status,
         entry: entry.id
       })
     }
@@ -107,6 +110,8 @@ class JourneyForm extends Component {
   // }
 
   async handleSubmission () {
+    // ADD MORE ALERTS
+    //also this one doesn't work because image is no longer a state
     if(this.state.image === null){
       Alert.alert('Please add an image to your entry');
     } else {
@@ -115,7 +120,8 @@ class JourneyForm extends Component {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
         diet: this.state.diet,
-        description: this.state.description
+        description: this.state.description,
+        status: this.state.status
       })
       if(this.state.entry === null){
         await this.props.addEntry(this.props.userId, formData)
@@ -125,6 +131,7 @@ class JourneyForm extends Component {
           stressLevel: 3,
           diet: "",
           description: "",
+          status: null,
           entry: null
         })
         Alert.alert('Entry Added!');
@@ -136,11 +143,16 @@ class JourneyForm extends Component {
           stressLevel: 3,
           diet: "",
           description: "",
+          status: null,
           entry: null
         })
         Alert.alert('Entry Added!');
       }
     }
+  }
+
+  handleStatus (num) {
+    this.setState({status: num})
   }
 
   renderItem = ({ item }) => {
@@ -150,7 +162,6 @@ class JourneyForm extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <ScrollView contentContainerStyle={styles.container}>
           {/* <Text style={styles.header}>Entry</Text> */}
@@ -174,7 +185,7 @@ class JourneyForm extends Component {
           }
           <TextInputMask
               style={styles.input}
-              placeholder="MM/DD/YYYY"
+              placeholder= 'MM/DD/YYYY'
               type={'datetime'}
               options={{
                   format: 'MM/DD/YYYY'
@@ -186,6 +197,7 @@ class JourneyForm extends Component {
                   })
               }}
           />
+          <Text style={styles.text}>How stressed are you today?</Text>
           <Slider 
               style={{width: '100%', alignSelf: 'center'}}
               maximumValue={5} 
@@ -204,12 +216,32 @@ class JourneyForm extends Component {
           />
           <AutoGrowingTextInput
               style={styles.input}
-              placeholder="How are you and your skin doing?"
+              placeholder="What was your routine today?"
               onChangeText={text => this.setState({ description: text })}
               value={this.state.description}
           />
+          <Text style={styles.text}>How is your skin doing?</Text>
+          <View style={styles.statusContainer}>
+            <TouchableOpacity
+                style={this.state.status === 3 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(3)}
+            >
+                <Text style={this.state.status === 3 ? styles.statusText : styles.btnText}>Great!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={this.state.status === 2 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(2)}
+            >
+                <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Okay.</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={this.state.status === 1 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(1)}
+            >
+                <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Help!</Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
-              style={styles.AddImageBtn}
               onPress={() => this.pickImage()}
           >
               <Text style={styles.AddImageText}>Add Image</Text>
@@ -255,23 +287,24 @@ const styles = StyleSheet.create({
   // },
   input: {
     width: "100%",
-    padding: 15,
     marginBottom: 10,
     borderWidth: 1, 
     borderColor: "#dadada",
-    borderRadius: 10
+    borderRadius: 10,
+    fontFamily: 'Avenir',
+    padding: 10
   },
-  AddImageBtn: {
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 25,
-    backgroundColor: "transparent",
-    padding: 15,
-    width: '60%',
-    display: 'flex',
-    marginBottom: 10,
-    alignSelf: 'center'
-  },
+  // AddImageBtn: {
+  //   borderWidth: 2,
+  //   borderColor: "white",
+  //   borderRadius: 25,
+  //   backgroundColor: "transparent",
+  //   padding: 15,
+  //   width: '60%',
+  //   display: 'flex',
+  //   marginBottom: 10,
+  //   alignSelf: 'center'
+  // },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
     padding: 10,
@@ -285,7 +318,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 2, 
     fontWeight: "bold",
-    color: '#a8a8a8'
+    color: '#a8a8a8',
+    fontFamily: 'Avenir',
+    padding: 15
   },
   SaveText: {
     fontSize: 20,
@@ -293,11 +328,46 @@ const styles = StyleSheet.create({
     textTransform: "uppercase", 
     letterSpacing: 2, 
     fontWeight: "bold",
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir'
   },
   image: {
     width: 180,
     height: 180,
     borderRadius: 10
+  },
+  text: {
+    fontFamily: 'Avenir',
+    color: '#a8a8a8'
+  },
+  statusContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  btn: {
+    borderWidth: 1,
+    borderColor: "#dadada",
+    borderRadius: 25,
+    padding: 1,
+    width: '25%'
+  },
+  statusBtn: {
+    borderWidth: 1,
+    borderColor: "#A7CAEB",
+    borderRadius: 25,
+    padding: 1,
+    width: '25%'
+  },
+  statusText: {
+    fontFamily: 'Avenir',
+    color: '#A7CAEB',
+    textAlign: 'center'
+  },
+  btnText: {
+    fontFamily: 'Avenir',
+    color: '#dadada',
+    textAlign: 'center'
   }
 })
