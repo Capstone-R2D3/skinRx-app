@@ -128,7 +128,7 @@ class JourneyForm extends Component {
         this.setState({
           date: "",
           images: [],
-          stressLevel: 1,
+          stressLevel: 3,
           diet: "",
           description: "",
           status: null,
@@ -140,7 +140,7 @@ class JourneyForm extends Component {
         this.setState({
           date: "",
           images: [],
-          stressLevel: 1,
+          stressLevel: 3,
           diet: "",
           description: "",
           status: null,
