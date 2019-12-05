@@ -77,7 +77,6 @@ class JourneyCalendar extends Component {
             else if(nextx > (lowerBound * 2) && nextx < (upperBound * 2)) this.setState({selected: "calendar"})
           }}
         >
-
           <View style={styles.card}>
             <JourneyEntries/>
           </View>
