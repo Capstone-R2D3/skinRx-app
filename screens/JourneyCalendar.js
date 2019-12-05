@@ -19,18 +19,41 @@ class JourneyCalendar extends React.Component {
     this.state = {
         markedDates: {}
     }
-    this.markNewDate = this.markNewDate.bind(this);
+    this.reformatDate = this.reformatDate.bind(this);
   }
 
-  componentDidMount() {
+  reformatDate (date) {
+      const dateArray = date.split('/');
+      const formattedDate = `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
+      return formattedDate;
+  }
+
+  async componentDidMount() {
     const userId = this.props.user.id;
-    this.props.getEntries(userId);
+    await this.props.getEntries(userId);
+    const numOfEntries = this.props.entries.length;
+    const entryDates = {};
+    for (let i=0; i<numOfEntries; i++){
+        const entryDate = this.reformatDate(this.props.entries[i].date);
+        const entryStatus = this.props.entries[i].status;
+        let entryColor;
+        if(entryStatus === 1){
+            entryColor = 'red'
+        } else if (entryStatus === 2){
+            entryColor = 'yellow'
+        } else {
+            entryColor = 'green'
+        }
+        entryDates[entryDate] = {selected: true, selectedColor: entryColor}
+    }
+    console.log(entryDates)
+    this.setState({markedDates: entryDates});
   }
 
-  markNewDate(day) {
-    let date = day.dateString
-    this.setState({'markedDates': {[date]: {selected: true, marked: true, selectedColor: 'white'}} })
-  }
+//   markNewDate(day) {
+//     let date = day.dateString
+//     this.setState({'markedDates': {[date]: {selected: true, marked: true, selectedColor: 'white'}} })
+//   }
 
   render() {
     return (

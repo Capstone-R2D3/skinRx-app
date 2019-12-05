@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     entry: {
-        width: '90%',
+        width: '85%',
         backgroundColor: '#BFD7ED',
         borderRadius: 3,
         marginLeft: '7%',

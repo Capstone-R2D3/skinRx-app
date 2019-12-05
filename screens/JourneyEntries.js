@@ -18,9 +18,6 @@ class JourneyEntries extends React.Component {
     super();
     this.delete = this.delete.bind(this);
     this.update = this.update.bind(this);
-    this.state = {
-      items: {}
-    }
   }
 
   componentDidMount() {
