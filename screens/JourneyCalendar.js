@@ -17,13 +17,19 @@ class JourneyCalendar extends React.Component {
   constructor() {
     super();
     this.state = {
-      items: {}
+        markedDates: {}
     }
+    this.markNewDate = this.markNewDate.bind(this);
   }
 
   componentDidMount() {
     const userId = this.props.user.id;
     this.props.getEntries(userId);
+  }
+
+  markNewDate(day) {
+    let date = day.dateString
+    this.setState({'markedDates': {[date]: {selected: true, marked: true, selectedColor: 'white'}} })
   }
 
   render() {
@@ -32,8 +38,6 @@ class JourneyCalendar extends React.Component {
             current={Date()}
             minDate={'2018-01-01'}
             maxDate={'2023-01-01'}
-            onDayPress={(day) => this.markNewDate(day)}
-            onDayLongPress={(day) => this.markNewDate(day)}
             monthFormat={'MMMM yyyy'}
             hideArrows={false}
             hideExtraDays={true}

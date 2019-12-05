@@ -96,18 +96,6 @@ class JourneyForm extends Component {
       })
     }
   }
-  // componentDidMount () {
-  //   const entry = this.props.navigation.getParam("entry");
-  //   if(entry !== null){
-  //     this.setState({
-  //       date: entry.date,
-  //       images: entry.imageUrls,
-  //       stressLevel: entry.stressLevel,
-  //       diet: entry.diet,
-  //       description: entry.description
-  //     })
-  //   }
-  // }
 
   async handleSubmission () {
     // ADD MORE ALERTS
@@ -115,7 +103,6 @@ class JourneyForm extends Component {
     if(this.state.image === null){
       Alert.alert('Please add an image to your entry');
     } else {
-      // const entry = this.props.navigation.getParam("entry");
       const formData = this.createFormData(this.state.images, {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
@@ -164,7 +151,6 @@ class JourneyForm extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-          {/* <Text style={styles.header}>Entry</Text> */}
           {
             this.state.images.length > 0 ?
             <View style={{marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "center"}}>
@@ -275,16 +261,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: '7%'
   },
-  // header: {
-  //   fontFamily: 'Avenir',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  //   fontSize: 35,
-  //   marginBottom: 30,
-  //   marginTop: "10%",
-  //   color: "white",
-  //   letterSpacing: 3,
-  // },
   input: {
     width: "100%",
     marginBottom: 10,
@@ -294,17 +270,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     padding: 10
   },
-  // AddImageBtn: {
-  //   borderWidth: 2,
-  //   borderColor: "white",
-  //   borderRadius: 25,
-  //   backgroundColor: "transparent",
-  //   padding: 15,
-  //   width: '60%',
-  //   display: 'flex',
-  //   marginBottom: 10,
-  //   alignSelf: 'center'
-  // },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
     padding: 10,

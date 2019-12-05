@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Calendar } from 'react-native-calendars';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { withNavigation } from "react-navigation";
 import JourneyForm from './JourneyForm';
@@ -11,11 +10,9 @@ class JourneyScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        markedDates: {},
         selected: 'entries',
         screenWidth: Dimensions.get('window').width * 0.85
     };
-    this.markNewDate = this.markNewDate.bind(this);
     this.scrollToA = this.scrollToA.bind(this)
     this.scrollToB = this.scrollToB.bind(this)
     this.scrollToC = this.scrollToC.bind(this)
@@ -35,11 +32,6 @@ class JourneyScreen extends Component {
     this.scroller.scrollTo({x: scrollXPos, y: 0});
     this.setState({selected: "calendar"})
   };
-
-  markNewDate(day) {
-    let date = day.dateString
-    this.setState({'markedDates': {[date]: {selected: true, marked: true, selectedColor: 'white'}} })
-  }
   
   render() {
     return (

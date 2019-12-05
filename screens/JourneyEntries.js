@@ -41,19 +41,7 @@ class JourneyEntries extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.headerText}>Your Entries</Text>
-          <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("JourneyForm", {
-                  entry: null
-                });
-              }}
-          >
-              <Text>+</Text>
-          </TouchableOpacity>
-        </View> */}
+      <ScrollView>
         <View>
           {
             (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
@@ -75,47 +63,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(JourneyEntries);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "white"
-  }
-  // header: {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "center"
-  // },
-  // btnContainer: {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  // },
-  // userBtn: {
-  //   backgroundColor: "#dadada",
-  //   padding: 15,
-  //   width: "75%",
-  //   display: "flex",
-  //   borderRadius: 7,
-  //   margin: 5
-  // },
-  // btnText: {
-  //   fontSize: 18,
-  //   textAlign: "center"
-  // },
-  // headerText: {
-  //   color: 'white',
-  //   margin: '6%',
-  //   fontFamily: 'Avenir',
-  //   fontWeight: 'bold',
-  //   fontSize: 35,
-  //   letterSpacing: 2,
-  //   shadowColor: '#699add',
-  //   shadowOffset: { width: 0, height: 1 },
-  //   shadowOpacity: 0.8,
-  //   shadowRadius: 1
-  // }, 
-});
