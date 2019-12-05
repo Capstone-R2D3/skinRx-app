@@ -21,7 +21,7 @@ class MoisturizerQuestion extends Component {
         if (skinType === 4) {result = 'Combination'}
         if (skinType === 5) {result = 'Sensitive'}
         const userId = this.props.user.id;
-        await this.props.addSkinType(userId, result);
+        await this.props.addSkinTypeThunk(userId, result);
 
         this.props.navigation.navigate('Result', {
             result
@@ -94,7 +94,7 @@ const mapState = state => ({
   })
   
  const mapDispatch = dispatch => ({
-    addSkinType: (userId, result) => dispatch(addSkinType(userId, result)),
+    addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result)),
   })
 
 export default connect(mapState, mapDispatch)(MoisturizerQuestion)

@@ -27,7 +27,7 @@ class ProductCard extends React.Component {
 
   // since props are being passed down from the parent, parent state updates will only update through this lifecycle hook!!!
   componentWillReceiveProps(nextProps) {
-    this.setState({name: nextProps.state.name, imageUrl: nextProps.state.imageUrl, brand: nextProps.state.brand, id: nextProps.state.id, ingredients: nextProps.state.ingredients})
+    this.setState({name: nextProps.state.name, imageUrl: nextProps.state.imageUrl, brand: nextProps.state.brand, id: nextProps.state.id, ingredients: nextProps.state.ingredients, category: nextProps.state.category})
   }
 
 
@@ -94,15 +94,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly", 
     alignItems: "center", 
     marginRight: 20,
-    
-    // shadowColor: "#000",
-    // shadowOffset:{
-    //   width: 0,
-    //   height: 0.6,
-    // },
-    // shadowOpacity: 0.10,
-    // shadowRadius: .7,
-    // elevation: 1,
   }, 
   image: {
     width: 225, 
