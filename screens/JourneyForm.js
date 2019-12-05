@@ -110,6 +110,8 @@ class JourneyForm extends Component {
   // }
 
   async handleSubmission () {
+    // ADD MORE ALERTS
+    //also this one doesn't work because image is no longer a state
     if(this.state.image === null){
       Alert.alert('Please add an image to your entry');
     } else {

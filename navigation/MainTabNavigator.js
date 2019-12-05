@@ -26,9 +26,6 @@ import SkinQuestion from '../screens/skin-type-quiz/SkinQuestion'
 import SkinTypeQuiz from '../screens/skin-type-quiz/SkinTypeQuiz'
 import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
 
-import JourneyForm from '../screens/JourneyForm'
-import JourneyCalendar from '../screens/JourneyCalendar'
-
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -109,13 +106,10 @@ ScanStack.path = ''
 
 const JourneyStack = createStackNavigator(
   {
-    JourneyCalendar: {
-      screen: JourneyCalendar,
+    JourneyScreen: {
+      screen: JourneyScreen,
       navigationOptions: {header: null}
-    },
-    JourneyEntries: JourneyScreen,
-    
-    JourneyForm: JourneyForm,
+    }
   },
   config
 );
