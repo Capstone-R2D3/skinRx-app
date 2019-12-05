@@ -6,11 +6,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View, 
+  Dimensions
 } from 'react-native';
 import { withNavigation } from "react-navigation";
 import {connect} from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
+
+const {width, height} = Dimensions.get('window')
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -85,8 +88,10 @@ export default withNavigation(connect(mapState, null)(ProductCard))
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
-    width: 300, 
-    height: 450,
+    width: width * .70,
+    height: height * .61,
+    // width: 300, 
+    // height: 450,
     borderRadius: 10,
     padding: 10,
     display: "flex", 
@@ -96,8 +101,10 @@ const styles = StyleSheet.create({
     marginRight: 20,
   }, 
   image: {
-    width: 225, 
-    height: 225, 
+    width: width * .55,
+    height: width * .55, 
+    // width: 225, 
+    // height: 225, 
     resizeMode: "cover", 
     marginTop: 40,
     marginBottom: 25

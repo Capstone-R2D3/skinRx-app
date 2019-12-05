@@ -12,6 +12,7 @@ import ProductCard from './ProductCard';
 import {connect} from 'react-redux'
 import { getRecommendations, getExistingUserRecs, getNewRecommendation } from '../redux/reducers/recommendations'
 
+const {width, height} = Dimensions.get('window')
 
 class RecommendationScreen extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class RecommendationScreen extends React.Component {
       userId: this.props.user.id,
       skinTypeId: this.props.user.skinTypeId, 
       selected: 'cleanser',    
-      screenWidth: Dimensions.get('window').width * 0.85,
+      screenWidth: Dimensions.get('window').width * 0.7,
     }
     this.getNewProductRec = this.getNewProductRec.bind(this)
     this.scrollToA = this.scrollToA.bind(this)
@@ -30,10 +31,7 @@ class RecommendationScreen extends React.Component {
   }
 
   async componentDidMount() {
-    // FOR EXISTING USERS!
     await this.props.getExistingUserRecs(this.state.userId)
-    // *** FOR NEW USERS ***
-    // await this.props.getRecommendations(this.state.userId, this.state.skinTypeId)
   }
 
   async getNewProductRec(productId, userRating) {
@@ -85,12 +83,13 @@ class RecommendationScreen extends React.Component {
             </TouchableOpacity>
           </View>
 
+          {/* "3.5%" */}
           <ScrollView 
-              style={{paddingLeft: "3.5%"}}
-              contentContainerStyle={{paddingHorizontal: "6%"}}
+              style={{paddingLeft: width * .005}}
+              contentContainerStyle={{paddingHorizontal: width * .11}}
               horizontal= {true}
               decelerationRate={0}
-              snapToInterval={this.state.screenWidth * 1.05} //element width
+              snapToInterval={this.state.screenWidth * 1.125} //element width
               snapToAlignment={"center"}
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={1000}
@@ -165,10 +164,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: "11%",
+    marginTop: height * .1,
     marginLeft: "3%",
     marginRight: "3%",
-    marginBottom: "7%",
+    marginBottom: height * .035,
     color: "white"
   }, 
   text: {

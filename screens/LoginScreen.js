@@ -4,11 +4,14 @@ import { View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView
+  ScrollView, 
+  Dimensions
 } from 'react-native'
 import {auth} from '../redux/reducers/users'
 import {connect} from 'react-redux'
 import {Ionicons} from '@expo/vector-icons'
+
+const {height} = Dimensions.get('window')
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -38,6 +41,7 @@ class LoginScreen extends Component {
 
   render() {
     return (
+      <View style={{flex: 1, height: height, }}>
       <ScrollView>
         <Ionicons 
             name="ios-arrow-round-back" 
@@ -78,6 +82,7 @@ class LoginScreen extends Component {
           </TouchableOpacity>
       </View>
       </ScrollView>
+      </View>
     );
   }
 }
@@ -100,11 +105,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    // backgroundColor: "#f1f1f1",
-    marginTop: "20%", 
+    marginTop: height * .009,
+    height: height * .75
+
   },
   backBtn: {
-    marginTop: 25,
+    marginTop: 30,
     marginLeft: 20, 
   },
   input: {
