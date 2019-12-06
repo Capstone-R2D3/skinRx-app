@@ -71,7 +71,7 @@ class JourneyScreen extends Component {
           }}
         >
           <View style={styles.card}>
-            <JourneyEntries/>
+            <JourneyEntries />
           </View>
 
           <View style={styles.card}>

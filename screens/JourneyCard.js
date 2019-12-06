@@ -9,8 +9,12 @@ import {
     View,
     Button
   } from 'react-native';
+  import { withNavigation } from 'react-navigation'
 
 class JourneyCard extends Component {
+  constructor(props) {
+    super(props)
+  }
     render() {
         const entryId = this.props.entry.id;
         return (
@@ -30,6 +34,14 @@ class JourneyCard extends Component {
                     </Text>
                     <TouchableOpacity
                         style={styles.userBtn}
+                        onPress={() => this.props.navigation.navigate('EntryDetails', {
+                          date: this.props.entry.date,
+                        })}
+                    >
+                        <Text style={{fontFamily: 'Avenir', color: 'white', fontWeight: 'bold'}}>Details</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.userBtn}
                         onPress={() => this.props.delete(entryId)}
                     >
                         <Text style={{fontFamily: 'Avenir', color: 'white', fontWeight: 'bold'}}>Delete</Text>
@@ -46,7 +58,7 @@ class JourneyCard extends Component {
     }
 }
 
-export default JourneyCard;
+export default withNavigation(JourneyCard);
 
 const styles = StyleSheet.create({
     entryContainer: {
