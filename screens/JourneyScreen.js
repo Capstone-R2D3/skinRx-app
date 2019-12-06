@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
 import { withNavigation } from "react-navigation";
 import JourneyForm from './JourneyForm';
 import JourneyEntries from './JourneyEntries';
@@ -35,8 +35,8 @@ class JourneyScreen extends Component {
   
   render() {
     return (
-      <ImageBackground source={require('./images/background3.png')} style={styles.container}>
-        <Text style={styles.text}>Track your skincare journey with daily entries</Text> 
+      <ImageBackground source={require('./images/background3.png')} style={styles.container} onPress={Keyboard.dismiss}>
+        <Text style={styles.text} onPress={Keyboard.dismiss}>Track your skincare journey with daily entries</Text> 
               
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 17, marginBottom: 17,}}>
           <TouchableOpacity onPress={this.scrollToA}>
@@ -51,6 +51,7 @@ class JourneyScreen extends Component {
         </View>
 
         <ScrollView 
+          onPress={Keyboard.dismiss}
           style={{paddingLeft: "3.5%"}}
           contentContainerStyle={{paddingHorizontal: "6%"}}
           horizontal= {true}
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
     color: '#525252',
     marginTop: "11%",
     marginBottom: "7%",
+    marginHorizontal: "9%",
     fontFamily: 'Avenir',
     fontWeight: 'bold',
     fontSize: 25,
