@@ -24,7 +24,10 @@ export const getEntries = (userId) => async dispatch => {
 
 export const getOneEntry = (userId, date) => async dispatch => {
     try {
-        const {data} = await axios.get(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${date}`)
+        const dateStr = date.split("/")
+        let newDate = `${dateStr[0]}-${dateStr[1]}-${dateStr[2]}`
+        const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/entries/${userId}/entries/${newDate}`)
+        console.log('data', data)
         dispatch(gotOneEntry(data))
     } catch (error) {
         console.error(error)

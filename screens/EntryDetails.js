@@ -17,9 +17,12 @@ class EntryDetails extends Component {
     super(props)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const date = this.props.navigation.getParam("date")
-    this.props.getOneEntry(this.props.user.id, date)
+    console.log('date', date)
+    console.log('userid', this.props.user.id)
+    await this.props.getOneEntry(this.props.user.id, date)
+    console.log('ENTRIESSSSSS', this.props.entry)
   }
 
   render() {
