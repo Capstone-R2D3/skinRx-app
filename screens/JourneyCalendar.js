@@ -72,8 +72,8 @@ class JourneyCalendar extends React.Component {
             onPressArrowRight={addMonth => addMonth()}
             // allows you to press 
             onDayPress={(day) => {
-              const dateStr = day.split("-")
-              let newDate = `${dateStr[1]}/${dateStr[1]}/${dateStr[0]}`
+              const dateStr = day.dateString.split("-")
+              let newDate = `${dateStr[1]}/${dateStr[2]}/${dateStr[0]}`
               this.props.navigation.navigate("EntryDetails", {
                 date: newDate
               })
