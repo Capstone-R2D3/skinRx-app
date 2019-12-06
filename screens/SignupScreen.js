@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView, 
-  Dimensions
+  Dimensions,
+  Keyboard
 } from "react-native";
 import { signUp, me, logout } from "../redux/reducers/users";
 import { connect } from "react-redux";
@@ -74,7 +75,7 @@ class SignupScreen extends Component {
             size={50}
             style={styles.backBtn}
             onPress={() => this.props.navigation.navigate("Welcome")} />
-        <View style={styles.container}>
+        <View style={styles.container} onPress={Keyboard.dismiss}>
           <Text style={styles.header}>New around town?</Text>
           <Text style={{fontSize: 18, marginBottom: 45,}}>We're happy you're here.</Text>
           <TextInput

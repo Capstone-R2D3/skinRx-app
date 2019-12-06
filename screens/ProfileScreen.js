@@ -54,8 +54,8 @@ class ProfileScreen extends React.Component {
                 <Text>Skin Type: { this.props.skinType ? this.props.skinType : null }</Text>
                 <Text />
                 <Text>Think it might be different?</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}>
-                  <Text>Retake our quiz!</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')} style={styles.retakeBtn}>
+                  <Text style={styles.retakeText}>Retake our quiz</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -238,5 +238,17 @@ const styles = StyleSheet.create({
   incorrect: {
     marginTop: 5,
     color: 'red',
+  }, 
+  retakeText: {
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    color: "white", 
+    fontWeight: "bold",
+  },
+  retakeBtn: {
+    backgroundColor: "#A7CAEB", 
+    borderRadius: 10,
+    width: 140,
+    marginTop: 7
   }
 });
