@@ -1,16 +1,31 @@
 import axios from 'axios';
 
 const GOT_ENTRIES = 'GOT_ENTRIES';
+const GOT_ONE_ENTRY = 'GOT_ONE_ENTRY';
 
 const gotEntries = (entries) => ({
     type: GOT_ENTRIES,
     entries
 })
 
+const gotOneEntry = (entry) => ({
+    type: GOT_ONE_ENTRY, 
+    entry
+})
+
 export const getEntries = (userId) => async dispatch => {
     try {
         const {data} = await axios.get(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries`);
         dispatch(gotEntries(data));
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getOneEntry = (userId, date) => async dispatch => {
+    try {
+        const {data} = await axios.get(`https://skinrx-server.herokuapp.com/auth/users/${userId}/entries/${date}`)
+        dispatch(gotOneEntry(data))
     } catch (error) {
         console.error(error)
     }
@@ -66,6 +81,8 @@ const journey = (state = initialState, action) => {
     switch (action.type) {
         case GOT_ENTRIES:
             return { ...state, entries: action.entries }
+        case GOT_ONE_ENTRY:
+            return { ...state, entry : action.entry }
         default:
             return state
     }
