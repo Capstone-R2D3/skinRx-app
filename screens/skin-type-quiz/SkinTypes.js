@@ -31,65 +31,63 @@ class SkinTypes extends Component {
 
     render() {
         return (
-            <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={require('./blob.png')} style={styles.backgroundImage}>
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
                         <Text style={styles.header}>
                             My skin type is
                         </Text>
                     </View>
-                    <View style={{ zIndex: 5, width: '100%', margin: 0 }}>
-                        <View style={styles.scrollContainer}>
-                            <View style={styles.btnContainer}>
-                                <TouchableOpacity
-                                style={styles.userBtn}
-                                onPress={() => {
-                                    this.addUserSkinType(4)
-                                }}
-                                >
-                                    <Text style={styles.btnText}>combination</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.btnContainer}>
-                                <TouchableOpacity
-                                style={styles.userBtn}
-                                onPress={() => {
-                                    this.addUserSkinType(2)
-                                }}
-                                >
-                                    <Text style={styles.btnText}>dry</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.btnContainer}>
-                                <TouchableOpacity
-                                style={styles.userBtn}
-                                onPress={() => {
-                                    this.addUserSkinType(1)
-                                }}
-                                >
-                                    <Text style={styles.btnText}>oily</Text>
-                                </TouchableOpacity>
-                            </View>                
-                            <View style={styles.btnContainer}>
-                                <TouchableOpacity
-                                style={styles.userBtn}
-                                onPress={() => {
-                                    this.addUserSkinType(5)
-                                }}
-                                >
-                                    <Text style={styles.btnText}>sensitive</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.btnContainer}>
-                                <TouchableOpacity
-                                style={styles.userBtn}
-                                onPress={() => {
-                                    this.addUserSkinType(3)
-                                }}
-                                >
-                                    <Text style={styles.btnText}>normal</Text>
-                                </TouchableOpacity>
-                            </View>
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => {
+                                this.addUserSkinType(4)
+                            }}
+                            >
+                                <Text style={styles.btnText}>combination</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => {
+                                this.addUserSkinType(2)
+                            }}
+                            >
+                                <Text style={styles.btnText}>dry</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => {
+                                this.addUserSkinType(1)
+                            }}
+                            >
+                                <Text style={styles.btnText}>oily</Text>
+                            </TouchableOpacity>
+                        </View>                
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => {
+                                this.addUserSkinType(5)
+                            }}
+                            >
+                                <Text style={styles.btnText}>sensitive</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                            style={styles.userBtn}
+                            onPress={() => {
+                                this.addUserSkinType(3)
+                            }}
+                            >
+                                <Text style={styles.btnText}>normal</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -112,42 +110,41 @@ const mapDispatch = dispatch => ({
 export default connect(mapState, mapDispatch)(SkinTypes)
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        resizeMode: 'center',
+    },
     container: {
+      flex: 1,
       height: "100%",
-      width: "100%",
-      margin: 0,
-      padding: 0,
       display: "flex",
       flexDirection: "column",
       alignItems: "center"
     },
     topContainer: {
         marginTop: "auto",
+        marginBottom: "auto",
+        display: "flex",
+        alignItems: "center",
         marginLeft: 20,
         marginRight: 20,
-        width: "100%",
-        height: 200,
-        position: "absolute"
+        width: "100%"
       },
     header: {
-      marginTop: "25%",
       textAlign: "center",
       fontSize: 34,
       color: "white"
     },
-    scrollContainer: {
+    bottomContainer: {
         width: "100%",
-        height: "100%",
         backgroundColor: "white",
         borderTopLeftRadius: 35,
         borderTopRightRadius: 35,
-        marginTop: 250,
-        marginLeft: 0,
-        marginRight: 0,
-        marginBottom: 0,
         display: "flex",
         flexDirection: "column",
-        paddingTop: "20%",
+        paddingTop: "15%",
         paddingLeft: "10%",
         paddingRight: "10%",
         paddingBottom: "15%"
@@ -166,16 +163,11 @@ const styles = StyleSheet.create({
       padding: 15,
       borderRadius: 25,
       marginBottom: 10,
-      width: "85%",
+      width: "95%",
     },
     btnText: {
-      fontSize: 18,
+      fontSize: 16,
       color: "#A7CAEB",
       textAlign: "center"
-    },
-    bodyText: {
-        fontSize: 18,
-        textAlign: "center",
-        margin: 15
     }
 });
