@@ -153,7 +153,7 @@ class JourneyForm extends Component {
       <ScrollView contentContainerStyle={styles.container}>
           {
             this.state.images.length > 0 ?
-            <View style={{marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "center"}}>
+            <View style={{marginBottom: '10%', display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <Carousel
                 inactiveSlideOpacity={0.6}
                 inactiveSlideScale={0.65}
@@ -185,7 +185,7 @@ class JourneyForm extends Component {
           />
           <Text style={styles.text}>How stressed are you today?</Text>
           <Slider 
-              style={{width: '100%', alignSelf: 'center'}}
+              style={{width: '100%', alignSelf: 'center', marginBottom: '7%'}}
               maximumValue={5} 
               minimumValue={1} 
               value={this.state.stressLevel}
@@ -202,7 +202,7 @@ class JourneyForm extends Component {
           />
           <AutoGrowingTextInput
               style={styles.input}
-              placeholder="What was your routine today?"
+              placeholder="What was your skincare routine today?"
               onChangeText={text => this.setState({ description: text })}
               value={this.state.description}
           />
@@ -224,7 +224,7 @@ class JourneyForm extends Component {
                 style={this.state.status === 1 ? styles.statusBtn : styles.btn}
                 onPress={() => this.handleStatus(1)}
             >
-                <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Help!</Text>
+                <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Bad!</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
@@ -259,22 +259,25 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     backgroundColor: 'white',
-    padding: '7%'
+    padding: '5%'
   },
   input: {
     width: "100%",
-    marginBottom: 10,
+    marginBottom: '7%',
     borderWidth: 1, 
     borderColor: "#dadada",
     borderRadius: 10,
     fontFamily: 'Avenir',
-    padding: 10
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%',
+    paddingTop: '2%'
   },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
-    padding: 10,
-    width: '60%',
-    marginBottom: 5,
+    padding: '2%',
+    width: '50%',
+    marginBottom: '2%',
     alignSelf: 'center',
     borderRadius: 15
   },
@@ -285,7 +288,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#a8a8a8',
     fontFamily: 'Avenir',
-    padding: 15
+    marginBottom: '7%'
   },
   SaveText: {
     fontSize: 20,
@@ -303,26 +306,29 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Avenir',
-    color: '#a8a8a8'
+    color: '#a8a8a8',
+    marginBottom: '5%'
   },
   statusContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '2%',
+    marginBottom: '7%'
   },
   btn: {
     borderWidth: 1,
     borderColor: "#dadada",
     borderRadius: 25,
-    padding: 1,
+    padding: '2%',
     width: '25%'
   },
   statusBtn: {
     borderWidth: 1,
     borderColor: "#A7CAEB",
     borderRadius: 25,
-    padding: 1,
+    padding: '2%',
     width: '25%'
   },
   statusText: {

@@ -28,26 +28,9 @@ class JourneyCalendar extends React.Component {
       return formattedDate;
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const userId = this.props.user.id;
-    await this.props.getEntries(userId);
-    const numOfEntries = this.props.entries.length;
-    const entryDates = {};
-    for (let i=0; i<numOfEntries; i++){
-        const entryDate = this.reformatDate(this.props.entries[i].date);
-        const entryStatus = this.props.entries[i].status;
-        let entryColor;
-        if(entryStatus === 1){
-            entryColor = 'red'
-        } else if (entryStatus === 2){
-            entryColor = 'yellow'
-        } else {
-            entryColor = 'green'
-        }
-        entryDates[entryDate] = {selected: true, selectedColor: entryColor}
-    }
-    console.log(entryDates)
-    this.setState({markedDates: entryDates});
+    this.props.getEntries(userId);
   }
 
 //   markNewDate(day) {
@@ -56,6 +39,21 @@ class JourneyCalendar extends React.Component {
 //   }
 
   render() {
+    const numOfEntries = this.props.entries.length;
+    const entryDates = {};
+    for (let i=0; i<numOfEntries; i++){
+        const entryDate = this.reformatDate(this.props.entries[i].date);
+        const entryStatus = this.props.entries[i].status;
+        let entryColor;
+        if(entryStatus === 1){
+            entryColor = '#ff6961'
+        } else if (entryStatus === 2){
+            entryColor = '#fcef64'
+        } else {
+            entryColor = '#8be28b'
+        }
+        entryDates[entryDate] = {selected: true, selectedColor: entryColor}
+    }
     return (
         <Calendar
             current={Date()}
@@ -67,7 +65,7 @@ class JourneyCalendar extends React.Component {
             disableMonthChange={true}
             firstDay={1}
             hideDayNames={false}
-            markedDates={this.state.markedDates}
+            markedDates={entryDates}
             // Handler when press arrow icon are selected. Receives callback to go forward and back a month
             onPressArrowLeft={substractMonth => substractMonth()}
             onPressArrowRight={addMonth => addMonth()}

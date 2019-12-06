@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
-    resizeMode: 'center'
+    resizeMode: 'center',
   },
   text: {
     color: '#525252',
@@ -120,7 +120,12 @@ const styles = StyleSheet.create({
     height: 410,
     marginRight: 20,
     borderRadius: 15,
-    padding: 10
+    padding: 10,
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   clicked: {
     color: "#525252", 
