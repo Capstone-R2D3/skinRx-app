@@ -12,10 +12,12 @@ import {
 import { connect } from 'react-redux';
 import { getEntries, deleteEntry } from '../redux/reducers/journey';
 import JourneyCard from './JourneyCard';
+import Carousel from 'react-native-snap-carousel';
+
 
 class JourneyEntries extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.delete = this.delete.bind(this);
     this.update = this.update.bind(this);
   }
