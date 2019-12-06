@@ -6,11 +6,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View, 
+  Dimensions
 } from 'react-native';
 import { withNavigation } from "react-navigation";
 import {connect} from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
+
+const {width, height} = Dimensions.get('window')
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -27,7 +30,7 @@ class ProductCard extends React.Component {
 
   // since props are being passed down from the parent, parent state updates will only update through this lifecycle hook!!!
   componentWillReceiveProps(nextProps) {
-    this.setState({name: nextProps.state.name, imageUrl: nextProps.state.imageUrl, brand: nextProps.state.brand, id: nextProps.state.id, ingredients: nextProps.state.ingredients})
+    this.setState({name: nextProps.state.name, imageUrl: nextProps.state.imageUrl, brand: nextProps.state.brand, id: nextProps.state.id, ingredients: nextProps.state.ingredients, category: nextProps.state.category})
   }
 
 
@@ -85,8 +88,10 @@ export default withNavigation(connect(mapState, null)(ProductCard))
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
-    width: 300, 
-    height: 450,
+    width: width * .70,
+    height: height * .61,
+    // width: 300, 
+    // height: 450,
     borderRadius: 10,
     padding: 10,
     display: "flex", 
@@ -94,19 +99,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly", 
     alignItems: "center", 
     marginRight: 20,
-    
-    // shadowColor: "#000",
-    // shadowOffset:{
-    //   width: 0,
-    //   height: 0.6,
-    // },
-    // shadowOpacity: 0.10,
-    // shadowRadius: .7,
-    // elevation: 1,
   }, 
   image: {
-    width: 225, 
-    height: 225, 
+    width: width * .55,
+    height: width * .55, 
+    // width: 225, 
+    // height: 225, 
     resizeMode: "cover", 
     marginTop: 40,
     marginBottom: 25

@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar, 
-  ImageBackground
+  ImageBackground, 
+  Dimensions
 } from 'react-native'
 
 export default function WelcomeScreen(props) {
@@ -37,6 +38,8 @@ export default function WelcomeScreen(props) {
   )
 } 
 
+const {width, height} = Dimensions.get('window')
+
 const styles = StyleSheet.create({
   backgroundImage: {
     width: '100%',
@@ -57,9 +60,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 65,
-    // marginBottom: 175,
-    marginBottom: "49%",
-    marginTop: "62%",
+    marginTop: height * 0.37,
+    marginBottom: height * 0.25,
     color: "white",
     letterSpacing: 3,
   },

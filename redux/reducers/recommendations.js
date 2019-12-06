@@ -32,6 +32,15 @@ export const getExistingUserRecs = (userId) => async dispatch => {
   }
 }
 
+export const updateRecommendations = (userId) => async dispatch => {
+  try {
+    await axios.put(`https://skinrx-server.herokuapp.com/api/recommendations/update/${userId}`)
+    dispatch(getExistingUserRecs(userId))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 export const getNewRecommendation = (userId, category, productId, skinTypeId, userRating) => async dispatch => {
   try {

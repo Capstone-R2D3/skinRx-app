@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
-import {getRecommendations} from '../../redux/reducers/recommendations';
+import {getRecommendations, getExistingUserRecs, updateRecommendations} from '../../redux/reducers/recommendations';
 
 class Result extends Component {
     constructor(props) {
@@ -9,8 +9,14 @@ class Result extends Component {
         this.goHome = this.goHome.bind(this);
     }
 
-    goHome() {
-      this.props.navigation.navigate('Home');
+    async goHome(result) {
+      if (this.props.recommendations.length === 0) {
+        await this.props.getRecommendations(this.props.user.id, result)
+        this.props.navigation.navigate('Dashboard');
+      } else {
+        await this.props.updateRecommendations(this.props.user.id)
+        this.props.navigation.navigate('Dashboard');
+      }
     }
 
     render() {
@@ -25,8 +31,7 @@ class Result extends Component {
                     <TouchableOpacity
                     style={styles.userBtn}
                     onPress={() => {
-                      this.goHome()
-                      this.props.getRecommendations(this.props.user.id, result)
+                      this.goHome(result)
                     }}
                     >
                         <Text style={styles.btnText}>Take me to my products!</Text>
@@ -39,11 +44,14 @@ class Result extends Component {
 }
 
 const mapState = state => ({
-  user: state.users.user
+  user: state.users.user,
+  recommendations: state.recommendations.recommendations
 })
 
 const mapDispatch = dispatch => ({
   getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
+  getExistingUserRecs: (userId) => dispatch(getExistingUserRecs(userId)),
+  updateRecommendations: (userId) => dispatch(updateRecommendations(userId))
 })
 
 export default connect(mapState, mapDispatch)(Result)

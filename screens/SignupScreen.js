@@ -5,11 +5,14 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView
+  ScrollView, 
+  Dimensions
 } from "react-native";
 import { signUp, me, logout } from "../redux/reducers/users";
 import { connect } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+
+const {width, height} = Dimensions.get('window')
 
 class SignupScreen extends Component {
   constructor(props) {
@@ -63,6 +66,7 @@ class SignupScreen extends Component {
 
   render() {
     return (
+      <View style={{flex: 1, height: height, }}>
       <ScrollView>
         <Ionicons
             name="ios-arrow-round-back"
@@ -124,6 +128,7 @@ class SignupScreen extends Component {
         </TouchableOpacity>
       </View>
       </ScrollView>
+      </View>
     );
   }
 }
@@ -148,7 +153,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    marginTop: "11%",
+    marginTop: height * .01,
+    height: height * .8
   },
   backBtn: {
     marginTop: 25,

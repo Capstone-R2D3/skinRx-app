@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import {addSkinType} from '../../redux/reducers/users'
-import {getRecommendations} from '../../redux/reducers/recommendations'
+import {getRecommendations, updateRecommendations} from '../../redux/reducers/recommendations'
 
 
 class SkinTypes extends Component {
@@ -20,7 +19,14 @@ class SkinTypes extends Component {
       (typeId === 4) && (result = 'Combination');
       (typeId === 5) && (result = 'Sensitive');
       await this.props.addSkinTypeThunk(userId, result)
-      this.props.navigation.navigate('Home')
+
+      if (this.props.recommendations.length === 0) {
+        await this.props.getRecommendations(this.props.user.id, result)
+        this.props.navigation.navigate('Dashboard');
+      } else {
+        await this.props.updateRecommendations(this.props.user.id)
+        this.props.navigation.navigate('Dashboard');
+      }
     }
 
     render() {
@@ -39,7 +45,6 @@ class SkinTypes extends Component {
                                 style={styles.userBtn}
                                 onPress={() => {
                                     this.addUserSkinType(4)
-                                    this.props.getRecommendations(this.props.user.id, 4)
                                 }}
                                 >
                                     <Text style={styles.btnText}>combination</Text>
@@ -50,7 +55,6 @@ class SkinTypes extends Component {
                                 style={styles.userBtn}
                                 onPress={() => {
                                     this.addUserSkinType(2)
-                                    this.props.getRecommendations(this.props.user.id, 2)
                                 }}
                                 >
                                     <Text style={styles.btnText}>dry</Text>
@@ -61,7 +65,6 @@ class SkinTypes extends Component {
                                 style={styles.userBtn}
                                 onPress={() => {
                                     this.addUserSkinType(1)
-                                    this.props.getRecommendations(this.props.user.id, 1)
                                 }}
                                 >
                                     <Text style={styles.btnText}>oily</Text>
@@ -72,7 +75,6 @@ class SkinTypes extends Component {
                                 style={styles.userBtn}
                                 onPress={() => {
                                     this.addUserSkinType(5)
-                                    this.props.getRecommendations(this.props.user.id, 5)
                                 }}
                                 >
                                     <Text style={styles.btnText}>sensitive</Text>
@@ -83,7 +85,6 @@ class SkinTypes extends Component {
                                 style={styles.userBtn}
                                 onPress={() => {
                                     this.addUserSkinType(3)
-                                    this.props.getRecommendations(userId, 3)
                                 }}
                                 >
                                     <Text style={styles.btnText}>normal</Text>
@@ -98,12 +99,14 @@ class SkinTypes extends Component {
 }
 
 const mapState = state => ({
-    user: state.users.user
+    user: state.users.user,
+    recommendations: state.recommendations.recommendations
 })
 
 const mapDispatch = dispatch => ({
   addSkinTypeThunk: (userId, result) => dispatch(addSkinType(userId, result)),
   getRecommendations: (userId, skinTypeId) => dispatch(getRecommendations(userId, skinTypeId)),
+  updateRecommendations: (userId) => dispatch(updateRecommendations(userId))
 })
 
 export default connect(mapState, mapDispatch)(SkinTypes)

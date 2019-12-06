@@ -31,9 +31,11 @@ class JourneyForm extends Component {
         stressLevel: 3,
         diet: "",
         description: "",
+        status: null,
         entry: null
     }
     this.handleSubmission = this.handleSubmission.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
   }
 
   getPermissionAsync = async () => {
@@ -89,33 +91,24 @@ class JourneyForm extends Component {
         stressLevel: entry.stressLevel,
         diet: entry.diet,
         description: entry.description,
+        status: entry.status,
         entry: entry.id
       })
     }
   }
-  // componentDidMount () {
-  //   const entry = this.props.navigation.getParam("entry");
-  //   if(entry !== null){
-  //     this.setState({
-  //       date: entry.date,
-  //       images: entry.imageUrls,
-  //       stressLevel: entry.stressLevel,
-  //       diet: entry.diet,
-  //       description: entry.description
-  //     })
-  //   }
-  // }
 
   async handleSubmission () {
+    // ADD MORE ALERTS
+    //also this one doesn't work because image is no longer a state
     if(this.state.image === null){
       Alert.alert('Please add an image to your entry');
     } else {
-      // const entry = this.props.navigation.getParam("entry");
       const formData = this.createFormData(this.state.images, {
         date: this.state.date,
         stressLevel: this.state.stressLevel,
         diet: this.state.diet,
-        description: this.state.description
+        description: this.state.description,
+        status: this.state.status
       })
       if(this.state.entry === null){
         await this.props.addEntry(this.props.userId, formData)
@@ -125,6 +118,7 @@ class JourneyForm extends Component {
           stressLevel: 3,
           diet: "",
           description: "",
+          status: null,
           entry: null
         })
         Alert.alert('Entry Added!');
@@ -136,11 +130,16 @@ class JourneyForm extends Component {
           stressLevel: 3,
           diet: "",
           description: "",
+          status: null,
           entry: null
         })
         Alert.alert('Entry Added!');
       }
     }
+  }
+
+  handleStatus (num) {
+    this.setState({status: num})
   }
 
   renderItem = ({ item }) => {
@@ -150,13 +149,11 @@ class JourneyForm extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <ScrollView contentContainerStyle={styles.container}>
-          {/* <Text style={styles.header}>Entry</Text> */}
           {
             this.state.images.length > 0 ?
-            <View style={{marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "center"}}>
+            <View style={{marginBottom: '10%', display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <Carousel
                 inactiveSlideOpacity={0.6}
                 inactiveSlideScale={0.65}
@@ -174,7 +171,7 @@ class JourneyForm extends Component {
           }
           <TextInputMask
               style={styles.input}
-              placeholder="MM/DD/YYYY"
+              placeholder= 'MM/DD/YYYY'
               type={'datetime'}
               options={{
                   format: 'MM/DD/YYYY'
@@ -186,8 +183,9 @@ class JourneyForm extends Component {
                   })
               }}
           />
+          <Text style={styles.text}>How stressed are you today?</Text>
           <Slider 
-              style={{width: '100%', alignSelf: 'center'}}
+              style={{width: '100%', alignSelf: 'center', marginBottom: '7%'}}
               maximumValue={5} 
               minimumValue={1} 
               value={this.state.stressLevel}
@@ -204,12 +202,32 @@ class JourneyForm extends Component {
           />
           <AutoGrowingTextInput
               style={styles.input}
-              placeholder="How are you and your skin doing?"
+              placeholder="What was your skincare routine today?"
               onChangeText={text => this.setState({ description: text })}
               value={this.state.description}
           />
+          <Text style={styles.text}>How is your skin doing?</Text>
+          <View style={styles.statusContainer}>
+            <TouchableOpacity
+                style={this.state.status === 3 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(3)}
+            >
+                <Text style={this.state.status === 3 ? styles.statusText : styles.btnText}>Great!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={this.state.status === 2 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(2)}
+            >
+                <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Okay.</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={this.state.status === 1 ? styles.statusBtn : styles.btn}
+                onPress={() => this.handleStatus(1)}
+            >
+                <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Bad!</Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
-              style={styles.AddImageBtn}
               onPress={() => this.pickImage()}
           >
               <Text style={styles.AddImageText}>Add Image</Text>
@@ -241,42 +259,25 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     backgroundColor: 'white',
-    padding: '7%'
+    padding: '5%'
   },
-  // header: {
-  //   fontFamily: 'Avenir',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  //   fontSize: 35,
-  //   marginBottom: 30,
-  //   marginTop: "10%",
-  //   color: "white",
-  //   letterSpacing: 3,
-  // },
   input: {
     width: "100%",
-    padding: 15,
-    marginBottom: 10,
+    marginBottom: '7%',
     borderWidth: 1, 
     borderColor: "#dadada",
-    borderRadius: 10
-  },
-  AddImageBtn: {
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 25,
-    backgroundColor: "transparent",
-    padding: 15,
-    width: '60%',
-    display: 'flex',
-    marginBottom: 10,
-    alignSelf: 'center'
+    borderRadius: 10,
+    fontFamily: 'Avenir',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%',
+    paddingTop: '2%'
   },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
-    padding: 10,
-    width: '60%',
-    marginBottom: 5,
+    padding: '2%',
+    width: '50%',
+    marginBottom: '2%',
     alignSelf: 'center',
     borderRadius: 15
   },
@@ -285,7 +286,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 2, 
     fontWeight: "bold",
-    color: '#a8a8a8'
+    color: '#a8a8a8',
+    fontFamily: 'Avenir',
+    marginBottom: '7%'
   },
   SaveText: {
     fontSize: 20,
@@ -293,11 +296,49 @@ const styles = StyleSheet.create({
     textTransform: "uppercase", 
     letterSpacing: 2, 
     fontWeight: "bold",
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir'
   },
   image: {
     width: 180,
     height: 180,
     borderRadius: 10
+  },
+  text: {
+    fontFamily: 'Avenir',
+    color: '#a8a8a8',
+    marginBottom: '5%'
+  },
+  statusContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: '2%',
+    marginBottom: '7%'
+  },
+  btn: {
+    borderWidth: 1,
+    borderColor: "#dadada",
+    borderRadius: 25,
+    padding: '2%',
+    width: '25%'
+  },
+  statusBtn: {
+    borderWidth: 1,
+    borderColor: "#A7CAEB",
+    borderRadius: 25,
+    padding: '2%',
+    width: '25%'
+  },
+  statusText: {
+    fontFamily: 'Avenir',
+    color: '#A7CAEB',
+    textAlign: 'center'
+  },
+  btnText: {
+    fontFamily: 'Avenir',
+    color: '#dadada',
+    textAlign: 'center'
   }
 })
