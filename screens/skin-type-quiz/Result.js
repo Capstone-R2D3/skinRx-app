@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   btnText: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     color: '#A7CAEB'
   }
