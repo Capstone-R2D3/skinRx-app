@@ -37,11 +37,19 @@ class JourneyEntries extends React.Component {
   }
 
   render() {
+    const entries = this.props.entries;
+
     return (
       <ScrollView>
         <View>
           {
-            (this.props.entries || []).map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
+            entries.length === 0 ? 
+            <View style={styles.container}>
+              <Image source={require('./images/report.png')} style={{height: 80, width: 80, marginBottom: '5%'}}/>
+              <Text style={styles.text}>Uh Oh! You don't have an entries yet! Swipe to left add one</Text>
+            </View>
+            : 
+            entries.map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
           }
         </View>
       </ScrollView>
@@ -60,3 +68,21 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(JourneyEntries);
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 18,
+    textAlign: "center",
+    letterSpacing: 2, 
+    fontWeight: "bold",
+    color: '#BFD7ED',
+    fontFamily: 'Avenir',
+    padding: '4%'
+  }
+});
