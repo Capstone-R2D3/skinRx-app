@@ -83,7 +83,6 @@ class RecommendationScreen extends React.Component {
             </TouchableOpacity>
           </View>
 
-          {/* "3.5%" */}
           <ScrollView 
               style={{paddingLeft: width * .005}}
               contentContainerStyle={{paddingHorizontal: width * .11}}
@@ -156,9 +155,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-  },
-  contentContainer: {
-    // paddingHorizontal: 7,
   },
   header: {
     fontSize: 25,

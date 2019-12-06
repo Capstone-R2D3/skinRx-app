@@ -25,7 +25,9 @@ import Result from '../screens/skin-type-quiz/Result'
 import SkinQuestion from '../screens/skin-type-quiz/SkinQuestion'
 import SkinTypeQuiz from '../screens/skin-type-quiz/SkinTypeQuiz'
 import SkinTypes from '../screens/skin-type-quiz/SkinTypes'
-
+import EntryDetails from '../screens/EntryDetails'
+import JourneyCard from '../screens/JourneyCard'
+import JourneyEntries from '../screens/JourneyEntries'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -108,8 +110,19 @@ const JourneyStack = createStackNavigator(
   {
     JourneyScreen: {
       screen: JourneyScreen,
-      navigationOptions: {header: null}
-    }
+      navigationOptions: {header: null},
+      path: 'journies',
+      navigationOptions: ({ navigation }) => ({
+        header: null,
+        navigation: navigation
+      })},
+    EntryDetails: {
+      screen: EntryDetails,
+      path: 'journies/:id',
+      navigationOptions: ({ navigation }) => ({
+        header: null,
+        navigation: navigation
+      })},
   },
   config
 );

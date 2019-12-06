@@ -18,7 +18,7 @@ export default class SkinTypeQuiz extends Component {
 
     render() {
         return (
-            <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={require('./blob.png')} style={styles.backgroundImage}>
               <View style={styles.container}>
                 <Text style={styles.header}>
                     Let's get started!
@@ -46,6 +46,12 @@ export default class SkinTypeQuiz extends Component {
 }
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+      width: '100%',
+      height: '100%',
+      flex: 1,
+      resizeMode: 'center',
+    },
     container: {
       flex: 1,
       display: "flex",
