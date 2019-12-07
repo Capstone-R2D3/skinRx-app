@@ -158,14 +158,14 @@ class JourneyForm extends Component {
                 inactiveSlideOpacity={0.6}
                 inactiveSlideScale={0.65}
                 firstItem={0}
-                sliderWidth={300}
-                itemWidth={240}
+                sliderWidth={width/2}
+                itemWidth={width/4}
                 data={this.state.images}
                 renderItem={this.renderItem}
                 containerCustomStyle={{ overflow: 'visible' }}
                 contentContainerCustomStyle={{ overflow: 'visible' }}
                 layout={'stack'} 
-                layoutCardOffset={2}
+                layoutCardOffset={10}
               />
             </View> : null
           }
@@ -218,7 +218,7 @@ class JourneyForm extends Component {
                 style={this.state.status === 2 ? styles.statusBtn : styles.btn}
                 onPress={() => this.handleStatus(2)}
             >
-                <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Okay.</Text>
+                <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Fine.</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={this.state.status === 1 ? styles.statusBtn : styles.btn}
@@ -269,13 +269,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontFamily: 'Avenir',
     paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingBottom: '2%',
-    paddingTop: '2%'
+    paddingRight: '5%'
   },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
-    padding: '2%',
+    padding: '1%',
     width: '50%',
     marginBottom: '2%',
     alignSelf: 'center',
@@ -288,7 +286,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#a8a8a8',
     fontFamily: 'Avenir',
-    marginBottom: '7%'
+    marginBottom: '5%'
   },
   SaveText: {
     fontSize: 20,
@@ -300,8 +298,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir'
   },
   image: {
-    width: 180,
-    height: 180,
+    width: width/3,
+    height: width/3,
     borderRadius: 10
   },
   text: {
@@ -315,7 +313,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: '2%',
-    marginBottom: '7%'
+    marginBottom: '5%'
   },
   btn: {
     borderWidth: 1,

@@ -48,7 +48,7 @@ class JourneyEntries extends React.Component {
             entries.length === 0 ? 
             <View style={styles.container}>
               <Image source={require('./images/report.png')} style={{height: 80, width: 80, marginBottom: '5%'}}/>
-              <Text style={styles.text}>Uh Oh! You don't have an entries yet! Swipe to left add one</Text>
+              <Text style={styles.text}>Uh Oh! You don't have any entries yet! Swipe left to add one</Text>
             </View>
             : 
             entries.map((entry, idx) => {return <JourneyCard entry={entry} key={entry.id} delete={this.delete} update={this.update}/>})
