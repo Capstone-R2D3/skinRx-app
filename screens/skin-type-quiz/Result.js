@@ -24,12 +24,6 @@ class Result extends Component {
         const result = this.props.navigation.getParam('result').toLowerCase();
         return (
           <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
-            <Ionicons 
-                name="ios-arrow-round-back" 
-                color="#dadada"
-                size={55} 
-                style={styles.backBtn}
-                onPress={() => this.props.navigation.navigate('MoisturizerQuestion')} />
             <View style={styles.container}>
                 <Text style={styles.header}>
                     You have {result} skin.
@@ -42,6 +36,16 @@ class Result extends Component {
                     }}
                     >
                         <Text style={styles.btnText}>Take me to my products!</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity
+                    style={styles.retakeBtn}
+                    onPress={() => {
+                      this.props.navigation.navigate('SkinQuestion')
+                    }}
+                    >
+                        <Text style={styles.retakeBtnText}>I want to retake the quiz.</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -101,5 +105,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     color: '#A7CAEB'
+  },
+  retakeBtn: {
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 25,
+    backgroundColor: "#A7CAEB",
+    padding: 15,
+    width: '75%',
+    display: 'flex',
+    marginBottom: 10
+  },
+  retakeBtnText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'white'
   }
 });
