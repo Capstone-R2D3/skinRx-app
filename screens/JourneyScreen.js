@@ -122,12 +122,7 @@ const styles = StyleSheet.create({
     height: height * .61,
     marginRight: 20,
     borderRadius: 15,
-    padding: 10,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: '2%'
   },
   clicked: {
     color: "#525252", 
