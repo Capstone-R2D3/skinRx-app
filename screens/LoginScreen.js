@@ -5,7 +5,8 @@ import { View,
   TextInput,
   TouchableOpacity,
   ScrollView, 
-  Dimensions
+  Dimensions,
+  Keyboard,
 } from 'react-native'
 import {auth} from '../redux/reducers/users'
 import {connect} from 'react-redux'
@@ -49,7 +50,7 @@ class LoginScreen extends Component {
             size={55} 
             style={styles.backBtn}
             onPress={() => this.props.navigation.navigate('Welcome')} />
-      <View style={styles.container}>
+      <View style={styles.container} onPress={Keyboard.dismiss}>
           <Text style={styles.header}>Nice to see you.</Text>
           <Text style={{fontSize: 18, marginBottom: 45, }}>Please log in.</Text>
           <TextInput

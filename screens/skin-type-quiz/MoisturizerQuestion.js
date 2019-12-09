@@ -30,13 +30,13 @@ class MoisturizerQuestion extends Component {
 
     render() {
         return (
-            <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={require('./blob.png')} style={styles.backgroundImage}>
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
                         <Text style={styles.header}>I need a moisturizer that</Text>
                     </View>
-                    <View style={{ zIndex: 5 }}>
-                        <View style={styles.scrollContainer}>
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.allBtns}>
                             <View style={styles.btnContainer}>
                                 <TouchableOpacity
                                 style={styles.userBtn}
@@ -77,11 +77,12 @@ class MoisturizerQuestion extends Component {
                                     <Text style={styles.btnText}>calms and soothes my irritated skin.</Text>
                                 </TouchableOpacity>
                             </View>
-                           <Text style={styles.bodyText}>
-                                Progress: 75%
-                          </Text> 
                         </View>
-                        
+                        <View>
+                            <Text style={styles.bodyText}>
+                                Progress: 75%
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </ImageBackground>
@@ -101,68 +102,69 @@ export default connect(mapState, mapDispatch)(MoisturizerQuestion)
 
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    width: "100%",
-    margin: 0,
-    padding: 0,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  topContainer: {
-      marginTop: "auto",
-      marginLeft: 20,
-      marginRight: 20,
-      width: "100%",
-      height: 200,
-      position: "absolute"
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        resizeMode: 'center',
     },
-  header: {
-    marginTop: "20%",
-    textAlign: "center",
-    fontSize: 34,
-    color: "white"
-  },
-  scrollContainer: {
-      width: "100%",
+    container: {
+      flex: 1,
       height: "100%",
-      backgroundColor: "white",
-      borderTopLeftRadius: 35,
-      borderTopRightRadius: 35,
-      marginTop: 200,
-      marginLeft: 0,
-      marginRight: 0,
-      marginBottom: 0,
       display: "flex",
       flexDirection: "column",
-      paddingTop: "13%",
-      paddingLeft: "10%",
-      paddingRight: "10%",
+      alignItems: "center"
     },
-  btnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-  },
-  userBtn: {
-    backgroundColor: "white",
-    borderColor: "#A7CAEB",
-    borderWidth: 2,
-    padding: 15,
-    borderRadius: 25,
-    marginBottom: 10,
-    width: "95%",
-  },
-  btnText: {
-    fontSize: 16,
-    color: "#A7CAEB",
-    textAlign: "center"
-  },
-  bodyText: {
-      fontSize: 12,
-      textAlign: 'center',
-      marginTop: '15%'
-  }
+    topContainer: {
+        marginTop: "auto",
+        marginBottom: "auto",
+        display: "flex",
+        alignItems: "center",
+        marginLeft: 20,
+        marginRight: 20,
+        width: "100%"
+      },
+    header: {
+      textAlign: "center",
+      fontSize: 34,
+      color: "white"
+    },
+    bottomContainer: {
+        width: "100%",
+        backgroundColor: "white",
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        paddingTop: "15%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        paddingBottom: "15%"
+      },
+    btnContainer: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: 'center',
+      width: "100%",
+    },
+    userBtn: {
+        backgroundColor: "white",
+        borderColor: "#A7CAEB",
+        borderWidth: 2,
+        padding: 15,
+        borderRadius: 25,
+        marginBottom: 10,
+        width: "95%",
+      },
+      btnText: {
+        fontSize: 16,
+        color: "#A7CAEB",
+        textAlign: "center"
+      },
+      bodyText: {
+          fontSize: 12,
+          textAlign: "center"
+      }
 });
