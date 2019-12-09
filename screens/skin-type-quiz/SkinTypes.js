@@ -148,13 +148,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         width: width,
-        height: height * 0.25,
+        height: height * 0.36,
       },
     header: {
       textAlign: "center",
       fontSize: 34,
       color: "white",
-      paddingTop: height * 0.08,
+      paddingTop: height * 0.11,
     },
     bottomContainer: {
         width: width,
@@ -163,14 +163,14 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 35,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "center",
         alignItems: 'center',
-        paddingTop: height * 0.05,
+        paddingTop: height * 0.035,
         paddingLeft: width * 0.1,
         paddingRight: width * 0.1,
-        paddingBottom: height * 0.05,
-        marginTop: height * 0.03,
-        height: height * 0.65
+        paddingBottom: height * 0.035,
+        marginTop: height * 0.01,
+        height: height * 0.56
       },
     btnContainer: {
       display: "flex",
