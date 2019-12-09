@@ -72,16 +72,17 @@ class JourneyScreen extends Component {
             else if(nextx > (lowerBound * 2) && nextx < (upperBound * 2)) this.setState({selected: "calendar"})
           }}
         >
+
+          <View style={styles.card}>
+            <JourneyCalendar/>
+          </View>
+
           <View style={styles.card}>
             <JourneyEntries />
           </View>
 
           <View style={styles.card}>
             <JourneyForm entry={null}/>
-          </View>
-
-          <View style={styles.card}>
-            <JourneyCalendar/>
           </View>
 
         </ScrollView>
