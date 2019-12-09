@@ -14,21 +14,12 @@ const gotProduct = product => ({
 })
 
 export const getToxicityScore = productId => async dispatch => {
-  const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/products/${productId}`)
-  let totalToxicity = 0
-  let len = data.ingredients.length
-  let score
-  data.ingredients.forEach((ingredient) => {
-    if (ingredient === ' : ') {
-      len = len - 1
-    } else {
-      score = ingredient.split(': ')
-      score = score[1]
-      totalToxicity += parseInt(score, 10)
-    } 
-  })
-  score = totalToxicity / len
-  dispatch(gotToxicityScore(Math.round(score)))
+  try {
+    const {data} = await axios.get(`https://skinrx-server.herokuapp.com/api/products/${productId}`)
+    dispatch(gotToxicityScore(data.score))
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const getProduct = name => async dispatch => {

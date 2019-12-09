@@ -6,6 +6,7 @@ import { View,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native'
 import { connect } from 'react-redux';
 import { updateUserProfile, logout, getSkinType } from '../redux/reducers/users';
@@ -54,8 +55,8 @@ class ProfileScreen extends React.Component {
                 <Text>Skin Type: { this.props.skinType ? this.props.skinType : null }</Text>
                 <Text />
                 <Text>Think it might be different?</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')}>
-                  <Text>Retake our quiz!</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SkinTypeQuiz')} style={styles.retakeBtn}>
+                  <Text style={styles.retakeText}>Retake our quiz</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -113,7 +114,9 @@ class ProfileScreen extends React.Component {
                       onPress={() => {
                         this.state.changedField 
                         ? ( this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password),
-                          this.setState({showMessage: false}) ) 
+                          this.setState({showMessage: false}),
+                          Alert.alert('Updated profile!'), 
+                          this.setState({changedField: false}) ) 
                         : this.setState({showMessage: true})
                       }}>
                       <Text style={styles.btnText}>Update Info</Text>
@@ -238,5 +241,17 @@ const styles = StyleSheet.create({
   incorrect: {
     marginTop: 5,
     color: 'red',
+  }, 
+  retakeText: {
+    paddingVertical: 5,
+    paddingHorizontal: 17,
+    color: "white", 
+    fontWeight: "bold",
+  },
+  retakeBtn: {
+    backgroundColor: "#A7CAEB", 
+    borderRadius: 10,
+    width: 140,
+    marginTop: 7
   }
 });

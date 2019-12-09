@@ -12,7 +12,7 @@ const clearedRecs = () => ({
   type: CLEAR_RECS
 })
 
-// for new users when they sign up only --> hook up to submit page 
+// for new users when they sign up only 
 export const getRecommendations = (userId, skinTypeId) => async dispatch => {
   try {
     const {data} = await axios.post(`https://skinrx-server.herokuapp.com/api/recommendations/${userId}`, {skinTypeId})

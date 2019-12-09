@@ -150,95 +150,98 @@ class JourneyForm extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-          {
-            this.state.images.length > 0 ?
-            <View style={{marginBottom: '10%', display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <Carousel
-                inactiveSlideOpacity={0.6}
-                inactiveSlideScale={0.65}
-                firstItem={0}
-                sliderWidth={300}
-                itemWidth={240}
-                data={this.state.images}
-                renderItem={this.renderItem}
-                containerCustomStyle={{ overflow: 'visible' }}
-                contentContainerCustomStyle={{ overflow: 'visible' }}
-                layout={'stack'} 
-                layoutCardOffset={2}
-              />
-            </View> : null
-          }
-          <TextInputMask
-              style={styles.input}
-              placeholder= 'MM/DD/YYYY'
-              type={'datetime'}
-              options={{
-                  format: 'MM/DD/YYYY'
-              }}
-              value={this.state.date}
-              onChangeText={text => {
-                  this.setState({
-                  date: text
-                  })
-              }}
-          />
-          <Text style={styles.text}>How stressed are you today?</Text>
-          <Slider 
-              style={{width: '100%', alignSelf: 'center', marginBottom: '7%'}}
-              maximumValue={5} 
-              minimumValue={1} 
-              value={this.state.stressLevel}
-              step={1}
-              onValueChange={value => this.setState({stressLevel: value})} 
-              minimumTrackTintColor={'#BFD7ED'}
-              maximumTrackTintColor={'#dadada'}
-          />
-          <AutoGrowingTextInput
-              style={styles.input}
-              placeholder="How's your diet?"
-              onChangeText={text => this.setState({ diet: text })}
-              value={this.state.diet}
-          />
-          <AutoGrowingTextInput
-              style={styles.input}
-              placeholder="What was your skincare routine today?"
-              onChangeText={text => this.setState({ description: text })}
-              value={this.state.description}
-          />
-          <Text style={styles.text}>How is your skin doing?</Text>
-          <View style={styles.statusContainer}>
+      <View style={styles.container}>
+          <ScrollView>
+            {
+              this.state.images.length > 0 ?
+              <View style={{marginBottom: '10%', display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                <Carousel
+                  inactiveSlideOpacity={0.6}
+                  inactiveSlideScale={0.65}
+                  firstItem={0}
+                  sliderWidth={width/2}
+                  itemWidth={width*(15/100)}
+                  data={this.state.images}
+                  renderItem={this.renderItem}
+                  containerCustomStyle={{ overflow: 'visible' }}
+                  contentContainerCustomStyle={{ overflow: 'visible' }}
+                  layout={'stack'} 
+                  layoutCardOffset={10}
+                />
+              </View> : null
+            }
+            <TextInputMask
+                style={styles.input}
+                placeholder= 'MM/DD/YYYY'
+                type={'datetime'}
+                options={{
+                    format: 'MM/DD/YYYY'
+                }}
+                value={this.state.date}
+                onChangeText={text => {
+                    this.setState({
+                    date: text
+                    })
+                }}
+            />
+            <Text style={styles.text}>How stressed are you today?</Text>
+            <Slider 
+                style={{width: '100%', alignSelf: 'center', marginBottom: '7%'}}
+                maximumValue={5} 
+                minimumValue={1} 
+                value={this.state.stressLevel}
+                step={1}
+                onValueChange={value => this.setState({stressLevel: value})} 
+                minimumTrackTintColor={'#BFD7ED'}
+                maximumTrackTintColor={'#dadada'}
+            />
+            <AutoGrowingTextInput
+                style={styles.input}
+                placeholder="How's your diet?"
+                onChangeText={text => this.setState({ diet: text })}
+                value={this.state.diet}
+            />
+            <AutoGrowingTextInput
+                style={styles.input}
+                placeholder="What was your skincare routine today?"
+                onChangeText={text => this.setState({ description: text })}
+                value={this.state.description}
+            />
+            <Text style={styles.text}>How is your skin doing?</Text>
+            <View style={styles.statusContainer}>
+              <TouchableOpacity
+                  style={this.state.status === 3 ? styles.statusBtn : styles.btn}
+                  onPress={() => this.handleStatus(3)}
+              >
+                  <Text style={this.state.status === 3 ? styles.statusText : styles.btnText}>Great!</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  style={this.state.status === 2 ? styles.statusBtn : styles.btn}
+                  onPress={() => this.handleStatus(2)}
+              >
+                  <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Fine.</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  style={this.state.status === 1 ? styles.statusBtn : styles.btn}
+                  onPress={() => this.handleStatus(1)}
+              >
+                  <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Bad!</Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
-                style={this.state.status === 3 ? styles.statusBtn : styles.btn}
-                onPress={() => this.handleStatus(3)}
+                onPress={() => this.pickImage()}
             >
-                <Text style={this.state.status === 3 ? styles.statusText : styles.btnText}>Great!</Text>
+                <Text style={styles.AddImageText}>Add Image</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={this.state.status === 2 ? styles.statusBtn : styles.btn}
-                onPress={() => this.handleStatus(2)}
+                style={styles.SaveBtn}
+                onPress={() => this.handleSubmission()}
             >
-                <Text style={this.state.status === 2 ? styles.statusText : styles.btnText}>Okay.</Text>
+                <Text style={styles.SaveText}>Save</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                style={this.state.status === 1 ? styles.statusBtn : styles.btn}
-                onPress={() => this.handleStatus(1)}
-            >
-                <Text style={this.state.status === 1 ? styles.statusText : styles.btnText}>Bad!</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-              onPress={() => this.pickImage()}
-          >
-              <Text style={styles.AddImageText}>Add Image</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-              style={styles.SaveBtn}
-              onPress={() => this.handleSubmission()}
-          >
-              <Text style={styles.SaveText}>Save</Text>
-          </TouchableOpacity>
-      </ScrollView>
+          </ScrollView>
+      </View>
+      
     )
   }
 }
@@ -259,7 +262,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     backgroundColor: 'white',
-    padding: '5%'
+    marginBottom: '2%'
   },
   input: {
     width: "100%",
@@ -269,13 +272,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontFamily: 'Avenir',
     paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingBottom: '2%',
-    paddingTop: '2%'
+    paddingRight: '5%'
   },
   SaveBtn: {
     backgroundColor: "#BFD7ED",
-    padding: '2%',
+    padding: '1%',
     width: '50%',
     marginBottom: '2%',
     alignSelf: 'center',
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#a8a8a8',
     fontFamily: 'Avenir',
-    marginBottom: '7%'
+    marginBottom: '5%'
   },
   SaveText: {
     fontSize: 20,
@@ -300,8 +301,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir'
   },
   image: {
-    width: 180,
-    height: 180,
+    width: width/4,
+    height: width/4,
     borderRadius: 10
   },
   text: {
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: '2%',
-    marginBottom: '7%'
+    marginBottom: '5%'
   },
   btn: {
     borderWidth: 1,

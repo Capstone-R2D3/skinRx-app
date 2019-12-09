@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
 import { withNavigation } from "react-navigation";
 import JourneyForm from './JourneyForm';
 import JourneyEntries from './JourneyEntries';
 import JourneyCalendar from './JourneyCalendar';
+
+const { height, width } = Dimensions.get('window');
 
 
 class JourneyScreen extends Component {
@@ -11,7 +13,7 @@ class JourneyScreen extends Component {
     super(props);
     this.state = {
         selected: 'entries',
-        screenWidth: Dimensions.get('window').width * 0.85
+        screenWidth: width * 0.8
     };
     this.scrollToA = this.scrollToA.bind(this)
     this.scrollToB = this.scrollToB.bind(this)
@@ -35,8 +37,8 @@ class JourneyScreen extends Component {
   
   render() {
     return (
-      <ImageBackground source={require('./images/background3.png')} style={styles.container}>
-        <Text style={styles.text}>Track your skincare journey with daily entries</Text> 
+      <ImageBackground source={require('./images/background3.png')} style={styles.container} onPress={Keyboard.dismiss}>
+        <Text style={styles.text} onPress={Keyboard.dismiss}>Track your skincare journey with daily entries</Text> 
               
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: 17, marginBottom: 17,}}>
           <TouchableOpacity onPress={this.scrollToA}>
@@ -51,6 +53,7 @@ class JourneyScreen extends Component {
         </View>
 
         <ScrollView 
+          onPress={Keyboard.dismiss}
           style={{paddingLeft: "3.5%"}}
           contentContainerStyle={{paddingHorizontal: "6%"}}
           horizontal= {true}
@@ -70,16 +73,17 @@ class JourneyScreen extends Component {
             else if(nextx > (lowerBound * 2) && nextx < (upperBound * 2)) this.setState({selected: "calendar"})
           }}
         >
+
           <View style={styles.card}>
-            <JourneyEntries/>
+            <JourneyCalendar/>
+          </View>
+
+          <View style={styles.card}>
+            <JourneyEntries />
           </View>
 
           <View style={styles.card}>
             <JourneyForm entry={null}/>
-          </View>
-
-          <View style={styles.card}>
-            <JourneyCalendar/>
           </View>
 
         </ScrollView>
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
     color: '#525252',
     marginTop: "11%",
     marginBottom: "7%",
+    marginHorizontal: "9%",
     fontFamily: 'Avenir',
     fontWeight: 'bold',
     fontSize: 25,
@@ -116,16 +121,11 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "white",
-    width: 300, 
-    height: 410,
+    width: width * .70,
+    height: height * .61,
     marginRight: 20,
     borderRadius: 15,
-    padding: 10,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: '2%'
   },
   clicked: {
     color: "#525252", 

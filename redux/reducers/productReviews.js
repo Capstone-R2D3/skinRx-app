@@ -2,7 +2,7 @@
 
 
 // action types
-const ADD_RATING = 'ADD_RATING';
+const ADD_RATING = 'ADD_RATING'
 const GET_RATING = 'GET_RATING'
 const EDIT_RATING = 'EDIT_RATING'
 
@@ -31,7 +31,7 @@ export const getRating = (productId, userId) => async dispatch => {
   }
 }
 
-// thunks
+
 export const addRating = (productId, userId, rating) => async dispatch => {
     try {
       let { data } = await axios.post(`https://skinrx-server.herokuapp.com/api/reviews`, {rating, productId, userId})
@@ -57,7 +57,7 @@ const initialState = {
     rating: null,
 }
 
-// *** @@@ Not sure if i will actually ever need this reducer... may remove in future 
+ 
 export default function(state = initialState, action) {
     switch (action.type) {
         case GET_RATING: 

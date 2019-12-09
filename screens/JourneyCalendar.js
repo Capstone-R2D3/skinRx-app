@@ -10,8 +10,9 @@ import {
   Button
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getEntries, deleteEntry } from '../redux/reducers/journey';
+import { getEntries, deleteEntry, getOneEntry } from '../redux/reducers/journey';
 import { Calendar } from 'react-native-calendars';
+import { withNavigation } from 'react-navigation';
 
 class JourneyCalendar extends React.Component {
   constructor() {
@@ -55,6 +56,7 @@ class JourneyCalendar extends React.Component {
         entryDates[entryDate] = {selected: true, selectedColor: entryColor}
     }
     return (
+      <View style={styles.container}>
         <Calendar
             current={Date()}
             minDate={'2018-01-01'}
@@ -69,22 +71,31 @@ class JourneyCalendar extends React.Component {
             // Handler when press arrow icon are selected. Receives callback to go forward and back a month
             onPressArrowLeft={substractMonth => substractMonth()}
             onPressArrowRight={addMonth => addMonth()}
+            // allows you to press 
+            onDayPress={(day) => {
+              const dateStr = day.dateString.split("-")
+              let newDate = `${dateStr[1]}/${dateStr[2]}/${dateStr[0]}`
+              this.props.navigation.navigate("EntryDetails", {
+                date: newDate
+              })
+            }}
             theme={{
-            textDayFontFamily: 'Avenir',
-            textMonthFontFamily: 'Avenir',
-            textDayHeaderFontFamily: 'Avenir',
-            monthTextColor: '#a8a8a8',
-            todayTextColor: '#699add',
-            dayTextColor: '#a8a8a8',
-            arrowColor: '#a8a8a8',
-            calendarBackground: 'white',
-            'stylesheet.calendar.header': {
-                dayHeader: {
-                color: '#a8a8a8'
-                }
-            }
-        }}
-      />
+              textDayFontFamily: 'Avenir',
+              textMonthFontFamily: 'Avenir',
+              textDayHeaderFontFamily: 'Avenir',
+              monthTextColor: '#a8a8a8',
+              todayTextColor: '#699add',
+              dayTextColor: '#a8a8a8',
+              arrowColor: '#a8a8a8',
+              calendarBackground: 'white',
+              'stylesheet.calendar.header': {
+                  dayHeader: {
+                  color: '#a8a8a8'
+                  }
+              }
+            }}
+        />
+      </View>
     )
   }
 }
@@ -96,7 +107,20 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getEntries: (userId) => dispatch(getEntries(userId)),
-  deleteEntry: (userId, entryId) => dispatch(deleteEntry(userId, entryId))
+  deleteEntry: (userId, entryId) => dispatch(deleteEntry(userId, entryId)),
+  getOneEntry: (userId, date) => dispatch(getOneEntry(userId, date))
 })
 
-export default connect(mapState, mapDispatch)(JourneyCalendar);
+export default withNavigation(connect(mapState, mapDispatch)(JourneyCalendar));
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
