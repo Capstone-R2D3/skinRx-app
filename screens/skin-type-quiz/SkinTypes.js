@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ImageBackground, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import {addSkinType} from '../../redux/reducers/users'
-import {getRecommendations, updateRecommendations} from '../../redux/reducers/recommendations'
+import { addSkinType } from '../../redux/reducers/users'
+import { getRecommendations, updateRecommendations } from '../../redux/reducers/recommendations'
 
 
 class SkinTypes extends Component {
@@ -34,6 +35,12 @@ class SkinTypes extends Component {
             <ImageBackground source={require('./blob.png')} style={styles.backgroundImage}>
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
+                        <Ionicons 
+                            name="ios-arrow-round-back" 
+                            color="#dadada"
+                            size={55} 
+                            style={styles.backBtn}
+                            onPress={() => this.props.navigation.navigate('PoreQuestion')} />
                         <Text style={styles.header}>
                             My skin type is
                         </Text>
@@ -109,45 +116,61 @@ const mapDispatch = dispatch => ({
 
 export default connect(mapState, mapDispatch)(SkinTypes)
 
+const { height, width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
     backgroundImage: {
-        width: '100%',
-        height: '100%',
+        width: width,
+        height: height,
         flex: 1,
         resizeMode: 'center',
     },
+    backBtn: {
+        marginTop: height * 0.15,
+        marginLeft: width * 0.03,
+        color: "white"
+    },                                                                                                                                                                      
     container: {
       flex: 1,
-      height: "100%",
+      zIndex: 2,
+      height: height,
       display: "flex",
       flexDirection: "column",
+      justifyContent: 'space-between',
       alignItems: "center"
     },
     topContainer: {
         marginTop: "auto",
-        marginBottom: "auto",
+        marginBottom: height * 0.2,
         display: "flex",
-        alignItems: "center",
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         marginLeft: 20,
         marginRight: 20,
-        width: "100%"
+        width: width,
+        height: height * 0.25,
       },
     header: {
       textAlign: "center",
       fontSize: 34,
-      color: "white"
+      color: "white",
+      paddingTop: height * 0.08,
     },
     bottomContainer: {
-        width: "100%",
+        width: width,
         backgroundColor: "white",
         borderTopLeftRadius: 35,
         borderTopRightRadius: 35,
         display: "flex",
         flexDirection: "column",
-        paddingTop: "15%",
-        paddingLeft: "10%",
-        paddingRight: "10%",
-        paddingBottom: "15%"
+        justifyContent: "space-around",
+        alignItems: 'center',
+        paddingTop: height * 0.05,
+        paddingLeft: width * 0.1,
+        paddingRight: width * 0.1,
+        paddingBottom: height * 0.05,
+        marginTop: height * 0.03,
+        height: height * 0.65
       },
     btnContainer: {
       display: "flex",
@@ -157,17 +180,21 @@ const styles = StyleSheet.create({
       width: "100%",
     },
     userBtn: {
-      backgroundColor: "white",
-      borderColor: "#A7CAEB",
-      borderWidth: 2,
-      padding: 15,
-      borderRadius: 25,
-      marginBottom: 10,
-      width: "95%",
-    },
-    btnText: {
-      fontSize: 16,
-      color: "#A7CAEB",
-      textAlign: "center"
-    }
+        backgroundColor: "white",
+        borderColor: "#A7CAEB",
+        borderWidth: 2,
+        padding: 15,
+        borderRadius: 25,
+        marginBottom: 10,
+        width: "95%",
+      },
+      btnText: {
+        fontSize: 16,
+        color: "#A7CAEB",
+        textAlign: "center"
+      },
+      bodyText: {
+          fontSize: 12,
+          textAlign: "center"
+      }
 });
