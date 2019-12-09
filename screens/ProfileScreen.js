@@ -6,6 +6,7 @@ import { View,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native'
 import { connect } from 'react-redux';
 import { updateUserProfile, logout, getSkinType } from '../redux/reducers/users';
@@ -113,7 +114,9 @@ class ProfileScreen extends React.Component {
                       onPress={() => {
                         this.state.changedField 
                         ? ( this.props.updateUserProfile(this.props.user.id, this.state.firstName, this.state.lastName, this.state.email, this.state.password),
-                          this.setState({showMessage: false}) ) 
+                          this.setState({showMessage: false}),
+                          Alert.alert('Updated profile!'), 
+                          this.setState({changedField: false}) ) 
                         : this.setState({showMessage: true})
                       }}>
                       <Text style={styles.btnText}>Update Info</Text>
@@ -241,7 +244,7 @@ const styles = StyleSheet.create({
   }, 
   retakeText: {
     paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 17,
     color: "white", 
     fontWeight: "bold",
   },
