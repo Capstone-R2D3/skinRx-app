@@ -5,13 +5,15 @@ import JourneyForm from './JourneyForm';
 import JourneyEntries from './JourneyEntries';
 import JourneyCalendar from './JourneyCalendar';
 
+const { height, width } = Dimensions.get('window');
+
 
 class JourneyScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
         selected: 'entries',
-        screenWidth: Dimensions.get('window').width * 0.85
+        screenWidth: width * 0.8
     };
     this.scrollToA = this.scrollToA.bind(this)
     this.scrollToB = this.scrollToB.bind(this)
@@ -71,16 +73,17 @@ class JourneyScreen extends Component {
             else if(nextx > (lowerBound * 2) && nextx < (upperBound * 2)) this.setState({selected: "calendar"})
           }}
         >
+
+          <View style={styles.card}>
+            <JourneyCalendar/>
+          </View>
+
           <View style={styles.card}>
             <JourneyEntries />
           </View>
 
           <View style={styles.card}>
             <JourneyForm entry={null}/>
-          </View>
-
-          <View style={styles.card}>
-            <JourneyCalendar/>
           </View>
 
         </ScrollView>
@@ -118,16 +121,11 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "white",
-    width: 300, 
-    height: 410,
+    width: width * .70,
+    height: height * .61,
     marginRight: 20,
     borderRadius: 15,
-    padding: 10,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: '2%'
   },
   clicked: {
     color: "#525252", 
