@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import {getRecommendations, getExistingUserRecs, updateRecommendations} from '../../redux/reducers/recommendations';
 
@@ -23,6 +24,12 @@ class Result extends Component {
         const result = this.props.navigation.getParam('result').toLowerCase();
         return (
           <ImageBackground source={require('./blob.png')} style={{width: '100%', height: '100%'}}>
+            <Ionicons 
+                name="ios-arrow-round-back" 
+                color="#dadada"
+                size={55} 
+                style={styles.backBtn}
+                onPress={() => this.props.navigation.navigate('MoisturizerQuestion')} />
             <View style={styles.container}>
                 <Text style={styles.header}>
                     You have {result} skin.
@@ -57,6 +64,11 @@ const mapDispatch = dispatch => ({
 export default connect(mapState, mapDispatch)(Result)
 
 const styles = StyleSheet.create({
+  backBtn: {
+    marginTop: 30,
+    marginLeft: 20,
+    color: "white"
+},
   container: {
     flex: 1,
     display: "flex",
