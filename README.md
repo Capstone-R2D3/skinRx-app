@@ -7,9 +7,6 @@ Javscript, React Native, Redux, Express, Sequelize, PostgreSQL, Barcode Lookup A
 ## Installation
 
 ```js
-// assuming postgreSQL for databases
-createdb skinRx
-
 // install required libraries
 npm install 
 
