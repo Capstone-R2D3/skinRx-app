@@ -17,4 +17,5 @@ npm run start
 
 
 ## Screenshots
-![home page](https://github.com/Capstone-R2D3/skinRx-app/blob/master/skinRx.png)
+![welcome page](https://github.com/Capstone-R2D3/skinRx-app/blob/master/skinRx.png)
+![home page](https://github.com/Capstone-R2D3/skinRx-app/blob/master/home-page.png)
