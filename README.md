@@ -10,8 +10,9 @@ Javscript, React Native, Redux, Express, Sequelize, PostgreSQL, Barcode Lookup A
 // install required libraries
 npm install 
 
+// download Expo on phone
 // run app
-npm run start-dev
+npm run start 
 ```
 
 
