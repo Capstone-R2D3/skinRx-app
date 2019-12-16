@@ -1,8 +1,8 @@
 ## skinRx 
-SkinRx is a suite of applications featuring a mobile app and a chrome extension. We promote healthy skin care solutions and our mission is to make the skin care industry more transparent by exposing the harmful chemicals included in products. 
+skinRx is a suite of applications featuring a mobile app and a chrome extension. Promoting healthy skin care solutions, our mission is to make the skin care industry more transparent by exposing the harmful chemicals included in products.
 
-## Technolgies
-Javscript, React Native, Redux, Express, Sequelize, PostgreSQL, Barcode Lookup API, Heroku, Expo, 
+## Technologies
+JavaScript, React Native, Redux, Express, Sequelize, PostgreSQL, Barcode Lookup API, Heroku, Expo
 
 ## Installation
 
